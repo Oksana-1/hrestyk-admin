@@ -26,6 +26,7 @@
                 </v-col>
             </v-row>
         </v-container>
+        <router-view/>
     </v-main>
 </template>
 

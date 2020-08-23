@@ -3,8 +3,13 @@
 </template>
 
 <script>
+import {apiResponseProducts} from "../../api";
+
 export default {
-name: "PageProducts"
+    name: "PageProducts",
+    created() {
+        console.log(apiResponseProducts);
+    }
 }
 </script>
 
