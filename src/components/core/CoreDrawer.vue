@@ -1,10 +1,48 @@
 <template>
     <v-navigation-drawer
         v-model="drawer"
-        :clipped="true"
+        src="../../assets/images/hrestyk.jpg"
+        dark
         app
     >
-        <v-list dense>
+        <template v-slot:img="props">
+            <v-img
+                gradient="to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)"
+                v-bind="props"
+            />
+        </template>
+
+        <v-divider class="mb-1" />
+
+        <v-list
+            dense
+            nav
+        >
+            <v-list-item>
+                <v-list-item-avatar
+                    class="align-self-center"
+                    color="#fff"
+                    contain
+                >
+                    <v-img
+                        src="../../assets/images/logo.png"
+                        max-height="30"
+                    />
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                    <v-list-item-title
+                        class="h1"
+                        v-text="'Хрестик'"
+                    />
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+
+        <v-divider class="mb-2" />
+
+
+        <v-list expand nav>
             <v-list-item link>
                 <v-list-item-action>
                     <v-icon>mdi-storefront</v-icon>

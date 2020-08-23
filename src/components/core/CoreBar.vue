@@ -1,12 +1,27 @@
 <template>
     <v-app-bar
+        absolute
         app
-        color="primary"
-        dark
-        :clipped-left="true"
+        color="transparent"
+        flat
+        height="75"
     >
-        <v-app-bar-nav-icon @click="setDrawer(!drawer)"></v-app-bar-nav-icon>
-        <v-toolbar-title>Хрестик</v-toolbar-title>
+
+        <v-btn
+            class="mr-3"
+            elevation="1"
+            fab
+            small
+            @click="setDrawer(!drawer)"
+            color="secondary"
+        >
+            <v-icon>
+                mdi-dots-vertical
+            </v-icon>
+        </v-btn>
+        <v-toolbar-title
+            class="hidden-sm-and-down font-weight-light"
+            v-text="$route.name"/>
     </v-app-bar>
 </template>
 
