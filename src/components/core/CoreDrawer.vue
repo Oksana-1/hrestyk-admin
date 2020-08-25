@@ -18,7 +18,7 @@
             dense
             nav
         >
-            <v-list-item>
+            <v-list-item link to="/">
                 <v-list-item-avatar
                     class="align-self-center"
                     color="#fff"
@@ -32,7 +32,6 @@
 
                 <v-list-item-content>
                     <v-list-item-title
-                        class="h1"
                         v-text="'Хрестик'"
                     />
                 </v-list-item-content>
@@ -43,36 +42,12 @@
 
 
         <v-list expand nav>
-            <v-list-item link>
+            <v-list-item v-for="(link, i) in links" :key="`drawer-link-${i}`" link :to="link.route">
                 <v-list-item-action>
-                    <v-icon>mdi-storefront</v-icon>
+                    <v-icon>{{link.icon}}</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Товари</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-                <v-list-item-action>
-                    <v-icon>mdi-folder-multiple-image</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title>Слайдер</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-                <v-list-item-action>
-                    <v-icon>mdi-cart</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title>Замовлення</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-                <v-list-item-action>
-                    <v-icon>mdi-cog</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title>Налаштування</v-list-item-title>
+                    <v-list-item-title>{{link.title}}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -82,6 +57,32 @@
 <script>
 export default {
     name: "CoreDrawer",
+    data() {
+        return {
+            links: [
+                {
+                    icon: 'mdi-storefront',
+                    title: 'Товари',
+                    route: '/products'
+                },
+                {
+                    icon: 'mdi-folder-multiple-image',
+                    title: 'Слайдер',
+                    route: '/main-slider'
+                },
+                {
+                    icon: 'mdi-cart',
+                    title: 'Замовлення',
+                    route: '/orders'
+                },
+                {
+                    icon: 'mdi-cog',
+                    title: 'Налаштування',
+                    route: '/settings'
+                },
+            ]
+        }
+    },
     computed: {
         drawer: {
             get () {

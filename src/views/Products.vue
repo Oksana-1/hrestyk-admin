@@ -1,13 +1,13 @@
 <template>
     <v-container fluid>
         <v-row justify="center">
-            <v-col>
+            <v-col cols="12">
                 <BaseCard icon-name="mdi-storefront">
                     <template v-slot:card-content>
                         <v-list
                         avatar="true"
                         >
-                            <v-list-item-group v-model="item" color="primary">
+                            <v-list-item-group color="primary">
                                 <v-list-item
                                     v-for="product in products"
                                     :key="product.id"
@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import BaseCard from "../base/BaseCard";
-import {apiResponseProducts} from "../../api";
+import BaseCard from "../components/base/BaseCard";
+import {apiResponseProducts} from "../api";
 
 export default {
-    name: "PageProducts",
+    name: "Products",
     components: {
         BaseCard
     },
