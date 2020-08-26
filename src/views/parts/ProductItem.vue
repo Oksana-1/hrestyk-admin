@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-list-item>
+        <v-list-item link :to="`/products/${product.id}`">
             <v-row align="center" no-gutters class="py-1">
                 <v-col cols="3" sm="1">
                     <v-list-item-avatar color="grey lighten-3">
@@ -26,7 +26,7 @@
                 </v-col>
                 <v-col cols="1">
                     <v-row>
-                        <v-tooltip left>
+                        <v-tooltip top>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                     text
@@ -34,13 +34,14 @@
                                     color="transparent"
                                     v-bind="attrs"
                                     v-on="on"
+                                    @click.prevent="editItem"
                                 >
                                     <v-icon color="grey" small>mdi-pencil</v-icon>
                                 </v-btn>
                             </template>
                             <span>Редагувати</span>
                         </v-tooltip>
-                        <v-tooltip left>
+                        <v-tooltip top>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                     text
@@ -48,6 +49,7 @@
                                     color="transparent"
                                     v-bind="attrs"
                                     v-on="on"
+                                    @click.prevent="deleteItem"
                                 >
                                     <v-icon color="grey" small>mdi-delete</v-icon>
                                 </v-btn>
@@ -81,6 +83,14 @@ export default {
             const month = date.getMonth();
             const year = date.getFullYear();
             return `${day}.${month >=10 ? month: '0' + month}.${year}`;
+        }
+    },
+    methods: {
+        editItem() {
+            alert('Edit!');
+        },
+        deleteItem() {
+            alert('Delete!');
         }
     }
 }
