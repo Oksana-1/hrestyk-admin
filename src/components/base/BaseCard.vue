@@ -2,11 +2,11 @@
     <v-card class="pa-3">
         <div class="hr-card-header">
             <v-avatar
-                size="70"
+                size="60"
                 color="primary"
                 class="hr-card-header_icon elevation-5"
             >
-                <v-icon large color="#fff">{{iconName}}</v-icon>
+                <v-icon color="#fff">{{iconName}}</v-icon>
             </v-avatar>
             <slot name="card-content"/>
         </div>

@@ -14,8 +14,9 @@
                                 <v-col cols="2" class="text-caption primary--text">Відредаговано</v-col>
                             </v-row>
                         </v-list-item>
+                        <v-divider/>
                         <v-list-item-group>
-                            <v-list avatar="true">
+                            <v-list avatar="true" class="py-0">
                                <product-item
                                    v-for="(product, i) in products"
                                    :key="`product-${i}`"
