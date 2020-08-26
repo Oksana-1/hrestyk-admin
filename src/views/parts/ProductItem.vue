@@ -12,7 +12,7 @@
                         <v-list-item-title class="text-caption">{{product.title}}</v-list-item-title>
                     </v-list-item-content>
                 </v-col>
-                <v-col cols="3">
+                <v-col cols="3" sm="2">
                     <div class="text-caption">{{productCategoryTitle}}</div>
                 </v-col>
                 <v-col cols="4" sm="1">
@@ -21,8 +21,40 @@
                 <v-col cols="4" sm="1">
                     <div class="text-caption">{{product.onStock}} шт.</div>
                 </v-col>
-                <v-col cols="4" sm="2">
+                <v-col cols="3" sm="2">
                     <div class="text-caption">{{lastEditDate}}</div>
+                </v-col>
+                <v-col cols="1">
+                    <v-row>
+                        <v-tooltip left>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    text
+                                    small
+                                    color="transparent"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    <v-icon color="grey" small>mdi-pencil</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Редагувати</span>
+                        </v-tooltip>
+                        <v-tooltip left>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    text
+                                    small
+                                    color="transparent"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    <v-icon color="grey" small>mdi-delete</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Видалити</span>
+                        </v-tooltip>
+                    </v-row>
                 </v-col>
             </v-row>
         </v-list-item>
