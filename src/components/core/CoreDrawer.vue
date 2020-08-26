@@ -14,10 +14,7 @@
 
         <v-divider class="mb-1" />
 
-        <v-list
-            dense
-            nav
-        >
+        <v-list expand nav>
             <v-list-item link to="/">
                 <v-list-item-avatar
                     class="align-self-center"
