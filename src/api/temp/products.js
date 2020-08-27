@@ -103,6 +103,11 @@ export default
         "src": "https://firebasestorage.googleapis.com/v0/b/hrestyk-3428d.appspot.com/o/earrings%2FE1_3.jpg?alt=media&token=a177555e-1bde-4ae5-8c6d-e9d93054eab1",
         "alt": "Сережки \"Червона рута\". E1",
         "isMain": false
+      },
+      {
+        "src": "https://firebasestorage.googleapis.com/v0/b/hrestyk-3428d.appspot.com/o/earrings%2FE1_4.jpg?alt=media&token=3c16d2a4-2a1e-4c1f-ac21-8783da87b5ab",
+        "alt": "Сережки \"Червона рута\". E1",
+        "isMain": false
       }
     ],
     "creationDate": 1577836800,

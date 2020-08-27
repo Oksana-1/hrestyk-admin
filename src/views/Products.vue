@@ -2,7 +2,9 @@
     <v-container fluid>
         <v-row justify="center">
             <v-col cols="12">
-                <BaseCard icon-name="mdi-storefront">
+                <BaseCard
+                    header-type="avatar"
+                    icon-name="mdi-storefront">
                     <template v-slot:card-content>
                         <v-list-item>
                             <v-row align="center" class="hidden-sm-and-down" no-gutters>
@@ -16,7 +18,7 @@
                         </v-list-item>
                         <v-divider/>
                         <v-list avatar="true" class="py-0">
-                           <product-item
+                           <product-list-item
                                v-for="(product, i) in products"
                                :key="`product-${i}`"
                                :product="product"/>
@@ -30,13 +32,13 @@
 
 <script>
 import BaseCard from "../components/base/BaseCard";
-import ProductItem from "./parts/ProductItem";
+import ProductListItem from "./parts/ProductListItem";
 import {apiResponseProducts} from "../api";
 
 export default {
     name: "Products",
     components: {
-        ProductItem,
+        ProductListItem,
         BaseCard
     },
     data() {
