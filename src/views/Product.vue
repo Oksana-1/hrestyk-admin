@@ -4,8 +4,8 @@
         <v-row justify="center">
             <v-col cols="12">
                 <BaseCard
-                    header-type="title">
-                    <template v-slot:card-header>{{ product.title }}</template>
+                    header-type="avatar"
+                    icon-name="mdi-storefront">
                     <template v-slot:card-content>
                         <product-form :product="product" :category="category"/>
                     </template>

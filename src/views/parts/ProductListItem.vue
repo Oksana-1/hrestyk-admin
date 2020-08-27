@@ -24,39 +24,22 @@
                 <v-col cols="3" sm="2">
                     <div class="text-caption">{{lastEditDate}}</div>
                 </v-col>
-                <v-col cols="1">
-                    <v-row>
-                        <v-tooltip top>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                    text
-                                    small
-                                    color="transparent"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    @click.prevent="editItem"
-                                >
-                                    <v-icon color="grey" small>mdi-pencil</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Редагувати</span>
-                        </v-tooltip>
-                        <v-tooltip top>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                    text
-                                    small
-                                    color="transparent"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    @click.prevent="deleteItem"
-                                >
-                                    <v-icon color="grey" small>mdi-delete</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Видалити</span>
-                        </v-tooltip>
-                    </v-row>
+                <v-col cols="1" class="d-flex justify-end">
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                text
+                                small
+                                color="transparent"
+                                v-bind="attrs"
+                                v-on="on"
+                                @click.prevent="deleteItem"
+                            >
+                                <v-icon color="grey" small>mdi-delete</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>Видалити</span>
+                    </v-tooltip>
                 </v-col>
             </v-row>
         </v-list-item>
@@ -86,9 +69,6 @@ export default {
         }
     },
     methods: {
-        editItem() {
-            alert('Edit!');
-        },
         deleteItem() {
             alert('Delete!');
         }

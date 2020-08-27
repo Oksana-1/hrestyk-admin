@@ -1,5 +1,5 @@
 <template>
-    <v-card-text class="mt-6">
+    <v-card-text>
         <v-text-field
             label="Назва товару"
             :value="`${product.title}`"
