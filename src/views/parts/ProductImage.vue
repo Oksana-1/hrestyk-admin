@@ -72,7 +72,7 @@ export default {
             alert("Are you sure?");
         },
         makeItMain() {
-            alert("makeItMain clicked!");
+            this.$emit('makeImageMain');
         }
     }
 }
