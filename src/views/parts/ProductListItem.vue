@@ -4,7 +4,7 @@
             <v-row align="center" no-gutters class="py-1">
                 <v-col cols="3" sm="1">
                     <v-list-item-avatar color="grey lighten-3">
-                        <v-img :src="product.images[1].src"></v-img>
+                        <v-img :src="product.images[0].url"></v-img>
                     </v-list-item-avatar>
                 </v-col>
                 <v-col cols="5" sm="4">
@@ -13,16 +13,16 @@
                     </v-list-item-content>
                 </v-col>
                 <v-col cols="3" sm="2">
-                    <div class="text-caption">{{productCategoryTitle}}</div>
+                    <div class="text-caption">{{product.category}}</div>
                 </v-col>
                 <v-col cols="4" sm="1">
                     <div class="text-caption font-weight-bold">{{product.price}} грн</div>
                 </v-col>
                 <v-col cols="4" sm="1">
-                    <div class="text-caption">{{product.onStock}} шт.</div>
+                    <div class="text-caption">{{product.qty_available}} шт.</div>
                 </v-col>
                 <v-col cols="3" sm="2">
-                    <div class="text-caption">{{lastEditDate}}</div>
+                    <div class="text-caption">{{createdAtFormated}}</div>
                 </v-col>
                 <v-col cols="1" class="d-flex justify-end">
                     <v-tooltip top>
@@ -48,20 +48,15 @@
 </template>
 
 <script>
-import { apiResponseCategories } from "../../api";
-
+import Product from "../../entities/Product";
 export default {
     name: "ProductItem",
     props: {
-        product: Object
+        product: Product
     },
     computed: {
-        productCategoryTitle() {
-            const category = apiResponseCategories.find(item => item.id === this.product.categoryId) || null;
-            return category ? category.title : null;
-        },
-        lastEditDate() {
-            const date = new Date(this.product.lastEditDate*1000);
+        createdAtFormated() {
+            const date = new Date(this.product.createdAt);
             const day = date.getDate();
             const month = date.getMonth();
             const year = date.getFullYear();

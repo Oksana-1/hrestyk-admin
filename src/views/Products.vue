@@ -12,16 +12,16 @@
                                 <v-col cols="4" class="text-caption primary--text">Назва товару</v-col>
                                 <v-col cols="2" class="text-caption primary--text">Категорія</v-col>
                                 <v-col cols="1" class="text-caption primary--text">Ціна</v-col>
-                                <v-col cols="1" class="text-caption primary--text">Залишок</v-col>
-                                <v-col cols="2" class="text-caption primary--text">Відредаговано</v-col>
+                                <v-col cols="1" class="text-caption primary--text">На складі</v-col>
+                                <v-col cols="2" class="text-caption primary--text">Дата</v-col>
                             </v-row>
                         </v-list-item>
                         <v-divider/>
-                        <v-list avatar="true" class="py-0">
+                        <v-list v-if="!busy" avatar="true" class="py-0">
                            <product-list-item
-                               v-for="(product, i) in products"
-                               :key="`product-${i}`"
-                               :product="product"/>
+                               v-for="item in products"
+                               :key="item.id"
+                               :product="item"/>
                         </v-list>
                     </template>
                 </BaseCard>
@@ -33,18 +33,32 @@
 <script>
 import BaseCard from "../components/base/BaseCard";
 import ProductListItem from "./parts/ProductListItem";
-import {apiResponseProducts} from "../api";
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
     name: "Products",
+    data() {
+        return {
+            busy: false
+        }
+    },
     components: {
         ProductListItem,
         BaseCard
     },
-    data() {
-        return {
-            products: apiResponseProducts
+    computed: {
+        ...mapGetters(['products']),
+    },
+    methods: {
+        ...mapActions(['fetchProducts']),
+        async init() {
+            this.busy = true;
+            await this.fetchProducts();
+            this.busy = false;
         }
+    },
+    created() {
+        this.init();
     }
 }
 </script>
