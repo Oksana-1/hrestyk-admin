@@ -17,12 +17,32 @@
                             </v-row>
                         </v-list-item>
                         <v-divider/>
-                        <v-list v-if="!busy" avatar="true" class="py-0">
+                        <v-list v-if="!busy" avatar="true" class="py-0 mb-5">
                            <product-list-item
                                v-for="item in products"
                                :key="item.id"
                                :product="item"/>
                         </v-list>
+                        <v-row>
+                            <v-spacer/>
+                            <v-col cols="1">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                            fab
+                                            dark
+                                            color="primary"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            @click.prevent="addProduct"
+                                        >
+                                            <v-icon dark>mdi-plus</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Додати товар</span>
+                                </v-tooltip>
+                            </v-col>
+                        </v-row>
                     </template>
                 </BaseCard>
             </v-col>
@@ -51,6 +71,9 @@ export default {
     },
     methods: {
         ...mapActions(['fetchProducts']),
+        addProduct() {
+            alert('Add product!');
+        },
         async init() {
             this.busy = true;
             await this.fetchProducts();
