@@ -2,7 +2,7 @@
     <v-card-text>
         <v-text-field
             label="Назва товару"
-            :value="`${product.title}`"
+            :value="product.title"
         ></v-text-field>
         <v-textarea
             label="Опис товару"
@@ -13,19 +13,19 @@
                 <v-select
                     :items="categories"
                     label="Категорія"
-                    :value="category.title"
+                    :value="product.category"
                 ></v-select>
             </v-col>
             <v-col class="d-flex" cols="4">
                 <v-text-field
                     label="Ціна, грн"
-                    :value="`${product.price}`"
+                    :value="product.price"
                 ></v-text-field>
             </v-col>
             <v-col cols="4">
                 <v-text-field
                     label="На складі, шт"
-                    :value="`${product.onStock}`"
+                    :value="product.qty_available"
                 ></v-text-field>
             </v-col>
         </v-row>
@@ -34,11 +34,11 @@
 
 <script>
 import {apiResponseCategories} from "../../api";
+import Product from "../../entities/Product";
 export default {
     name: "ProductForm",
     props: {
-        product: Object,
-        category: Object
+        product: Product,
     },
     data() {
         return {

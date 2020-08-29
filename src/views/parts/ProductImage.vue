@@ -3,7 +3,7 @@
             class="mb-3">
             <v-hover v-slot:default="{ hover }">
             <v-img
-                :src="image.src"
+                :src="image.url"
                 aspect-ratio="1"
             >
             <v-fade-transition>
@@ -47,7 +47,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
-                            icon :color="image.isMain ? 'primary': ''"
+                            icon :color="image.is_main ? 'primary': ''"
                             v-bind="attrs"
                             v-on="on"
                             @click.prevent="makeItMain"

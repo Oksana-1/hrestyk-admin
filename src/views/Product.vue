@@ -1,20 +1,20 @@
 <template>
 <div>
     <v-container fluid>
-        <v-form v-model="valid">
+        <v-form v-model="valid" v-if="!busy">
             <v-row justify="center">
                 <v-col cols="12">
                     <BaseCard
                         header-type="avatar"
                         icon-name="mdi-storefront">
                         <template v-slot:card-content>
-                            <product-form :product="product" :category="category"/>
+                            <product-form :product="product"/>
                         </template>
                     </BaseCard>
                 </v-col>
                 <v-col cols="12">
                     <v-row>
-                        <v-col cols="4" v-for="(image, i) in productImages" :key="`productImage-${i}`">
+                        <v-col cols="4" v-for="image in productImages" :key="image.id">
                             <product-image
                                 :image="image"
                                 @makeImageMain="makeImageMain"/>
@@ -50,8 +50,8 @@ import BaseCard from "../components/base/BaseCard";
 import InfoModal from "./modals/InfoModal";
 import ProductForm from "./parts/ProductForm";
 import ProductImage from "./parts/ProductImage";
-import {apiResponseProducts, apiResponseCategories} from "../api";
-import {mapMutations} from 'vuex';
+import {apiResponseCategories} from "../api";
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
     name: "Product",
@@ -63,15 +63,14 @@ export default {
     },
     data() {
         return {
-            productId: parseInt(this.$route.params.id),
+            productId: this.$route.params.id,
             valid: false,
-            dialogVisible: false
+            dialogVisible: false,
+            busy: false
         }
     },
     computed: {
-        product() {
-            return apiResponseProducts.find(item => item.id === this.productId) || null;
-        },
+        ...mapGetters(['product']),
         productImages() {
             return this.product ? this.product.images : [];
         },
@@ -86,12 +85,21 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_DIALOG']),
+        ...mapActions(['getSingleProduct']),
         addPic() {
             alert("Add a pic please!");
         },
         makeImageMain() {
             this.SET_DIALOG(true);
+        },
+        async init() {
+            this.busy = true;
+            await this.getSingleProduct(this.productId);
+            this.busy = false;
         }
+    },
+    created() {
+        this.init();
     }
 }
 </script>
