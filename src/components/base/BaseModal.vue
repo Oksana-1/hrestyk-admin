@@ -3,8 +3,11 @@
         v-model="baseDialog"
         :width="dialogWidth"
     >
-        <v-card class="py-5">
-            <slot name="dialog-body"/>
+        <v-card class="pb-5">
+            <slot name="dialog-header"/>
+            <div class="pt-5">
+                <slot name="dialog-body"/>
+            </div>
             <slot name="dialog-footer">
                 <v-card-actions class="d-flex justify-center">
                     <v-btn

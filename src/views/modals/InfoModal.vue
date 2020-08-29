@@ -15,7 +15,9 @@ export default {
     props: {
         infoText: String
     },
-    components: {BaseModal}
+    components: {
+        BaseModal
+    }
 }
 </script>
 
