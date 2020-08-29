@@ -1,3 +1,5 @@
+import {BASE_HOST} from "../api";
+
 export default class Product {
     constructor(product) {
         this.category = product.category;
@@ -15,7 +17,7 @@ class Image {
     constructor(image) {
         this.alt = image.alt;
         this.is_main = image.is_main;
-        this.url = image.url;
+        this.url = /^http/.test(image.url) ? image.url: BASE_HOST + image.url;
         this.id = image._id;
     }
 }

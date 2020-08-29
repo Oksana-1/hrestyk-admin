@@ -1,9 +1,9 @@
 import axios from 'axios';
 import Product from "../entities/Product";
 
-const BASE_HOST = '//95.179.185.226:8085';
-const PRODUCTS_URL = '/api/v1/product/all';
-const PRODUCT_URL_BASE = '/api/v1/product/single/';
+export const BASE_HOST = '//95.179.185.226:8085/';
+const PRODUCTS_URL = 'api/v1/product/all';
+const PRODUCT_URL_BASE = 'api/v1/product/single/';
 axios.defaults.baseURL = BASE_HOST;
 
 
