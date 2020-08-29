@@ -6,11 +6,7 @@ const PRODUCTS_URL = 'api/v1/product/all';
 const PRODUCT_URL_BASE = 'api/v1/product/single/';
 axios.defaults.baseURL = BASE_HOST;
 
-
-
-import products from './temp/products';
 import categories from "./temp/categories";
-export const apiResponseProducts = products;
 export const apiResponseCategories = categories;
 
 export const getProducts = async() => {
