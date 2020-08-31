@@ -5,7 +5,6 @@
                 <router-view/>
             </v-main>
         <core-bar/>
-        <core-footer/>
     </v-app>
 </template>
 
@@ -13,15 +12,13 @@
 
 import CoreBar from "./components/core/CoreBar";
 import CoreDrawer from "./components/core/CoreDrawer";
-import CoreFooter from "./components/core/CoreFooter";
 
 export default {
   name: 'App',
 
   components: {
       CoreBar,
-      CoreDrawer,
-      CoreFooter
+      CoreDrawer
   }
 };
 </script>

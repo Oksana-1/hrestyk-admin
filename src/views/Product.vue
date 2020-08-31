@@ -2,7 +2,7 @@
 <div>
     <v-container fluid>
         <v-form v-model="valid" v-if="!busy">
-            <v-row justify="center">
+            <v-row>
                 <v-col cols="12">
                     <BaseCard
                         header-type="avatar"
@@ -28,6 +28,7 @@
                                     <v-btn
                                         fab
                                         dark
+                                        depressed
                                         color="primary"
                                         v-bind="attrs"
                                         v-on="on"
@@ -42,8 +43,18 @@
                     </v-row>
                 </v-col>
             </v-row>
+            <v-row class="justify-center px-6 mb-10 mt-5">
+                <v-btn depressed large dark color="primary">
+                    <v-icon class="pr-2">{{ 'mdi-content-save' }}</v-icon>
+                    Зберегти
+                </v-btn>
+            </v-row>
         </v-form>
     </v-container>
+    <v-row class="justify-space-between secondary lighten-2 white--text">
+        <v-col class="caption px-6">Дата створення: {{ product.createdAt | dateToString}}</v-col>
+        <v-col class="caption px-6 text-right">Дата останнього редагування: {{ product.createdAt | dateToString}}</v-col>
+    </v-row>
     <info-modal :infoText="'Зробити картинку головною?'"/>
 </div>
 </template>

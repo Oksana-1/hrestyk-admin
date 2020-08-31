@@ -19,7 +19,7 @@
                 class="d-flex align-center"
                 @click="clicked"
             >
-                <v-icon class="pr-1">{{ item.icon }}</v-icon>
+                <v-icon class="pr-2">{{ item.icon }}</v-icon>
                 <v-list-item-title class="caption text-uppercase">{{ item.title }}</v-list-item-title>
             </v-list-item>
         </v-list>
