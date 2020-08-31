@@ -6,8 +6,11 @@
                 <v-col cols="12">
                     <BaseCard
                         header-type="avatar"
-                        icon-name="mdi-storefront">
+                        icon-name="mdi-store">
                         <template v-slot:card-content>
+                            <v-row class="justify-end mt-n8 px-2">
+                                <base-menu/>
+                            </v-row>
                             <product-form :product="product"/>
                         </template>
                     </BaseCard>
@@ -47,6 +50,7 @@
 
 <script>
 import BaseCard from "../components/base/BaseCard";
+import BaseMenu from "../components/base/BaseMenu";
 import InfoModal from "./modals/InfoModal";
 import ProductForm from "./parts/ProductForm";
 import ProductImage from "./parts/ProductImage";
@@ -58,6 +62,7 @@ export default {
     components: {
         ProductImage,
         BaseCard,
+        BaseMenu,
         InfoModal,
         ProductForm,
     },

@@ -12,9 +12,8 @@
             elevation="1"
             fab
             small
-            dark
             @click="setDrawer(!drawer)"
-            color="brown lighten-2"
+            color="white"
         >
             <v-icon>
                 mdi-dots-vertical
