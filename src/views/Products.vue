@@ -5,7 +5,7 @@
                 <v-col cols="12">
                     <BaseCard
                         header-type="avatar"
-                        icon-name="mdi-storefront">
+                        icon-name="mdi-store">
                         <template v-slot:card-content>
                             <v-list-item>
                                 <v-row align="center" class="hidden-sm-and-down" no-gutters>

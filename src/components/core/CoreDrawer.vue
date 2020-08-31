@@ -58,7 +58,7 @@ export default {
         return {
             links: [
                 {
-                    icon: 'mdi-storefront',
+                    icon: 'mdi-store',
                     title: 'Товари',
                     route: '/products'
                 },
