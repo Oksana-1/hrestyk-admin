@@ -29,6 +29,9 @@
                 ></v-text-field>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col>Дата створення: {{ product.createdAt | dateToString}}</v-col>
+        </v-row>
     </v-card-text>
 </template>
 

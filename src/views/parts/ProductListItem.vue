@@ -22,7 +22,7 @@
                     <div class="text-caption">{{product.qty_available}} шт.</div>
                 </v-col>
                 <v-col cols="3" sm="2">
-                    <div class="text-caption">{{createdAtFormated}}</div>
+                    <div class="text-caption">{{product.createdAt | dateToString}}</div>
                 </v-col>
                 <v-col cols="1" class="d-flex justify-end">
                     <v-tooltip top>
@@ -53,15 +53,6 @@ export default {
     name: "ProductItem",
     props: {
         product: Product
-    },
-    computed: {
-        createdAtFormated() {
-            const date = new Date(this.product.createdAt);
-            const day = date.getDate();
-            const month = date.getMonth();
-            const year = date.getFullYear();
-            return `${day}.${month >=10 ? month: '0' + month}.${year}`;
-        }
     },
     methods: {
         deleteItem() {

@@ -4,7 +4,9 @@ import Vuex from 'vuex';
 import vuetify from './plugins/vuetify';
 import adminStore from './store';
 import VueRouter from "vue-router";
-import routes from './routes'
+import routes from './routes';
+import {dateToString} from "./filters";
+Vue.filter('dateToString', dateToString);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 const store = new Vuex.Store(adminStore);
