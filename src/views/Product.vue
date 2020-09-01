@@ -1,7 +1,7 @@
 <template>
-<div>
+<div v-if="!busy">
     <v-container fluid>
-        <v-form v-model="valid" v-if="!busy">
+        <v-form v-model="valid">
             <v-row>
                 <v-col cols="12">
                     <BaseCard

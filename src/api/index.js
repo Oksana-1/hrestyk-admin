@@ -12,7 +12,8 @@ export const apiResponseCategories = categories;
 export const getProducts = async() => {
     try {
         const response = (await axios.get(PRODUCTS_URL)).data.data;
-        return response.map(item => new Product(item));
+
+        return response.products.map(item => new Product(item));
     } catch (e) {
         console.error(e);
     }
@@ -20,7 +21,7 @@ export const getProducts = async() => {
 export const getProduct = async (productId) => {
     try {
         const response = (await axios.get(PRODUCT_URL_BASE + productId)).data.data;
-        return new Product(response);
+        return new Product(response.products[0]);
     } catch (e) {
         console.error(e);
     }
