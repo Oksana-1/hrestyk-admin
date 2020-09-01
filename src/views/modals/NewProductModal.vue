@@ -25,7 +25,34 @@
                         </v-btn>
                     </v-stepper-content>
                     <v-stepper-content step="2">
-                        <add-image-form/>
+                        <add-image-form
+                            v-for="(image, i) in images"
+                            :key="`image-${i + 1}`"
+                            :image="image"
+                            @deleteImage="deleteImage($event)"/>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-tooltip right>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                            fab
+                                            small
+                                            dark
+                                            depressed
+                                            color="primary"
+                                            class="mb-5"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            @click.prevent="addFileInput"
+                                            :disabled="addPhotoBtnDisabled"
+                                        >
+                                            <v-icon dark>mdi-plus</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Додати поле</span>
+                                </v-tooltip>
+                            </v-col>
+                        </v-row>
                         <v-row>
                             <v-btn
                                 text
@@ -67,6 +94,13 @@ export default {
         return {
             product: new Product(newProductInitialForm),
             e1: 1,
+            image: {
+                alt: '',
+                is_main: '',
+                url: ''
+            },
+            images: [this.image],
+            addPhotoBtnDisabled: false
         }
     },
     methods: {
@@ -75,6 +109,14 @@ export default {
         },
         onCancel() {
             console.log('cancelled!');
+        },
+        addFileInput() {
+            this.images.length < 50
+            ?  this.images.push(this.image)
+            :this.addPhotoBtnDisabled = true;
+        },
+        deleteImage(nodeKey) {
+            console.log(nodeKey);
         }
     }
 }

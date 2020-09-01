@@ -1,6 +1,6 @@
 <template>
-    <v-row>
-        <v-col cols="12" sm="6">
+    <v-row class="align-center">
+        <v-col cols="12" sm="5">
             <v-file-input
                 label="Завантажити фото"
                 prepend-icon="mdi-camera"
@@ -11,7 +11,9 @@
                 label="Alt для фото"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" sm="1">
+        <v-col
+            cols="6"
+            sm="1">
             <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <div
@@ -25,24 +27,21 @@
                 <span>Головна</span>
             </v-tooltip>
         </v-col>
-        <v-col cols="12">
-            <v-tooltip right>
+        <v-col cols="6" sm="1">
+            <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
-                        fab
+                        text
                         small
-                        dark
-                        depressed
-                        color="primary"
-                        class="mb-5"
+                        color="transparent"
                         v-bind="attrs"
                         v-on="on"
-                        @click.prevent="addFileInput"
+                        @click.prevent="deleteImage"
                     >
-                        <v-icon dark>mdi-plus</v-icon>
+                        <v-icon color="grey" small>mdi-delete</v-icon>
                     </v-btn>
                 </template>
-                <span>Додати поле</span>
+                <span>Видалити поле</span>
             </v-tooltip>
         </v-col>
     </v-row>
@@ -51,14 +50,17 @@
 <script>
 export default {
     name: "AddImageForm",
+    props: {
+        image: Object
+    },
     data() {
         return {
             checkbox: false
         }
     },
     methods: {
-        addFileInput() {
-            console.log('addFileInput');
+        deleteImage() {
+            this.$emit('deleteImage', this.$vnode.key);
         }
     }
 }
