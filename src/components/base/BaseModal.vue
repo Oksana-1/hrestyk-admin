@@ -3,21 +3,10 @@
         v-model="baseDialog"
         :width="dialogWidth"
     >
-        <v-card class="pb-5">
+        <v-card>
             <slot name="dialog-header"/>
-            <div class="pt-5">
-                <slot name="dialog-body"/>
-            </div>
-            <slot name="dialog-footer">
-                <v-card-actions class="d-flex justify-center">
-                    <v-btn
-                        color="primary"
-                        @click="onSuccess"
-                    >
-                        Ок
-                    </v-btn>
-                </v-card-actions>
-            </slot>
+            <slot name="dialog-body"/>
+            <slot name="dialog-footer"/>
         </v-card>
     </v-dialog>
 </template>
