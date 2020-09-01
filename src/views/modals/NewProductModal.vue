@@ -69,7 +69,7 @@
                                 <v-btn
                                     color="primary"
                                     class="mx-2"
-                                    @click="e1 = 2"
+                                    @click="submit"
                                 >
                                     Зберегти
                                 </v-btn>
@@ -86,8 +86,9 @@
 import BaseModal from "../../components/base/BaseModal";
 import ProductForm from "../parts/ProductForm";
 import AddImageForm from "../parts/AddImageForm";
-import Product from "../../entities/Product";
+import ProductFormData from "../../entities/ProductFormData";
 import {newProductInitialForm} from "../../entities/initialForms/newProduct";
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
     name: "NewProductModal",
@@ -98,7 +99,7 @@ export default {
     },
     data() {
         return {
-            product: new Product(newProductInitialForm),
+            product: new ProductFormData(newProductInitialForm),
             e1: 1,
             image: {
                 alt: '',
@@ -109,7 +110,12 @@ export default {
             addPhotoBtnDisabled: false
         }
     },
+    computed: {
+        ...mapGetters(['newProduct'])
+    },
     methods: {
+        ...mapActions(['postNewProduct']),
+        ...mapMutations(['SET_NEW_PRODUCT']),
         onSuccess() {
             console.log('create a product please!');
         },
@@ -123,6 +129,17 @@ export default {
         },
         deleteImage(nodeKey) {
             console.log(nodeKey);
+        },
+        async submit() {
+            try {
+                const payload = this.newProduct.getFormData();
+                console.log(payload);
+                await this.postNewProduct(payload);
+                this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm))
+            } catch (e) {
+                console.log(e);
+            }
+
         }
     }
 }

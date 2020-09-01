@@ -2,30 +2,30 @@
     <v-form>
         <v-text-field
             label="Назва товару"
-            :value="product.title"
+            v-model="productForm.title"
         ></v-text-field>
         <v-textarea
             label="Опис товару"
-            :value="product.description"
+            v-model="productForm.description"
         ></v-textarea>
         <v-row>
             <v-col class="d-flex" cols="4">
                 <v-select
                     :items="categories"
                     label="Категорія"
-                    :value="product.category"
+                    v-model="productForm.category"
                 ></v-select>
             </v-col>
             <v-col class="d-flex" cols="4">
                 <v-text-field
                     label="Ціна, грн"
-                    :value="product.price"
+                    v-model="productForm.price"
                 ></v-text-field>
             </v-col>
             <v-col cols="4">
                 <v-text-field
                     label="На складі, шт"
-                    :value="product.qty_available"
+                    v-model="product.qty_available"
                 ></v-text-field>
             </v-col>
         </v-row>
@@ -34,16 +34,33 @@
 
 <script>
 import {apiResponseCategories} from "../../api";
-import Product from "../../entities/Product";
+import {mapGetters, mapMutations} from 'vuex';
 export default {
     name: "ProductForm",
     props: {
-        product: Product,
+        product: Object
     },
     data() {
         return {
-            categories: apiResponseCategories.map(item => item.title)
+            categories: apiResponseCategories.map(item => item.title),
         }
+    },
+    computed: {
+        ...mapGetters(['newProduct']),
+        productForm: {
+            get () {
+                return this.newProduct;
+            },
+            set (value) {
+                this.SET_NEW_PRODUCT(value);
+            },
+        },
+    },
+    methods: {
+        ...mapMutations(['SET_NEW_PRODUCT'])
+    },
+    created() {
+        this.SET_NEW_PRODUCT(this.product);
     }
 }
 </script>

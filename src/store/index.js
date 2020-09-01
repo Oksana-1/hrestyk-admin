@@ -1,16 +1,18 @@
-import {getProducts, getProduct} from "../api";
+import {getProducts, getProduct, createProduct} from "../api";
 
 const state = {
     drawer: null,
     dialog: false,
     products: null,
-    product: null
+    product: null,
+    newProduct: null,
 };
 const getters = {
     drawer: state => state.drawer,
     dialog: state => state.dialog,
     products: state => state.products,
     product: state => state.product,
+    newProduct: state => state.newProduct,
 }
 const mutations = {
     SET_DRAWER (state, payload) {
@@ -24,6 +26,9 @@ const mutations = {
     },
     SET_PRODUCT (state, payload) {
         state.product = payload;
+    },
+    SET_NEW_PRODUCT (state, payload) {
+        state.newProduct = payload;
     }
 };
 const actions = {
@@ -34,6 +39,9 @@ const actions = {
     async getSingleProduct({commit}, productId) {
         const product = await getProduct(productId);
         commit('SET_PRODUCT', product);
+    },
+    async postNewProduct ({state}) {
+        await createProduct(state.newProduct);
     }
 };
 export default {
