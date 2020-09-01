@@ -9,66 +9,72 @@
                 </v-stepper-header>
                 <v-stepper-items>
                     <v-stepper-content step="1">
-                        <product-form :product="product"/>
-                        <v-btn
-                            text
-                            class="mx-2"
-                        >
-                            Відмінити
-                        </v-btn>
-                        <v-btn
-                            color="primary"
-                            @click="e1 = 2"
-                            class="mx-2"
-                        >
-                            Зберегти
-                        </v-btn>
+                        <v-card-text>
+                            <product-form :product="product"/>
+                            <v-row>
+                                <v-btn
+                                    text
+                                    class="mx-2"
+                                >
+                                    Відмінити
+                                </v-btn>
+                                <v-btn
+                                    color="primary"
+                                    @click="e1 = 2"
+                                    class="mx-2"
+                                >
+                                    Зберегти
+                                </v-btn>
+                            </v-row>
+                        </v-card-text>
                     </v-stepper-content>
                     <v-stepper-content step="2">
-                        <add-image-form
-                            v-for="(image, i) in images"
-                            :key="`image-${i + 1}`"
-                            :image="image"
-                            @deleteImage="deleteImage($event)"/>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-tooltip right>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn
-                                            fab
-                                            small
-                                            dark
-                                            depressed
-                                            color="primary"
-                                            class="mb-5"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                            @click.prevent="addFileInput"
-                                            :disabled="addPhotoBtnDisabled"
-                                        >
-                                            <v-icon dark>mdi-plus</v-icon>
-                                        </v-btn>
-                                    </template>
-                                    <span>Додати поле</span>
-                                </v-tooltip>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-btn
-                                text
-                                class="mx-2"
-                                @click="e1 = 1"
-                            >
-                                Назад
-                            </v-btn>
-                            <v-btn
-                                color="primary"
-                                class="mx-2"
-                                @click="e1 = 2"
-                            >
-                                Зберегти
-                            </v-btn>
-                        </v-row>
+                        <v-card-text>
+                            <add-image-form
+                                v-for="(image, i) in images"
+                                :key="`image-${i + 1}`"
+                                :image="image"
+                                @deleteImage="deleteImage($event)"/>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-tooltip right>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn
+                                                fab
+                                                small
+                                                dark
+                                                depressed
+                                                color="primary"
+                                                class="mb-5"
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                @click.prevent="addFileInput"
+                                                :disabled="addPhotoBtnDisabled"
+                                            >
+                                                <v-icon dark>mdi-plus</v-icon>
+                                            </v-btn>
+                                        </template>
+                                        <span>Додати поле</span>
+                                    </v-tooltip>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-btn
+                                    text
+                                    class="mx-2"
+                                    @click="e1 = 1"
+                                >
+                                    Назад
+                                </v-btn>
+                                <v-btn
+                                    color="primary"
+                                    class="mx-2"
+                                    @click="e1 = 2"
+                                >
+                                    Зберегти
+                                </v-btn>
+                            </v-row>
+                        </v-card-text>
                     </v-stepper-content>
                 </v-stepper-items>
             </v-stepper>
