@@ -4,7 +4,7 @@ import Product from "../entities/Product";
 export const BASE_HOST = '//95.179.185.226:8085/';
 const PRODUCTS_URL = 'api/v1/product/all';
 const PRODUCT_URL_BASE = 'api/v1/product/single/';
-const NEW_PRODUCT_URL = '/api/v1/api/v1/product/store-form-data';
+const NEW_PRODUCT_URL = 'api/v1/product/store-form-data';
 axios.defaults.baseURL = BASE_HOST;
 
 import categories from "./temp/categories";
@@ -28,8 +28,13 @@ export const getProduct = async (productId) => {
     }
 }
 export const createProduct = async (payload) => {
+    const boundary = new Date().getTime();
     try {
-        await axios.post(NEW_PRODUCT_URL, payload);
+        await axios.post(
+            NEW_PRODUCT_URL,
+            payload,{
+                headers: {'Content-Type': 'multipart/form-data; boundary=---------------------' + boundary + '-----------------------------'+ boundary}
+            });
     } catch (e) {
         console.error(e);
     }
