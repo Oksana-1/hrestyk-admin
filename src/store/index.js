@@ -38,8 +38,9 @@ const mutations = {
 };
 const actions = {
     async fetchProducts ({commit}) {
-        const products = await getProducts();
-        commit('SET_PRODUCTS', products);
+        const response = await getProducts();
+        commit('SET_PRODUCTS', response.products);
+        commit('SET_CATEGORIES', response.categories);
     },
     async getSingleProduct({commit}, productId) {
         const response = await getProduct(productId);

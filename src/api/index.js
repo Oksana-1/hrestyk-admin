@@ -10,7 +10,10 @@ axios.defaults.baseURL = BASE_HOST;
 export const getProducts = async() => {
     try {
         const response = (await axios.get(PRODUCTS_URL)).data.data;
-        return response.products.map(item => new Product(item));
+        return {
+            products: response.products.map(item => new Product(item)),
+            categories: response.categories
+        };
     } catch (e) {
         console.error(e);
     }
@@ -28,7 +31,6 @@ export const getProduct = async (productId) => {
 }
 export const createProduct = async (payload) => {
     const boundary = new Date().getTime();
-    console.log(boundary);
     try {
         await axios.post(
             NEW_PRODUCT_URL,

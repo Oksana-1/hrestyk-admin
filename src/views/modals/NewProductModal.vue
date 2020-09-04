@@ -1,16 +1,18 @@
 <template>
     <base-modal dialogWidth="700px">
         <template v-slot:dialog-body>
-            <v-stepper v-model="e1">
+            <v-stepper v-model="step">
                 <v-stepper-header>
-                    <v-stepper-step :complete="e1 > 1" step="1">Загальна інформація</v-stepper-step>
+                    <v-stepper-step :complete="step > 1" step="1">Загальна інформація</v-stepper-step>
                     <v-divider></v-divider>
-                    <v-stepper-step :complete="e1 > 2" step="2">Завантаження фото</v-stepper-step>
+                    <v-stepper-step :complete="step > 2" step="2">Завантаження фото</v-stepper-step>
                 </v-stepper-header>
                 <v-stepper-items>
                     <v-stepper-content step="1">
                         <v-card-text>
-                            <product-form :product="product"/>
+                            <product-form
+                                :product="product"
+                                ref="productForm"/>
                             <v-row>
                                 <v-btn
                                     text
@@ -20,7 +22,7 @@
                                 </v-btn>
                                 <v-btn
                                     color="primary"
-                                    @click="e1 = 2"
+                                    @click="goToNextStep"
                                     class="mx-2"
                                 >
                                     Зберегти
@@ -62,7 +64,7 @@
                                 <v-btn
                                     text
                                     class="mx-2"
-                                    @click="e1 = 1"
+                                    @click="step = 1"
                                 >
                                     Назад
                                 </v-btn>
@@ -100,7 +102,7 @@ export default {
     data() {
         return {
             product: new ProductFormData(newProductInitialForm),
-            e1: 1,
+            step: 1,
             image: {
                 alt: '',
                 is_main: '',
@@ -129,6 +131,15 @@ export default {
         },
         deleteImage(nodeKey) {
             console.log(nodeKey);
+        },
+        goToNextStep() {
+            this.validate();
+        },
+        validate() {
+            this.$refs.productForm.$refs.form.validate();
+            if (this.$refs.productForm.valid) {
+                this.step = 2;
+            }
         },
         async submit() {
             try {
