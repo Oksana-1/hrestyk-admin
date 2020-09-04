@@ -65,7 +65,6 @@ import BaseMenu from "../components/base/BaseMenu";
 import InfoModal from "./modals/InfoModal";
 import ProductForm from "./parts/ProductForm";
 import ProductImage from "./parts/ProductImage";
-import {apiResponseCategories} from "../api";
 import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 export default {
@@ -86,12 +85,12 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['product']),
+        ...mapGetters(['product', 'categories']),
         productImages() {
             return this.product ? this.product.images : [];
         },
         category() {
-            return apiResponseCategories.find(item => item.id === this.product.categoryId) || null;
+            return this.categories.find(item => item === this.product.category) || null;
         }
     },
     watch: {

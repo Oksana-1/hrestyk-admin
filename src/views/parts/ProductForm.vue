@@ -18,14 +18,16 @@
             </v-col>
             <v-col class="d-flex" cols="4">
                 <v-text-field
+                    type="number"
                     label="Ціна, грн"
-                    v-model="productForm.price"
+                    v-model.number="productForm.price"
                 ></v-text-field>
             </v-col>
             <v-col cols="4">
                 <v-text-field
+                    type="number"
                     label="На складі, шт"
-                    v-model="product.qty_available"
+                    v-model.number="product.qty_available"
                 ></v-text-field>
             </v-col>
         </v-row>
@@ -33,20 +35,14 @@
 </template>
 
 <script>
-import {apiResponseCategories} from "../../api";
 import {mapGetters, mapMutations} from 'vuex';
 export default {
     name: "ProductForm",
     props: {
         product: Object
     },
-    data() {
-        return {
-            categories: apiResponseCategories.map(item => item.title),
-        }
-    },
     computed: {
-        ...mapGetters(['newProduct']),
+        ...mapGetters(['newProduct', 'categories']),
         productForm: {
             get () {
                 return this.newProduct;
