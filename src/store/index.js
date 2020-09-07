@@ -47,8 +47,9 @@ const actions = {
         commit('SET_PRODUCT', response.product);
         commit('SET_CATEGORIES', response.categories);
     },
-    async postNewProduct ({state}) {
-        await createProduct(state.newProduct);
+    async postNewProduct ({commit},payload) {
+        await createProduct(payload);
+        commit('SET_NEW_PRODUCT', {});
     }
 };
 export default {

@@ -144,9 +144,8 @@ export default {
         async submit() {
             try {
                 const payload = this.newProduct.getFormData();
-                console.log(payload);
                 await this.postNewProduct(payload);
-                this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm))
+                //this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm))
             } catch (e) {
                 console.log(e);
             }

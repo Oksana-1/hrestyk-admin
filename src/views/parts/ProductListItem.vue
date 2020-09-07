@@ -4,7 +4,8 @@
             <v-row align="center" no-gutters class="py-1">
                 <v-col cols="3" sm="1">
                     <v-list-item-avatar color="grey lighten-3">
-                        <v-img :src="product.images[0].url"></v-img>
+                        <v-img v-if="mainImageSrc" :src="mainImageSrc"></v-img>
+                        <v-icon v-else>mdi-image</v-icon>
                     </v-list-item-avatar>
                 </v-col>
                 <v-col cols="5" sm="4">
@@ -50,9 +51,20 @@
 <script>
 import Product from "../../entities/Product";
 export default {
-    name: "ProductItem",
+    name: "ProductListItem",
     props: {
         product: Product
+    },
+    computed: {
+        mainImageSrc() {
+            if (this.product !== undefined) {
+                return this.product.images.length > 0
+                    ? this.product.images[0].url
+                    : null
+            } else {
+                return null
+            }
+        }
     },
     methods: {
         deleteItem() {
