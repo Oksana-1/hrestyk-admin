@@ -7,6 +7,7 @@ const state = {
     categories: null,
     product: null,
     newProduct: null,
+    loading: false
 };
 const getters = {
     drawer: state => state.drawer,
@@ -15,6 +16,7 @@ const getters = {
     categories: state => state.categories,
     product: state => state.product,
     newProduct: state => state.newProduct,
+    loading: state => state.loading,
 }
 const mutations = {
     SET_DRAWER (state, payload) {
@@ -34,18 +36,25 @@ const mutations = {
     },
     SET_NEW_PRODUCT (state, payload) {
         state.newProduct = payload;
-    }
+    },
+    SET_LOADING (state, payload) {
+        state.loading = payload;
+    },
 };
 const actions = {
     async fetchProducts ({commit}) {
+        commit('SET_LOADING', true);
         const response = await getProducts();
         commit('SET_PRODUCTS', response.products);
         commit('SET_CATEGORIES', response.categories);
+        commit('SET_LOADING', false);
     },
     async getSingleProduct({commit}, productId) {
+        commit('SET_LOADING', true);
         const response = await getProduct(productId);
         commit('SET_PRODUCT', response.product);
         commit('SET_CATEGORIES', response.categories);
+        commit('SET_LOADING', false);
     },
     async postNewProduct ({commit},payload) {
         await createProduct(payload);
