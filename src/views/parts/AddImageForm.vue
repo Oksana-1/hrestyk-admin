@@ -4,11 +4,13 @@
             <v-file-input
                 label="Завантажити фото"
                 prepend-icon="mdi-camera"
+                v-model="newImage.filename"
             ></v-file-input>
         </v-col>
         <v-col cols="12" sm="5">
             <v-text-field
                 label="Alt для фото"
+                v-model="newImage.name"
             ></v-text-field>
         </v-col>
         <v-col
@@ -20,7 +22,7 @@
                     v-bind="attrs"
                     v-on="on">
                         <v-checkbox
-                            v-model="checkbox"
+                            v-model="newImage.is_main"
                         ></v-checkbox>
                     </div>
                 </template>
@@ -48,6 +50,7 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex';
 export default {
     name: "AddImageForm",
     props: {
@@ -55,10 +58,26 @@ export default {
     },
     data() {
         return {
-            checkbox: false
+            newImage: {
+              filename: '',
+              name: '',
+              is_main: false
+            }
         }
     },
-    methods: {
+    computed: {
+      ...mapGetters(['newProduct']),
+      productForm: {
+        get () {
+          return this.newProduct;
+        },
+        set (value) {
+          this.SET_NEW_PRODUCT(value);
+        },
+      },
+    },
+      methods: {
+      ...mapMutations(['SET_NEW_PRODUCT']),
         deleteImage() {
             this.$emit('deleteImage', this.$vnode.key);
         }
