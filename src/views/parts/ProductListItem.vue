@@ -2,7 +2,7 @@
     <div>
         <v-skeleton-loader
             class="py-2"
-            type="list-item"
+            type="list-item-avatar"
             :loading="loading"
         >
             <v-list-item link :to="`/products/${product.id}`">
