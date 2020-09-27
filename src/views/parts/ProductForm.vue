@@ -33,10 +33,25 @@
                 <v-text-field
                     type="number"
                     label="На складі, шт"
-                    v-model.number="product.qty_available"
+                    v-model.number="productForm.qty_available"
                     :rules="rules.qty_available"
                 ></v-text-field>
             </v-col>
+        </v-row>
+        <v-row>
+            <v-btn
+                text
+                class="mx-2"
+            >
+                Відмінити
+            </v-btn>
+            <v-btn
+                color="primary"
+                @click="goToNextStep"
+                class="mx-2"
+            >
+                Зберегти
+            </v-btn>
         </v-row>
     </v-form>
 </template>
@@ -44,11 +59,12 @@
 <script>
 import {mapGetters, mapMutations} from 'vuex';
 import {errorMessages} from "../../entities/errors/errorMessages";
+import ProductFormData from "../../entities/ProductFormData";
 
 export default {
     name: "ProductForm",
     props: {
-        product: Object
+        product: ProductFormData
     },
     data() {
         return {
@@ -88,7 +104,12 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_NEW_PRODUCT']),
-
+        goToNextStep() {
+            this.$refs.form.validate();
+            if (this.valid) {
+                this.$emit('validationPass');
+            }
+        }
     },
     created() {
         this.SET_NEW_PRODUCT(this.product);

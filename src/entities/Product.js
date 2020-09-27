@@ -11,6 +11,7 @@ export default class Product {
         this.title = product.title;
         this.article = product.__v;
         this.id = product._id;
+        this.isActive = product.isActive;
     }
 }
 class Image {

@@ -1,0 +1,91 @@
+<template>
+    <div>
+        <add-image-form
+        v-for="(image, i) in images"
+        :key="`image-${i + 1}`"
+        :image="image"
+        @deleteImage="deleteImage($event)"/>
+        <v-row>
+            <v-col cols="12">
+                <v-tooltip right>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                        fab
+                        small
+                        dark
+                        depressed
+                        color="primary"
+                        class="mb-5"
+                        v-bind="attrs"
+                        v-on="on"
+                        @click.prevent="addFileInput"
+                        :disabled="addPhotoBtnDisabled"
+                        >
+                        <v-icon dark>mdi-plus</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Додати поле</span>
+                </v-tooltip>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-btn
+                text
+                class="mx-2"
+                @click="step = 1"
+            >
+                Назад
+            </v-btn>
+            <v-btn
+                color="primary"
+                class="mx-2"
+                @click="validate"
+            >
+                Зберегти
+            </v-btn>
+        </v-row>
+    </div>
+</template>
+
+<script>
+
+import AddImageForm from "./AddImageForm";
+import ProductFormData from "../../entities/ProductFormData";
+import {ProductFormDataImage} from "../../entities/ProductFormData";
+import {newProductInitialImage} from "../../entities/initialForms/newProduct";
+
+export default {
+    name: "ImageFormList",
+    components: {
+        AddImageForm
+    },
+    props: {
+        product: ProductFormData
+    },
+    data() {
+        return {
+            images: [],
+            addPhotoBtnDisabled: false,
+        }
+    },
+    methods: {
+        addFileInput() {
+            this.images.length < 50
+            ?  this.images.push(new ProductFormDataImage(newProductInitialImage))
+            :  this.addPhotoBtnDisabled = true;
+        },
+
+        validate() {
+            this.$emit('validate');
+        },
+        deleteImage(nodeKey) {
+            console.log(nodeKey);
+        }
+
+    }
+}
+</script>
+
+<style scoped>
+
+</style>

@@ -4,5 +4,11 @@ export const newProductInitialForm = {
     images: [],
     price: null,
     qty_available: null,
-    title: ''
+    title: '',
+    isActive: true
+}
+export const  newProductInitialImage = {
+    file: null,
+    alt: '',
+    is_main: false
 }
