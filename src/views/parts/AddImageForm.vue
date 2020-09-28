@@ -88,13 +88,7 @@ export default {
     methods: {
         deleteImage() {
             this.$emit('deleteImage', this.$vnode.key);
-        },
-        validate() {
-            console.log(this.$refs.myForm.validate());
         }
-    },
-    created() {
-        this.$parent.$on('validate', this.validate);
     }
 }
 </script>
