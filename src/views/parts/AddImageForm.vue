@@ -1,6 +1,6 @@
 <template>
     <v-form
-        ref="myForm"
+        ref="form"
         v-model="valid">
         <v-row class="align-center">
             <v-col cols="12" sm="5">
@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import {ProductFormDataImage} from "../../entities/ProductFormData";
-import {errorMessages} from "../../entities/errors/errorMessages";
+import {ProductFormDataImage} from "@/entities/ProductFormData";
+import {errorMessages} from "@/entities/errors/errorMessages";
 
 export default {
     name: "AddImageForm",

@@ -2,6 +2,7 @@
     <div>
         <add-image-form
         v-for="(image, i) in images"
+        ref="addImageForm"
         :key="`image-${i + 1}`"
         :image="image"
         @deleteImage="deleteImage($event)"/>
@@ -39,7 +40,7 @@
             <v-btn
                 color="primary"
                 class="mx-2"
-                @click="validate"
+                @click="submit"
             >
                 Зберегти
             </v-btn>
@@ -50,9 +51,9 @@
 <script>
 
 import AddImageForm from "./AddImageForm";
-import ProductFormData from "../../entities/ProductFormData";
-import {ProductFormDataImage} from "../../entities/ProductFormData";
-import {newProductInitialImage} from "../../entities/initialForms/newProduct";
+import ProductFormData from "@/entities/ProductFormData";
+import {ProductFormDataImage} from "@/entities/ProductFormData";
+import {newProductInitialImage} from "@/entities/initialForms/newProduct";
 
 export default {
     name: "ImageFormList",
@@ -76,7 +77,20 @@ export default {
         },
 
         validate() {
-            this.$emit('validate');
+            let isValid = true;
+            if(this.$refs.addImageForm) {
+                this.$refs.addImageForm.forEach(addImageFormComponent => {
+                    addImageFormComponent.$refs.form.validate();
+                    if (!addImageFormComponent.valid) {
+                        isValid = false;
+                    }
+                });
+            }
+            return isValid;
+        },
+        submit() {
+            const isValid = this.validate();
+            console.log(isValid);
         },
         deleteImage(nodeKey) {
             console.log(nodeKey);
