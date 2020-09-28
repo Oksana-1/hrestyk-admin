@@ -54,6 +54,7 @@ import AddImageForm from "./AddImageForm";
 import ProductFormData from "@/entities/ProductFormData";
 import {ProductFormDataImage} from "@/entities/ProductFormData";
 import {newProductInitialImage} from "@/entities/initialForms/newProduct";
+import {mapMutations} from 'vuex';
 
 export default {
     name: "ImageFormList",
@@ -70,6 +71,7 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['SET_NEW_PRODUCT']),
         addFileInput() {
             this.images.length < 50
             ?  this.images.push(new ProductFormDataImage(newProductInitialImage))
@@ -90,7 +92,10 @@ export default {
         },
         submit() {
             const isValid = this.validate();
-            console.log(isValid);
+            if (isValid) {
+                this.product.images = this.images;
+                this.SET_NEW_PRODUCT(this.product);
+            }
         },
         deleteImage(nodeKey) {
             console.log(nodeKey);
