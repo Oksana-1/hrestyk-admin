@@ -42,6 +42,7 @@
             <v-btn
                 text
                 class="mx-2"
+                @click="closeDialog"
             >
                 Відмінити
             </v-btn>
@@ -103,12 +104,15 @@ export default {
         },
     },
     methods: {
-        ...mapMutations(['SET_NEW_PRODUCT']),
+        ...mapMutations(['SET_NEW_PRODUCT', 'SET_DIALOG']),
         goToNextStep() {
             this.$refs.form.validate();
             if (this.valid) {
                 this.$emit('validationPass');
             }
+        },
+        closeDialog() {
+            this.SET_DIALOG(false);
         }
     },
     created() {

@@ -12,6 +12,16 @@ export default class ProductFormData {
         const formData = new FormData();
         for (const [key, value] of Object.entries(this)) {
             formData.append(key, value);
+            if (key === 'images') {
+                const images = value;
+                if (images.length > 0) {
+                    images.forEach((image, index) => {
+                        formData.append('images'[index], image.file);
+                        formData.append('images'[index]['alt'], image.alt);
+                        formData.append('images'[index]['alt'], image.is_main);
+                    });
+                }
+            }
         }
         return formData;
     }

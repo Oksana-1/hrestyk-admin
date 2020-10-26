@@ -33,7 +33,7 @@
             <v-btn
                 text
                 class="mx-2"
-                @click="step = 1"
+                @click="$emit('step', 1)"
             >
                 Назад
             </v-btn>
@@ -95,6 +95,7 @@ export default {
             if (isValid) {
                 this.product.images = this.images;
                 this.SET_NEW_PRODUCT(this.product);
+                this.$emit('validationPass');
             }
         },
         deleteImage(nodeKey) {

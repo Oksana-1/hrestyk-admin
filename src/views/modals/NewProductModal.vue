@@ -20,6 +20,7 @@
                         <v-card-text>
                             <image-form-list
                                 :product="product"
+                                @step="step=$event"
                                 @validationPass="submit"
                             />
                         </v-card-text>
@@ -36,7 +37,7 @@ import ProductForm from "../parts/ProductForm";
 import ImageFormList from "../parts/ImageFormList";
 import ProductFormData from "../../entities/ProductFormData";
 import {newProductInitialForm} from "../../entities/initialForms/newProduct";
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
     name: "NewProductModal",
@@ -51,19 +52,25 @@ export default {
             step: 1
         }
     },
+    computed: {
+        ...mapGetters(['newProduct']),
+    },
     methods: {
         ...mapActions(['postNewProduct']),
+        ...mapMutations(['SET_NEW_PRODUCT', 'SET_DIALOG']),
         async submit() {
             try {
                 const payload = this.newProduct.getFormData();
                 await this.postNewProduct(payload);
-                //this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm))
+                this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
             } catch (e) {
                 console.log(e);
+            } finally {
+                this.SET_DIALOG(false);
             }
 
         }
-    }
+    },
 }
 </script>
 
