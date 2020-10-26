@@ -56,13 +56,14 @@ export default {
         ...mapGetters(['newProduct']),
     },
     methods: {
-        ...mapActions(['postNewProduct']),
+        ...mapActions(['postNewProduct', 'fetchProducts']),
         ...mapMutations(['SET_NEW_PRODUCT', 'SET_DIALOG']),
         async submit() {
             try {
                 const payload = this.newProduct.getFormData();
                 await this.postNewProduct(payload);
                 this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
+                this.fetchProducts();
             } catch (e) {
                 console.log(e);
             } finally {
