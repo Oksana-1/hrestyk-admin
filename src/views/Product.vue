@@ -11,7 +11,7 @@
                             <v-row class="justify-end mt-n8 px-2">
                                 <base-menu/>
                             </v-row>
-                            <product-form :product="product"/>
+                            <product-form :product="productForm"/>
                         </template>
                     </BaseCard>
                 </v-col>
@@ -66,6 +66,7 @@ import InfoModal from "./modals/InfoModal";
 import ProductForm from "./parts/ProductForm";
 import ProductImage from "./parts/ProductImage";
 import {mapActions, mapGetters, mapMutations} from 'vuex';
+import ProductFormData from "../entities/ProductFormData";
 
 export default {
     name: "Product",
@@ -81,7 +82,8 @@ export default {
             productId: this.$route.params.id,
             valid: false,
             dialogVisible: false,
-            busy: false
+            busy: false,
+            productForm: null
         }
     },
     computed: {
@@ -110,6 +112,9 @@ export default {
         async init() {
             this.busy = true;
             await this.getSingleProduct(this.productId);
+            if (this.product) {
+                this.productForm = new ProductFormData(this.product);
+            }
             this.busy = false;
         }
     },
