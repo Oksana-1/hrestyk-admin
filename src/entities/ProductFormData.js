@@ -16,9 +16,9 @@ export default class ProductFormData {
                 const images = value;
                 if (images.length > 0) {
                     images.forEach((image, index) => {
-                        formData.append('images'[index], image.file);
-                        formData.append('images'[index]['alt'], image.alt);
-                        formData.append('images'[index]['alt'], image.is_main);
+                        formData.append(`images[${index}]`, image.file);
+                        formData.append(`images[${index}][alt]`, image.alt);
+                        formData.append(`images[${index}][is_main]`, image.is_main);
                     });
                 }
             }
