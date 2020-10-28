@@ -1,4 +1,4 @@
-import {getProducts, getProduct, createProduct} from "../api";
+import * as api from "../api";
 
 const state = {
     drawer: null,
@@ -44,21 +44,29 @@ const mutations = {
 const actions = {
     async fetchProducts ({commit}) {
         commit('SET_LOADING', true);
-        const response = await getProducts();
+        const response = await api.getProducts();
         commit('SET_PRODUCTS', response.products);
         commit('SET_CATEGORIES', response.categories);
         commit('SET_LOADING', false);
     },
     async getSingleProduct({commit}, productId) {
         commit('SET_LOADING', true);
-        const response = await getProduct(productId);
+        const response = await api.getProduct(productId);
         commit('SET_PRODUCT', response.product);
         commit('SET_CATEGORIES', response.categories);
         commit('SET_LOADING', false);
     },
     async postNewProduct ({commit},payload) {
-        await createProduct(payload);
+        await api.createProduct(payload);
         commit('SET_NEW_PRODUCT', {});
+    },
+    async deleteProduct({commit},productId) {
+        commit('SET_LOADING', true);
+        await api.deleteProduct(productId);
+        const response = await api.getProducts();
+        commit('SET_PRODUCTS', response.products);
+        commit('SET_CATEGORIES', response.categories);
+        commit('SET_LOADING', false);
     }
 };
 export default {

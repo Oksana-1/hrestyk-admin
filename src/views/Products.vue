@@ -22,7 +22,8 @@
                                <product-list-item
                                    v-for="item in products"
                                    :key="item.id"
-                                   :product="item"/>
+                                   :product="item"
+                                    @onProductListDelete="deleteItemFromList($event)"/>
                             </v-list>
                             <v-row class="justify-end">
                                 <v-col cols="3" class="d-flex justify-end">
@@ -74,7 +75,7 @@ export default {
         ...mapGetters(['products', 'dialog']),
     },
     methods: {
-        ...mapActions(['fetchProducts']),
+        ...mapActions(['fetchProducts', 'deleteProduct']),
         ...mapMutations(['SET_DIALOG']),
         addProduct() {
             this.SET_DIALOG(true);
@@ -83,6 +84,9 @@ export default {
             this.busy = true;
             await this.fetchProducts();
             this.busy = false;
+        },
+        deleteItemFromList(productId) {
+            this.deleteProduct(productId);
         }
     },
     created() {

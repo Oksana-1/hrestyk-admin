@@ -3,8 +3,9 @@ import Product from "../entities/Product";
 
 export const BASE_HOST = '//95.179.185.226:8085/';
 const PRODUCTS_URL = 'api/v1/product/all';
-const PRODUCT_URL_BASE = 'api/v1/product/single/';
+const PRODUCT_URL = 'api/v1/product/single/';
 const NEW_PRODUCT_URL = 'api/v1/product/store-form-data';
+const DELETE_PRODUCT_URL = 'api/v1/product/document';
 axios.defaults.baseURL = BASE_HOST;
 
 export const getProducts = async() => {
@@ -20,7 +21,7 @@ export const getProducts = async() => {
 }
 export const getProduct = async (productId) => {
     try {
-        const response = (await axios.get(PRODUCT_URL_BASE + productId)).data.data;
+        const response = (await axios.get(PRODUCT_URL + productId)).data.data;
         return {
             product: new Product(response.product),
             categories: response.categories
@@ -37,6 +38,13 @@ export const createProduct = async (payload) => {
             payload,{
                 headers: {'Content-Type': 'multipart/form-data; boundary=boundary-' + boundary}
             });
+    } catch (e) {
+        console.error(e);
+    }
+}
+export const deleteProduct = async (productId)  => {
+    try {
+        await axios.delete(`${DELETE_PRODUCT_URL}/${productId}`);
     } catch (e) {
         console.error(e);
     }

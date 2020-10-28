@@ -35,9 +35,6 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_DIALOG']),
-        onSuccess() {
-            this.SET_DIALOG(false);
-        }
     }
 }
 </script>

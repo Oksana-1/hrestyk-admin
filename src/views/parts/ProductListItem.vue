@@ -39,7 +39,7 @@
                                     color="transparent"
                                     v-bind="attrs"
                                     v-on="on"
-                                    @click.prevent="deleteItem"
+                                    @click.prevent="$emit('onProductListDelete', product.id)"
                                 >
                                     <v-icon color="grey" small>mdi-delete</v-icon>
                                 </v-btn>
@@ -72,11 +72,6 @@ export default {
             } else {
                 return null
             }
-        }
-    },
-    methods: {
-        deleteItem() {
-            alert('Delete!');
         }
     }
 }
