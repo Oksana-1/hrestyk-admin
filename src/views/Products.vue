@@ -49,7 +49,8 @@
                 </v-col>
             </v-row>
         </v-container>
-        <new-product-modal/>
+        <confirm-modal :confirmationText="confirmationMessage" v-if="confirmModalMode"/>
+        <new-product-modal v-else/>
     </div>
 </template>
 
@@ -58,18 +59,22 @@ import BaseCard from "../components/base/BaseCard";
 import ProductListItem from "./parts/ProductListItem";
 import NewProductModal from "./modals/NewProductModal";
 import {mapActions, mapGetters, mapMutations} from 'vuex';
+import ConfirmModal from "./modals/ConfirmModal";
 
 export default {
     name: "Products",
     data() {
         return {
-            busy: false
+            busy: false,
+            confirmModalMode: false,
+            confirmationMessage: 'Видалити цей продукт?'
         }
     },
     components: {
         ProductListItem,
         BaseCard,
-        NewProductModal
+        NewProductModal,
+        ConfirmModal
     },
     computed: {
         ...mapGetters(['products', 'dialog']),
@@ -85,8 +90,10 @@ export default {
             await this.fetchProducts();
             this.busy = false;
         },
-        deleteItemFromList(productId) {
-            this.deleteProduct(productId);
+        deleteItemFromList() {
+            this.confirmModalMode = true;
+            this.SET_DIALOG(true);
+            //this.deleteProduct(productId);
         }
     },
     created() {
