@@ -10,13 +10,13 @@
                         <v-btn
                             text
                             class="mx-2"
-                            @click="this.$emit('cancel')"
+                            @click="$emit('cancel')"
                         >
                             Відмінити
                         </v-btn>
                         <v-btn
                             color="primary"
-                            @click="this.$emit('confirm')"
+                            @click="$emit('confirm')"
                             class="mx-2"
                         >
                             Добре

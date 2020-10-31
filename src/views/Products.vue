@@ -49,8 +49,14 @@
                 </v-col>
             </v-row>
         </v-container>
-        <confirm-modal :confirmationText="confirmationMessage" v-if="confirmModalMode"/>
-        <new-product-modal v-else/>
+        <confirm-modal
+            :confirmationText="confirmationMessage"
+            v-if="modalToShow === 'confirm'"
+            @confirm="doRemove"
+            @cancel="closeModal"
+        />
+        <new-product-modal
+            v-if="modalToShow === 'addProduct'"/>
     </div>
 </template>
 
@@ -66,8 +72,9 @@ export default {
     data() {
         return {
             busy: false,
-            confirmModalMode: false,
-            confirmationMessage: 'Видалити цей продукт?'
+            modalToShow: null,
+            confirmationMessage: 'Видалити цей продукт?',
+            productIdToDelete: null
         }
     },
     components: {
@@ -84,16 +91,26 @@ export default {
         ...mapMutations(['SET_DIALOG']),
         addProduct() {
             this.SET_DIALOG(true);
+            this.modalToShow = 'addProduct';
         },
         async init() {
             this.busy = true;
             await this.fetchProducts();
             this.busy = false;
         },
-        deleteItemFromList() {
-            this.confirmModalMode = true;
+        deleteItemFromList(productId) {
+            this.modalToShow = 'confirm';
             this.SET_DIALOG(true);
-            //this.deleteProduct(productId);
+            this.productIdToDelete = productId;
+        },
+        async doRemove() {
+            await this.deleteProduct(this.productIdToDelete);
+            this.closeModal();
+        },
+        closeModal() {
+            this.SET_DIALOG(false);
+            this.modalToShow = null;
+            this.productIdToDelete = null;
         }
     },
     created() {
