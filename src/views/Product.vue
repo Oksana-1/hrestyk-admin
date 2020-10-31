@@ -9,7 +9,10 @@
                         icon-name="mdi-store">
                         <template v-slot:card-content>
                             <v-row class="justify-end mt-n8 px-2">
-                                <base-menu/>
+                                <base-menu
+                                    @save="saveProduct"
+                                    @delete="deleteItem"
+                                />
                             </v-row>
                             <product-form :product="productForm"/>
                         </template>
@@ -55,7 +58,9 @@
         <v-col class="caption px-6">Дата створення: {{ product.createdAt | dateToString}}</v-col>
         <v-col class="caption px-6 text-right">Дата останнього редагування: {{ product.createdAt | dateToString}}</v-col>
     </v-row>
-    <info-modal :infoText="'Зробити картинку головною?'"/>
+    <info-modal
+        v-if="modalToShow==='mainImage'"
+        :infoText="'Зробити картинку головною?'"/>
 </div>
 </template>
 
@@ -81,9 +86,9 @@ export default {
         return {
             productId: this.$route.params.id,
             valid: false,
-            dialogVisible: false,
             busy: false,
-            productForm: null
+            productForm: null,
+            modalToShow: null
         }
     },
     computed: {
@@ -102,12 +107,13 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_DIALOG']),
-        ...mapActions(['getSingleProduct']),
+        ...mapActions(['getSingleProduct', 'deleteProduct']),
         addPic() {
             alert("Add a pic please!");
         },
         makeImageMain() {
             this.SET_DIALOG(true);
+            this.modalToShow = 'mainImage';
         },
         async init() {
             this.busy = true;
@@ -116,6 +122,13 @@ export default {
                 this.productForm = new ProductFormData(this.product);
             }
             this.busy = false;
+        },
+        saveProduct() {
+            console.log('working hard to save...')
+        },
+        async deleteItem() {
+            await this.deleteProduct(this.productId);
+            this.$router.push('/products');
         }
     },
     created() {

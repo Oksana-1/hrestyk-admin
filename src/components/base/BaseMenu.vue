@@ -15,9 +15,9 @@
         <v-list>
             <v-list-item
                 v-for="(item, i) in items"
-                :key="i"
+                :key="`baseMenuItem-${_uid}-${i}`"
                 class="d-flex align-center"
-                @click="clicked"
+                @click="$emit(item.methodToEmit)"
             >
                 <v-icon class="pr-2">{{ item.icon }}</v-icon>
                 <v-list-item-title class="caption text-uppercase">{{ item.title }}</v-list-item-title>
@@ -32,16 +32,11 @@ export default {
     data() {
         return {
             items: [
-                {title: 'Зберегти', icon: 'mdi-content-save'},
-                {title: 'Видалити', icon: 'mdi-delete'}
+                {title: 'Зберегти', icon: 'mdi-content-save', methodToEmit: 'save'},
+                {title: 'Видалити', icon: 'mdi-delete',  methodToEmit: 'delete'}
             ]
         }
     },
-    methods: {
-        clicked() {
-            console.log('Clicked!')
-        }
-    }
 }
 </script>
 
