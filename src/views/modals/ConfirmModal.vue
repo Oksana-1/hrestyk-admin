@@ -4,7 +4,7 @@
             <div class="pt-5 pb-3 text-center">{{ confirmationText }}</div>
         </template>
         <template v-slot:dialog-footer>
-            <v-card class="pa-3">
+            <div class="pa-3">
                 <v-row>
                     <v-col cols="12" class="d-flex justify-center">
                         <v-btn
@@ -23,7 +23,7 @@
                         </v-btn>
                     </v-col>
                 </v-row>
-            </v-card>
+            </div>
         </template>
     </base-modal>
 </template>

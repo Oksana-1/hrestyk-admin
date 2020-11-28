@@ -1,7 +1,6 @@
 <template>
     <div>
         <v-skeleton-loader
-            class="py-2"
             type="list-item-avatar"
             :loading="loading"
         >
