@@ -19,7 +19,25 @@
                     label="Категорія"
                     v-model="productForm.category"
                     :rules="rules.category"
-                ></v-select>
+                >
+                  <template v-slot:append-item>
+                    <v-list-item-content class="px-2">
+                        <v-text-field
+                            type="text"
+                            label="Нова категорія"
+                            v-model="customCategory"
+                        />
+                        <v-btn
+                            :disabled="!customCategory"
+                            color="primary"
+                            @click="addCategory"
+                        >
+                          Додати
+                        </v-btn>
+                    </v-list-item-content>
+                  </template>
+                </v-select>
+
             </v-col>
             <v-col class="d-flex" cols="4">
                 <v-text-field
@@ -59,8 +77,9 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex';
-import {errorMessages} from "../../entities/errors/errorMessages";
-import ProductFormData from "../../entities/ProductFormData";
+import {errorMessages} from "@/entities/errors/errorMessages";
+import ProductFormData from "@/entities/ProductFormData";
+import {cloneObject} from "@/utils/helpers";
 
 export default {
     name: "ProductForm",
@@ -90,6 +109,7 @@ export default {
                     value => Number.isInteger(value) || errorMessages.integerField,
                 ],
             },
+            customCategory: ''
         }
     },
     computed: {
@@ -104,7 +124,7 @@ export default {
         },
     },
     methods: {
-        ...mapMutations(['SET_NEW_PRODUCT', 'SET_DIALOG']),
+        ...mapMutations(['SET_NEW_PRODUCT', 'SET_DIALOG', 'SET_CATEGORIES']),
         goToNextStep() {
             this.$refs.form.validate();
             if (this.valid) {
@@ -113,6 +133,12 @@ export default {
         },
         closeDialog() {
             this.SET_DIALOG(false);
+        },
+        addCategory() {
+            const cloneCategories = cloneObject(this.categories);
+            cloneCategories.push(this.customCategory);
+            this.SET_CATEGORIES(cloneCategories);
+
         }
     },
     created() {
