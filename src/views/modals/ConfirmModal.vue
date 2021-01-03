@@ -8,18 +8,18 @@
                 <v-row>
                     <v-col cols="12" class="d-flex justify-center">
                         <v-btn
-                            text
-                            class="mx-2"
-                            @click="$emit('cancel')"
-                        >
-                            Відмінити
-                        </v-btn>
-                        <v-btn
                             color="primary"
                             @click="$emit('confirm')"
                             class="mx-2"
                         >
                             Добре
+                        </v-btn>
+                        <v-btn
+                            text
+                            class="mx-2"
+                            @click="$emit('cancel')"
+                        >
+                          Відмінити
                         </v-btn>
                     </v-col>
                 </v-row>

@@ -35,8 +35,8 @@
 import BaseModal from "../../components/base/BaseModal";
 import ProductForm from "../parts/ProductForm";
 import ImageFormList from "../parts/ImageFormList";
-import ProductFormData from "../../entities/ProductFormData";
-import {newProductInitialForm} from "../../entities/initialForms/newProduct";
+import ProductFormData from "@/entities/ProductFormData";
+import {newProductInitialForm} from "@/entities/initialForms/newProduct";
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
@@ -63,6 +63,7 @@ export default {
                 const payload = this.newProduct.getFormData();
                 await this.postNewProduct(payload);
                 this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
+                this.step = 1;
                 this.fetchProducts();
             } catch (e) {
                 console.log(e);
