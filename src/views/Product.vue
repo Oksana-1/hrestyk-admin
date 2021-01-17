@@ -61,6 +61,11 @@
     <info-modal
         v-if="modalToShow==='mainImage'"
         :infoText="'Зробити картинку головною?'"/>
+    <confirm-modal
+        v-if="modalToShow === 'confirm'"
+        :confirmation-text="'Видалити цей продукт?'"
+        @confirm="doRemove"
+        @cancel="closeModal"/>
 </div>
 </template>
 
@@ -68,6 +73,7 @@
 import BaseCard from "../components/base/BaseCard";
 import BaseMenu from "../components/base/BaseMenu";
 import InfoModal from "./modals/InfoModal";
+import ConfirmModal from "./modals/ConfirmModal";
 import ProductForm from "./parts/ProductForm";
 import ProductImage from "./parts/ProductImage";
 import {mapActions, mapGetters, mapMutations} from 'vuex';
@@ -80,6 +86,7 @@ export default {
         BaseCard,
         BaseMenu,
         InfoModal,
+        ConfirmModal,
         ProductForm,
     },
     data() {
@@ -88,7 +95,7 @@ export default {
             valid: false,
             busy: false,
             productForm: null,
-            modalToShow: null
+            modalToShow: null,
         }
     },
     computed: {
@@ -126,10 +133,18 @@ export default {
         saveProduct() {
             console.log('working hard to save...')
         },
-        async deleteItem() {
-            await this.deleteProduct(this.productId);
-            this.$router.push('/products');
-        }
+      deleteItem() {
+        this.modalToShow = 'confirm';
+        this.SET_DIALOG(true);
+      },
+      closeModal() {
+        this.SET_DIALOG(false);
+        this.modalToShow = null;
+      },
+      async doRemove() {
+          await this.deleteProduct(this.productId);
+          this.$router.push('/products');
+      }
     },
     created() {
         this.init();
