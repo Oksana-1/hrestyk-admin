@@ -64,7 +64,7 @@ export default {
                 await this.postNewProduct(payload);
                 this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
                 this.step = 1;
-                this.fetchProducts();
+                await this.fetchProducts();
             } catch (e) {
                 console.log(e);
             } finally {

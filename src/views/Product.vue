@@ -14,7 +14,10 @@
                                     @delete="deleteItem"
                                 />
                             </v-row>
-                            <product-form :product="productForm"/>
+                            <product-form
+                                :product="productForm"
+                                @validationPass="submit"
+                            />
                         </template>
                     </BaseCard>
                 </v-col>
@@ -99,7 +102,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['product', 'categories']),
+        ...mapGetters(['product', 'newProduct', 'categories']),
         productImages() {
             return this.product ? this.product.images : [];
         },
@@ -114,7 +117,7 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_DIALOG']),
-        ...mapActions(['getSingleProduct', 'deleteProduct']),
+        ...mapActions(['getSingleProduct', 'deleteProduct', 'editProduct']),
         addPic() {
             alert("Add a pic please!");
         },
@@ -132,6 +135,13 @@ export default {
         },
         saveProduct() {
             console.log('working hard to save...')
+        },
+        async submit() {
+          const payload = this.newProduct.getFormData();
+          await this.editProduct({
+            productId: this.product.id,
+            payload: payload
+          })
         },
       deleteItem() {
         this.modalToShow = 'confirm';

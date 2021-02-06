@@ -6,6 +6,7 @@ const PRODUCTS_URL = 'api/v1/product/all';
 const PRODUCT_URL = 'api/v1/product/single/';
 const NEW_PRODUCT_URL = 'api/v1/product/store-form-data';
 const DELETE_PRODUCT_URL = 'api/v1/product/document';
+const EDIT_PRODUCT_URL_BASE = 'api/v1/product/edit';
 axios.defaults.baseURL = BASE_HOST;
 
 export const getProducts = async() => {
@@ -45,6 +46,18 @@ export const createProduct = async (payload) => {
 export const deleteProduct = async (productId)  => {
     try {
         await axios.delete(`${DELETE_PRODUCT_URL}/${productId}`);
+    } catch (e) {
+        console.error(e);
+    }
+}
+export const editProduct = async ({productId, payload}) => {
+    const boundary = new Date().getTime();
+    try {
+        await axios.patch(
+          `${EDIT_PRODUCT_URL_BASE}/${productId}`,
+          payload,{
+              headers: {'Content-Type': 'multipart/form-data; boundary=boundary-' + boundary}
+          });
     } catch (e) {
         console.error(e);
     }

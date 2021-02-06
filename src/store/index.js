@@ -67,6 +67,14 @@ const actions = {
         commit('SET_PRODUCTS', response.products);
         commit('SET_CATEGORIES', response.categories);
         commit('SET_LOADING', false);
+    },
+    async editProduct({commit}, {productId, payload}) {
+        commit('SET_LOADING', true);
+        await api.editProduct({productId, payload});
+        const response = await api.getProduct(productId);
+        commit('SET_PRODUCT', response.product);
+        commit('SET_CATEGORIES', response.categories);
+        commit('SET_LOADING', false);
     }
 };
 export default {
