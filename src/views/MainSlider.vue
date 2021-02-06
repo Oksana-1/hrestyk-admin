@@ -1,10 +1,10 @@
 <template>
-    <div>Main Slider</div>
+  <div>Main Slider</div>
 </template>
 
 <script>
 export default {
-name: "MainSlider"
+  name: "MainSlider"
 }
 </script>
 

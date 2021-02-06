@@ -1,10 +1,10 @@
 <template>
-    <div>Welcome page</div>
+  <div>Welcome page</div>
 </template>
 
 <script>
 export default {
-name: "Index"
+  name: "Index"
 }
 </script>
 

@@ -8,6 +8,7 @@ import adminStore from './store';
 import routes from './routes';
 
 import {dateToString} from "./filters";
+
 Vue.filter('dateToString', dateToString);
 
 Vue.use(Vuex);
@@ -15,15 +16,15 @@ Vue.use(VueRouter);
 
 const store = new Vuex.Store(adminStore);
 const router = new VueRouter({
-  routes,
-  mode: 'history'
+	routes,
+	mode: 'history'
 });
 
 Vue.config.productionTip = false;
 
 new Vue({
-  vuetify,
-  store,
-  router,
-  render: h => h(App)
+	vuetify,
+	store,
+	router,
+	render: h => h(App)
 }).$mount('#app');

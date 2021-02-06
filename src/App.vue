@@ -1,11 +1,11 @@
 <template>
-    <v-app>
-        <core-drawer/>
-            <v-main class="grey lighten-4">
-                <router-view/>
-            </v-main>
-        <core-bar/>
-    </v-app>
+  <v-app>
+    <core-drawer/>
+    <v-main class="grey lighten-4">
+      <router-view/>
+    </v-main>
+    <core-bar/>
+  </v-app>
 </template>
 
 <script>
@@ -17,8 +17,8 @@ export default {
   name: 'App',
 
   components: {
-      CoreBar,
-      CoreDrawer
+    CoreBar,
+    CoreDrawer
   }
 };
 </script>
