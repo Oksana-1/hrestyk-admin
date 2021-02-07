@@ -1,10 +1,14 @@
 <template>
   <v-row>
     <v-col cols="4" v-for="image in productImages" :key="image.id">
-      <product-image :image="image" @setImageMain="setImageMain" />
+      <product-image
+        :image="image"
+        @setImageMain="setImageMain"
+        @setImageAlt="setImageAlt"
+      />
     </v-col>
     <v-col cols="4">
-      <new-image/>
+      <new-image />
     </v-col>
     <info-modal
       v-if="modalToShow === 'mainImage'"
@@ -19,6 +23,7 @@ import ProductImage from "@/views/product/ProductImage";
 import NewImage from "@/views/product/NewImage";
 import InfoModal from "@/views/modals/InfoModal";
 import { mapGetters, mapMutations } from "vuex";
+
 export default {
   name: "ProductImages",
   props: {
@@ -27,7 +32,7 @@ export default {
   components: {
     ProductImage,
     InfoModal,
-    NewImage
+    NewImage,
   },
   data() {
     return {
@@ -38,7 +43,7 @@ export default {
   computed: {
     ...mapGetters(["newProduct"]),
     infoMessage() {
-      if (!this.activeImage) return '';
+      if (!this.activeImage) return "";
       return this.activeImage.is_main
         ? "Зробити картинку не головною?"
         : "Зробити картинку головною?";
@@ -58,7 +63,15 @@ export default {
       this.SET_DIALOG(false);
       this.modalToShow = null;
       this.activeImage = null;
-      this.$emit('imageChanges')
+      this.$emit("imageChanges");
+    },
+    setImageAlt(imageId, imageAlt) {
+      this.activeImage = this.newProduct.images.find(
+        (image) => image.id === imageId
+      );
+      this.activeImage.alt = imageAlt;
+      this.$emit("imageChanges");
+      this.activeImage = null;
     },
   },
 };

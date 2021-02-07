@@ -17,7 +17,7 @@
                   v-bind="attrs"
                   v-on="on"
                   class="ma-auto"
-                  @click.prevent="deletePic"
+                  @click.prevent="$emit('deleteImage', image.id)"
                 >
                   <v-icon dark>mdi-minus</v-icon>
                 </v-btn>
@@ -30,7 +30,20 @@
     </v-hover>
     <v-card-actions>
       <v-card-title class="caption grey--text lighten-4">
-        <v-text-field label="Alt" :value="image.alt"></v-text-field>
+        <v-text-field label="Alt" v-model="alt" />
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+              @click.prevent="$emit('setImageAlt', image.id, alt)"
+            >
+              <v-icon>mdi-content-save</v-icon>
+            </v-btn>
+          </template>
+          <span>Зберегти</span>
+        </v-tooltip>
       </v-card-title>
       <v-spacer />
 
@@ -60,14 +73,14 @@ export default {
   props: {
     image: Image,
   },
+  data() {
+    return {
+      alt: this.image.alt,
+    };
+  },
   computed: {
     infoMessage() {
       return this.image.is_main ? "Зробити не головною" : "Зробити головною";
-    },
-  },
-  methods: {
-    deletePic() {
-      alert("Are you sure?");
     },
   },
 };
