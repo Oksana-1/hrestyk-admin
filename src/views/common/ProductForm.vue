@@ -1,34 +1,34 @@
 <template>
   <v-form ref="form" v-model="valid">
     <v-text-field
-        label="Назва товару"
-        v-model="productForm.title"
-        :rules="rules.title"
+      label="Назва товару"
+      v-model="productForm.title"
+      :rules="rules.title"
     ></v-text-field>
     <v-textarea
-        label="Опис товару"
-        v-model="productForm.description"
-        :rules="rules.description"
+      label="Опис товару"
+      v-model="productForm.description"
+      :rules="rules.description"
     ></v-textarea>
     <v-row>
       <v-col class="d-flex" cols="4">
         <v-select
-            :items="categories"
-            label="Категорія"
-            v-model="productForm.category"
-            :rules="rules.category"
+          :items="categories"
+          label="Категорія"
+          v-model="productForm.category"
+          :rules="rules.category"
         >
           <template v-slot:append-item>
             <v-list-item-content class="px-2">
               <v-text-field
-                  type="text"
-                  label="Нова категорія"
-                  v-model="customCategory"
+                type="text"
+                label="Нова категорія"
+                v-model="customCategory"
               />
               <v-btn
-                  :disabled="!customCategory"
-                  color="primary"
-                  @click="addCategory"
+                :disabled="!customCategory"
+                color="primary"
+                @click="addCategory"
               >
                 Додати
               </v-btn>
@@ -38,18 +38,18 @@
       </v-col>
       <v-col class="d-flex" cols="4">
         <v-text-field
-            type="number"
-            label="Ціна, грн"
-            v-model.number="productForm.price"
-            :rules="rules.price"
+          type="number"
+          label="Ціна, грн"
+          v-model.number="productForm.price"
+          :rules="rules.price"
         ></v-text-field>
       </v-col>
       <v-col cols="4">
         <v-text-field
-            type="number"
-            label="На складі, шт"
-            v-model.number="productForm.qty_available"
-            :rules="rules.qty_available"
+          type="number"
+          label="На складі, шт"
+          v-model.number="productForm.qty_available"
+          :rules="rules.qty_available"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
-import {errorMessages} from "@/entities/errors/errorMessages";
+import { mapGetters, mapMutations } from "vuex";
+import { errorMessages } from "@/entities/errors/errorMessages";
 import ProductFormData from "@/entities/ProductFormData";
-import {cloneObject} from "@/utils/helpers";
+import { cloneObject } from "@/utils/helpers";
 
 export default {
   name: "ProductForm",

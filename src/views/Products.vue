@@ -62,8 +62,8 @@
 
 <script>
 import BaseCard from "../components/base/BaseCard";
-import ProductListItem from "./parts/ProductListItem";
-import NewProductModal from "./modals/NewProductModal";
+import ProductListItem from "./products/ProductListItem";
+import NewProductModal from "./newProduct/NewProductModal";
 import {mapActions, mapGetters, mapMutations} from 'vuex';
 import ConfirmModal from "./modals/ConfirmModal";
 

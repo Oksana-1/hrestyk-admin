@@ -3,25 +3,26 @@
     <template v-slot:dialog-body>
       <v-stepper v-model="step">
         <v-stepper-header>
-          <v-stepper-step :complete="step > 1" step="1">Загальна інформація</v-stepper-step>
+          <v-stepper-step :complete="step > 1" step="1"
+            >Загальна інформація</v-stepper-step
+          >
           <v-divider></v-divider>
-          <v-stepper-step :complete="step > 2" step="2">Завантаження фото</v-stepper-step>
+          <v-stepper-step :complete="step > 2" step="2"
+            >Завантаження фото</v-stepper-step
+          >
         </v-stepper-header>
         <v-stepper-items>
           <v-stepper-content step="1">
             <v-card-text>
-              <product-form
-                  :product="product"
-                  @validationPass="step = 2"
-              />
+              <product-form :product="product" @validationPass="step = 2" />
             </v-card-text>
           </v-stepper-content>
           <v-stepper-content step="2">
             <v-card-text>
               <image-form-list
-                  :product="product"
-                  @step="step=$event"
-                  @validationPass="submit"
+                :product="product"
+                @step="step = $event"
+                @validationPass="submit"
               />
             </v-card-text>
           </v-stepper-content>
@@ -33,31 +34,31 @@
 
 <script>
 import BaseModal from "../../components/base/BaseModal";
-import ProductForm from "../parts/ProductForm";
-import ImageFormList from "../parts/ImageFormList";
+import ProductForm from "../common/ProductForm";
+import ImageFormList from "./productImageStep/ImageFormList";
 import ProductFormData from "@/entities/ProductFormData";
-import {newProductInitialForm} from "@/entities/initialForms/newProduct";
-import {mapActions, mapGetters, mapMutations} from 'vuex'
+import { newProductInitialForm } from "@/entities/initialForms/newProduct";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "NewProductModal",
   components: {
     ProductForm,
     ImageFormList,
-    BaseModal
+    BaseModal,
   },
   data() {
     return {
       product: new ProductFormData(newProductInitialForm),
-      step: 1
-    }
+      step: 1,
+    };
   },
   computed: {
-    ...mapGetters(['newProduct']),
+    ...mapGetters(["newProduct"]),
   },
   methods: {
-    ...mapActions(['postNewProduct', 'fetchProducts']),
-    ...mapMutations(['SET_NEW_PRODUCT', 'SET_DIALOG']),
+    ...mapActions(["postNewProduct", "fetchProducts"]),
+    ...mapMutations(["SET_NEW_PRODUCT", "SET_DIALOG"]),
     async submit() {
       try {
         const payload = this.newProduct.getFormData();
@@ -70,12 +71,9 @@ export default {
       } finally {
         this.SET_DIALOG(false);
       }
-
-    }
+    },
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
