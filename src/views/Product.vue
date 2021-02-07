@@ -7,29 +7,15 @@
             <BaseCard header-type="avatar" icon-name="mdi-store">
               <template v-slot:card-content>
                 <v-row class="justify-end mt-n8 px-2">
-                  <base-menu
-                      @save="submit"
-                      @delete="deleteItem" />
+                  <base-menu @save="submit" @delete="deleteItem" />
                 </v-row>
                 <product-form :product="productForm" @validationPass="submit" />
               </template>
             </BaseCard>
           </v-col>
           <v-col cols="12">
-            <product-images :productImages="productImages" />
+            <product-images :productImages="productImages" @imageChanges="submit"/>
           </v-col>
-        </v-row>
-        <v-row class="justify-center px-6 mb-10 mt-5">
-          <v-btn
-              depressed
-              large
-              dark
-              color="primary"
-              @click="submit"
-          >
-            <v-icon class="pr-2">{{ "mdi-content-save" }}</v-icon>
-            Зберегти
-          </v-btn>
         </v-row>
       </v-form>
     </v-container>
@@ -42,10 +28,6 @@
         {{ product.updatedAt | dateToString }}</v-col
       >
     </v-row>
-    <info-modal
-      v-if="modalToShow === 'mainImage'"
-      :infoText="'Зробити картинку головною?'"
-    />
     <info-modal
       v-if="modalToShow === 'success'"
       :infoText="'Зміни збережено!'"
@@ -123,7 +105,7 @@ export default {
           productId: this.product.id,
           payload: payload,
         });
-        this.modalToShow = 'success';
+        this.modalToShow = "success";
         this.SET_DIALOG(true);
       } catch (e) {
         console.error(e);
@@ -139,7 +121,7 @@ export default {
     },
     async doRemove() {
       await this.deleteProduct(this.productId);
-      this.$router.push("/products");
+      await this.$router.push("/products");
     },
   },
   created() {

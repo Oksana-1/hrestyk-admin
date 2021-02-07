@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-3">
+  <v-card class="mb-3" min-height="100%">
     <v-hover v-slot:default="{ hover }">
       <v-img :src="image.url" aspect-ratio="1">
         <v-fade-transition>
@@ -41,7 +41,7 @@
             :color="image.is_main ? 'primary' : ''"
             v-bind="attrs"
             v-on="on"
-            @click.prevent="makeItMain"
+            @click.prevent="$emit('setImageMain', image.id)"
           >
             <v-icon>mdi-heart</v-icon>
           </v-btn>
@@ -63,9 +63,6 @@ export default {
   methods: {
     deletePic() {
       alert("Are you sure?");
-    },
-    makeItMain() {
-      this.$emit("makeImageMain");
     },
   },
 };
