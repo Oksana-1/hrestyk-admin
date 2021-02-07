@@ -31,7 +31,7 @@
       >
       <v-col class="caption px-6 text-right"
         >Дата останнього редагування:
-        {{ product.createdAt | dateToString }}</v-col
+        {{ product.updatedAt | dateToString }}</v-col
       >
     </v-row>
     <info-modal

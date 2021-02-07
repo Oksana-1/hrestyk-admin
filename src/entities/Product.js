@@ -4,6 +4,7 @@ export default class Product {
   constructor(product) {
     this.category = product.category;
     this.createdAt = product.createdAt;
+    this.updatedAt = product.updatedAt;
     this.description = product.description;
     this.images = product.images.map((image) => new Image(image));
     this.price = product.price;
