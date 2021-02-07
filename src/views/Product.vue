@@ -7,7 +7,9 @@
             <BaseCard header-type="avatar" icon-name="mdi-store">
               <template v-slot:card-content>
                 <v-row class="justify-end mt-n8 px-2">
-                  <base-menu @save="saveProduct" @delete="deleteItem" />
+                  <base-menu
+                      @save="submit"
+                      @delete="deleteItem" />
                 </v-row>
                 <product-form :product="productForm" @validationPass="submit" />
               </template>
@@ -18,7 +20,13 @@
           </v-col>
         </v-row>
         <v-row class="justify-center px-6 mb-10 mt-5">
-          <v-btn depressed large dark color="primary">
+          <v-btn
+              depressed
+              large
+              dark
+              color="primary"
+              @click="submit"
+          >
             <v-icon class="pr-2">{{ "mdi-content-save" }}</v-icon>
             Зберегти
           </v-btn>
@@ -37,6 +45,11 @@
     <info-modal
       v-if="modalToShow === 'mainImage'"
       :infoText="'Зробити картинку головною?'"
+    />
+    <info-modal
+      v-if="modalToShow === 'success'"
+      :infoText="'Зміни збережено!'"
+      @ok="closeModal"
     />
     <confirm-modal
       v-if="modalToShow === 'confirm'"
@@ -103,15 +116,18 @@ export default {
       }
       this.busy = false;
     },
-    saveProduct() {
-      console.log("working hard to save...");
-    },
     async submit() {
-      const payload = this.newProduct.getFormData();
-      await this.editProduct({
-        productId: this.product.id,
-        payload: payload,
-      });
+      try {
+        const payload = this.newProduct.getFormData();
+        await this.editProduct({
+          productId: this.product.id,
+          payload: payload,
+        });
+        this.modalToShow = 'success';
+        this.SET_DIALOG(true);
+      } catch (e) {
+        console.error(e);
+      }
     },
     deleteItem() {
       this.modalToShow = "confirm";
