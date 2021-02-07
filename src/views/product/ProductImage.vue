@@ -46,7 +46,7 @@
             <v-icon>mdi-heart</v-icon>
           </v-btn>
         </template>
-        <span>Зробити головною</span>
+        <span>{{ infoMessage }}</span>
       </v-tooltip>
     </v-card-actions>
   </v-card>
@@ -59,6 +59,11 @@ export default {
   name: "ProductImage",
   props: {
     image: Image,
+  },
+  computed: {
+    infoMessage() {
+      return this.image.is_main ? "Зробити не головною" : "Зробити головною";
+    },
   },
   methods: {
     deletePic() {
