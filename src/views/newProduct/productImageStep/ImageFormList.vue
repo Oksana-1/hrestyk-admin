@@ -57,13 +57,17 @@ export default {
     return {
       images: [],
       addPhotoBtnDisabled: false,
+      newImageId: 0,
     };
   },
   methods: {
     ...mapMutations(["SET_NEW_PRODUCT"]),
     addFileInput() {
+      const newImage = new ProductFormDataImage(newProductInitialImage);
+      this.newImageId++;
+      newImage.id = `image-${this.newImageId}`;
       this.images.length < 50
-        ? this.images.push(new ProductFormDataImage(newProductInitialImage))
+        ? this.images.push(newImage)
         : (this.addPhotoBtnDisabled = true);
     },
 
@@ -88,7 +92,8 @@ export default {
       }
     },
     deleteImage(nodeKey) {
-      console.log(nodeKey);
+      const index = this.images.findIndex((image) => image.id === nodeKey);
+      this.images.splice(index, 1);
     },
   },
 };
