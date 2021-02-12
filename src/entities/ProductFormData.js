@@ -49,6 +49,7 @@ export default class ProductFormData {
 
 export class ProductFormDataImage {
   constructor(image) {
+    this.key = image.key ? image.key : null;
     this.id = image.id ? image.id : null;
     this.alt = image.alt;
     this.is_main = image.is_main;

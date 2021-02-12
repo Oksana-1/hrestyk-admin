@@ -1,9 +1,9 @@
 <template>
   <div>
     <add-image-form
-      v-for="(image, i) in images"
+      v-for="image in images"
       ref="addImageForm"
-      :key="`image-${i + 1}`"
+      :key="`image-${  image.key }`"
       :image="image"
       @deleteImage="deleteImage($event)"
     />
@@ -57,15 +57,15 @@ export default {
     return {
       images: [],
       addPhotoBtnDisabled: false,
-      newImageId: 0,
+      newImageKey: 0,
     };
   },
   methods: {
     ...mapMutations(["SET_NEW_PRODUCT"]),
     addFileInput() {
       const newImage = new ProductFormDataImage(newProductInitialImage);
-      this.newImageId++;
-      newImage.id = `image-${this.newImageId}`;
+      this.newImageKey++;
+      newImage.key = `image-${this.newImageKey}`;
       this.images.length < 50
         ? this.images.push(newImage)
         : (this.addPhotoBtnDisabled = true);
