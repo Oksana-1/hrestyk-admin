@@ -1,7 +1,7 @@
 <template>
   <base-modal dialogWidth="300px">
     <template v-slot:dialog-body>
-      <div class="pa-3 text-center">{{ infoText }}</div>
+      <div class="pt-5 pb-3 text-center">{{ confirmationText }}</div>
     </template>
     <template v-slot:dialog-footer>
       <div class="pa-3">
@@ -9,10 +9,17 @@
           <v-col cols="12" class="d-flex justify-center">
             <v-btn
                 color="primary"
-                @click="$emit('ok')"
+                @click="$emit('confirm')"
                 class="mx-2"
             >
               Добре
+            </v-btn>
+            <v-btn
+                text
+                class="mx-2"
+                @click="$emit('cancel')"
+            >
+              Відмінити
             </v-btn>
           </v-col>
         </v-row>
@@ -22,15 +29,15 @@
 </template>
 
 <script>
-import BaseModal from "@/components/base/BaseModal";
+import BaseModal from "../../components/base/BaseModal";
 
 export default {
-  name: "InfoModal",
-  props: {
-    infoText: String
-  },
+  name: "ConfirmModal",
   components: {
     BaseModal
+  },
+  props: {
+    confirmationText: String
   }
 }
 </script>
