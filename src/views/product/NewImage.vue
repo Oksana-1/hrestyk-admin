@@ -1,23 +1,25 @@
 <template>
-  <v-card min-height="100%" class="d-flex justify-center align-center mb-3">
-    <v-card-actions>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              fab
-              dark
-              depressed
-              color="primary"
-              v-bind="attrs"
-              v-on="on"
-              @click.prevent="addPic"
-          >
-            <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
-        </template>
-        <span>Додати картинку</span>
-      </v-tooltip>
-    </v-card-actions>
+  <v-card class="fill-height">
+    <v-responsive min-width="100%" :aspect-ratio="1">
+      <v-card-actions class="justify-center mb-3 flex-shrink-0 fill-height">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+                fab
+                dark
+                depressed
+                color="primary"
+                v-bind="attrs"
+                v-on="on"
+                @click.prevent="addPic"
+            >
+              <v-icon dark>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>Додати картинку</span>
+        </v-tooltip>
+      </v-card-actions>
+    </v-responsive>
   </v-card>
 </template>
 
