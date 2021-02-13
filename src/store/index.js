@@ -93,12 +93,13 @@ const actions = {
   },
   async deleteImage({ commit }, imageId) {
     try {
-      await api.deleteImage(imageId);
+      const response = await api.deleteImage(imageId);
+      commit("SET_PRODUCT", response.product);
+      commit("SET_CATEGORIES", response.categories);
     } catch (e) {
       console.error(e);
       throw e;
     }
-    commit("SET_LOADING", false);
   },
   async editProduct({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);

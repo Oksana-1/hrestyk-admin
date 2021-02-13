@@ -18,6 +18,7 @@
               :key="`product-images-${componentKey}`"
               :productImages="productImages"
               @imageChanges="submit"
+              @imageDeleted="forceUpdate"
             />
           </v-col>
         </v-row>

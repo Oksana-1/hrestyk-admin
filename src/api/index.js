@@ -57,7 +57,12 @@ export const deleteProduct = async (productId) => {
 };
 export const deleteImage = async (imageId) => {
   try {
-    await axios.delete(`${DELETE_IMAGE_URL_BASE}/${imageId}`);
+    const response = (await axios.delete(`${DELETE_IMAGE_URL_BASE}/${imageId}`))
+      .data.data;
+    return {
+      product: new Product(response.product),
+      categories: response.categories,
+    };
   } catch (e) {
     console.error(e);
     throw e;

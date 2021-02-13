@@ -78,6 +78,7 @@ export default {
     async deleteProductImage(imageId) {
       try {
         await this.deleteImage(imageId);
+        this.$emit('imageDeleted');
       } catch (e) {
         console.error(e);
       }
