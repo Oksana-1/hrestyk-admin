@@ -6,6 +6,7 @@ const PRODUCTS_URL = "api/v1/product/all";
 const PRODUCT_URL = "api/v1/product/single/";
 const NEW_PRODUCT_URL = "api/v1/product/store-form-data";
 const DELETE_PRODUCT_URL = "api/v1/product/document";
+const DELETE_IMAGE_URL_BASE = "api/v1/product/image";
 const EDIT_PRODUCT_URL_BASE = "api/v1/product/edit";
 axios.defaults.baseURL = BASE_HOST;
 
@@ -49,6 +50,14 @@ export const createProduct = async (payload) => {
 export const deleteProduct = async (productId) => {
   try {
     await axios.delete(`${DELETE_PRODUCT_URL}/${productId}`);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+export const deleteImage = async (imageId) => {
+  try {
+    await axios.delete(`${DELETE_IMAGE_URL_BASE}/${imageId}`);
   } catch (e) {
     console.error(e);
     throw e;

@@ -91,6 +91,15 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
+  async deleteImage({ commit }, imageId) {
+    try {
+      await api.deleteImage(imageId);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+    commit("SET_LOADING", false);
+  },
   async editProduct({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {

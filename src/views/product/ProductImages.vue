@@ -5,6 +5,7 @@
         :image="image"
         @setImageMain="setImageMain"
         @setImageAlt="setImageAlt"
+        @deleteImage="deleteProductImage"
       />
     </v-col>
     <v-col cols="4">
@@ -22,7 +23,7 @@
 import ProductImage from "@/views/product/ProductImage";
 import NewImage from "@/views/product/NewImage";
 import InfoModal from "@/views/modals/InfoModal";
-import { mapGetters, mapMutations } from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "ProductImages",
@@ -51,6 +52,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_DIALOG"]),
+    ...mapActions(['deleteImage']),
     setImageMain(imageId) {
       this.activeImage = this.newProduct.images.find(
         (image) => image.id === imageId
@@ -73,6 +75,13 @@ export default {
       this.$emit("imageChanges");
       this.activeImage = null;
     },
+    async deleteProductImage(imageId) {
+      try {
+        await this.deleteImage(imageId);
+      } catch (e) {
+        console.error(e);
+      }
+    }
   },
 };
 </script>
