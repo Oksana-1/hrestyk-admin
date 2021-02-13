@@ -94,8 +94,7 @@ const actions = {
   async editProduct({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {
-      await api.editProduct({ productId, payload });
-      const response = await api.getProduct(productId);
+      const response = await api.editProduct({ productId, payload });
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
     } catch (e) {

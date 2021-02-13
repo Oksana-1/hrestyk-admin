@@ -9,12 +9,16 @@
                 <v-row class="justify-end mt-n8 px-2">
                   <base-menu @save="submit" @delete="deleteItem" />
                 </v-row>
-                <product-form :product="productForm" @validationPass="submit" />
+                <product-form :product="newProduct" @validationPass="submit" />
               </template>
             </BaseCard>
           </v-col>
           <v-col cols="12">
-            <product-images :productImages="productImages" @imageChanges="submit"/>
+            <product-images
+              :key="`product-images-${componentKey}`"
+              :productImages="productImages"
+              @imageChanges="submit"
+            />
           </v-col>
         </v-row>
       </v-form>
@@ -72,8 +76,8 @@ export default {
       productId: this.$route.params.id,
       valid: false,
       busy: false,
-      productForm: null,
       modalToShow: null,
+      componentKey: 0,
     };
   },
   computed: {
@@ -93,24 +97,23 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_DIALOG"]),
+    ...mapMutations(["SET_DIALOG", "SET_NEW_PRODUCT"]),
     ...mapActions(["getSingleProduct", "deleteProduct", "editProduct"]),
     async init() {
       this.busy = true;
       await this.getSingleProduct(this.productId);
-      if (this.product) {
-        this.productForm = new ProductFormData(this.product);
-      }
+      this.setDefaultProductForm();
       this.busy = false;
     },
     async submit() {
       try {
         const payload = this.newProduct.getFormData();
-        const response = await this.editProduct({
+        await this.editProduct({
           productId: this.product.id,
           payload: payload,
         });
-        console.log(response);
+        this.forceUpdate();
+        this.setDefaultProductForm();
         this.modalToShow = "success";
         this.SET_DIALOG(true);
       } catch (e) {
@@ -130,6 +133,14 @@ export default {
     async doRemove() {
       await this.deleteProduct(this.productId);
       await this.$router.push("/products");
+    },
+    forceUpdate() {
+      this.componentKey += 1;
+    },
+    setDefaultProductForm() {
+      if (this.product) {
+        this.SET_NEW_PRODUCT(new ProductFormData(this.product));
+      }
     },
   },
   created() {
