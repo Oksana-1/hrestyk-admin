@@ -33,6 +33,11 @@
       :infoText="'Зміни збережено!'"
       @ok="closeModal"
     />
+    <info-modal
+      v-if="modalToShow === 'error'"
+      :infoText="'Упс... Сталася помилка.'"
+      @ok="closeModal"
+    />
     <confirm-modal
       v-if="modalToShow === 'confirm'"
       :confirmation-text="'Видалити цей продукт?'"
@@ -101,14 +106,17 @@ export default {
     async submit() {
       try {
         const payload = this.newProduct.getFormData();
-        await this.editProduct({
+        const response = await this.editProduct({
           productId: this.product.id,
           payload: payload,
         });
+        console.log(response);
         this.modalToShow = "success";
         this.SET_DIALOG(true);
       } catch (e) {
         console.error(e);
+        this.modalToShow = "error";
+        this.SET_DIALOG(true);
       }
     },
     deleteItem() {
