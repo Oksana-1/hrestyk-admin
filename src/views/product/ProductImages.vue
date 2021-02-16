@@ -5,7 +5,7 @@
         :image="image"
         @setImageMain="setImageMain"
         @setImageAlt="setImageAlt"
-        @deleteImage="deleteProductImage"
+        @deleteImage="showConfirmModal"
       />
     </v-col>
     <v-col cols="4">
@@ -16,6 +16,12 @@
       :infoText="infoMessage"
       @ok="changeMainImage"
     />
+    <confirm-modal
+        v-if="modalToShow === 'confirm'"
+        :confirmation-text="'Видалити цю картинку?'"
+        @confirm="deleteProductImage"
+        @cancel="closeModal"
+    />
   </v-row>
 </template>
 
@@ -23,6 +29,7 @@
 import ProductImage from "@/views/product/ProductImage";
 import NewImage from "@/views/product/NewImage";
 import InfoModal from "@/views/modals/InfoModal";
+import ConfirmModal from "@/views/modals/ConfirmModal";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
@@ -33,6 +40,7 @@ export default {
   components: {
     ProductImage,
     InfoModal,
+    ConfirmModal,
     NewImage,
   },
   data() {
@@ -62,10 +70,8 @@ export default {
     },
     changeMainImage() {
       this.activeImage.is_main = !this.activeImage.is_main;
-      this.SET_DIALOG(false);
-      this.modalToShow = null;
-      this.activeImage = null;
       this.$emit("imageChanges");
+      this.closeModal();
     },
     setImageAlt(imageId, imageAlt) {
       this.activeImage = this.newProduct.images.find(
@@ -75,13 +81,27 @@ export default {
       this.$emit("imageChanges");
       this.activeImage = null;
     },
-    async deleteProductImage(imageId) {
+    async deleteProductImage() {
       try {
-        await this.deleteImage(imageId);
+        await this.deleteImage(this.activeImage.id);
         this.$emit('imageDeleted');
       } catch (e) {
         console.error(e);
+      } finally {
+        this.closeModal();
       }
+    },
+    showConfirmModal(imageId) {
+      this.activeImage = this.newProduct.images.find(
+          (image) => image.id === imageId
+      );
+      this.SET_DIALOG(true);
+      this.modalToShow = "confirm";
+    },
+    closeModal() {
+      this.SET_DIALOG(false);
+      this.modalToShow = null;
+      this.activeImage = null;
     }
   },
 };
