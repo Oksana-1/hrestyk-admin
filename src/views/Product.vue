@@ -28,7 +28,7 @@
       <v-col class="caption px-6"
         >Дата створення: {{ product.createdAt | dateToString }}</v-col
       >
-      <v-col class="caption px-6 text-right"
+      <v-col v-if="product.updatedAt" class="caption px-6 text-right"
         >Дата останнього редагування:
         {{ product.updatedAt | dateToString }}</v-col
       >
