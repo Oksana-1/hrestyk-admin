@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="4" v-for="image in productImages" :key="image.id">
+    <v-col cols="12" md="4" sm="6" v-for="image in productImages" :key="image.id">
       <product-image
         :image="image"
         @setImageMain="setImageMain"
@@ -8,7 +8,7 @@
         @deleteImage="showConfirmModal"
       />
     </v-col>
-    <v-col cols="4">
+    <v-col cols="12" md="4" sm="6">
       <new-image />
     </v-col>
     <info-modal
@@ -17,10 +17,10 @@
       @ok="changeMainImage"
     />
     <confirm-modal
-        v-if="modalToShow === 'confirm'"
-        :confirmation-text="'Видалити цю картинку?'"
-        @confirm="deleteProductImage"
-        @cancel="closeModal"
+      v-if="modalToShow === 'confirm'"
+      :confirmation-text="'Видалити цю картинку?'"
+      @confirm="deleteProductImage"
+      @cancel="closeModal"
     />
   </v-row>
 </template>
@@ -30,7 +30,7 @@ import ProductImage from "@/views/product/ProductImage";
 import NewImage from "@/views/product/NewImage";
 import InfoModal from "@/views/modals/InfoModal";
 import ConfirmModal from "@/views/modals/ConfirmModal";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "ProductImages",
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_DIALOG"]),
-    ...mapActions(['deleteImage']),
+    ...mapActions(["deleteImage"]),
     setImageMain(imageId) {
       this.activeImage = this.newProduct.images.find(
         (image) => image.id === imageId
@@ -84,7 +84,7 @@ export default {
     async deleteProductImage() {
       try {
         await this.deleteImage(this.activeImage.id);
-        this.$emit('imageDeleted');
+        this.$emit("imageDeleted");
       } catch (e) {
         console.error(e);
       } finally {
@@ -93,7 +93,7 @@ export default {
     },
     showConfirmModal(imageId) {
       this.activeImage = this.newProduct.images.find(
-          (image) => image.id === imageId
+        (image) => image.id === imageId
       );
       this.SET_DIALOG(true);
       this.modalToShow = "confirm";
@@ -102,7 +102,7 @@ export default {
       this.SET_DIALOG(false);
       this.modalToShow = null;
       this.activeImage = null;
-    }
+    },
   },
 };
 </script>

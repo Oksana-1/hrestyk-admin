@@ -1,29 +1,25 @@
 <template>
   <v-card class="fill-height">
-    <v-responsive min-width="100%" :aspect-ratio="editMode ? 0 : 1">
+    <v-responsive min-width="100%" :aspect-ratio="1">
       <v-card-actions class="justify-center mb-3 flex-shrink-0 fill-height">
         <v-form v-if="editMode" ref="form" v-model="valid">
           <v-row class="align-center">
             <v-col cols="12">
-              <v-responsive :aspect-ratio="1" class="align-end">
-                <v-file-input
-                  label="Завантажити фото"
-                  prepend-icon=""
-                  prepend-inner-icon="mdi-camera"
-                  accept="image/*"
-                  truncate-length="15"
-                  v-model="image.file"
-                  :rules="rules.file"
-                >
+              <v-file-input
+                min-width="100%"
+                label="Завантажити фото"
+                prepend-icon="mdi-camera"
+                accept="image/*"
+                truncate-length="15"
+                v-model="image.file"
+                :rules="rules.file"
+              >
                 <template v-slot:selection="{ text }">
-                    <v-chip small label color="primary">
-                      {{ text }}
-                    </v-chip>
-                  </template>
-                  </v-file-input>
-              </v-responsive>
-            </v-col>
-            <v-col cols="12">
+                  <v-chip small label color="primary">
+                    {{ text }}
+                  </v-chip>
+                </template>
+              </v-file-input>
               <v-card-title class="caption grey--text lighten-4 pl-0 pr-0">
                 <v-text-field label="Alt" v-model="image.alt" />
                 <v-tooltip bottom>
@@ -38,8 +34,8 @@
             </v-col>
           </v-row>
           <v-row class="justify-center">
-            <v-btn text class="mx-2" @click="editMode=false"> Назад </v-btn>
-            <v-btn color="primary"> Зберегти </v-btn>
+            <v-btn text class="mx-2" @click="cancel"> Назад </v-btn>
+            <v-btn color="primary" @click="submit"> Зберегти </v-btn>
           </v-row>
         </v-form>
         <v-tooltip v-else bottom>
@@ -66,6 +62,10 @@
 <script>
 import { errorMessages } from "@/entities/errors/errorMessages";
 import { ProductFormDataImage } from "@/entities/ProductFormData";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import { cloneObject } from "@/utils/helpers";
+import ProductFormData from "@/entities/ProductFormData";
+import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 
 export default {
   name: "NewImage",
@@ -76,19 +76,39 @@ export default {
       rules: {
         file: [(value) => !!value || errorMessages.requiredField],
       },
-      image: new ProductFormDataImage({
-        alt: "",
-        is_main: false,
-        file: null,
-      }),
+      image: new ProductFormDataImage(newProductInitialImage),
     };
   },
+  computed: {
+    ...mapGetters(["product", "newProduct"]),
+  },
   methods: {
-    addPic() {
-      alert("Add a pic please!");
+    ...mapActions(["editProduct"]),
+    ...mapMutations(["SET_NEW_PRODUCT"]),
+    async submit() {
+      this.validate();
+      this.updateStoreNewProduct();
+      await this.editProduct({
+        productId: this.product.id,
+        payload: this.newProduct.getFormData(),
+      });
+      this.editMode = false;
+      this.resetForm();
     },
-    deleteImage() {
-      console.log("DELETE!");
+    updateStoreNewProduct() {
+      const newProductCopy = cloneObject(this.newProduct);
+      newProductCopy.images.push(this.image);
+      this.SET_NEW_PRODUCT(new ProductFormData(newProductCopy));
+    },
+    validate() {
+      this.$refs.form.validate();
+    },
+    resetForm() {
+      this.image = new ProductFormDataImage(newProductInitialImage);
+    },
+    cancel() {
+      this.editMode = false;
+      this.resetForm();
     },
   },
 };
