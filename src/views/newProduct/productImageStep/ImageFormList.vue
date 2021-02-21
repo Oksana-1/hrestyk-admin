@@ -34,6 +34,23 @@
       <v-btn text class="mx-2" @click="$emit('step', 1)"> Назад </v-btn>
       <v-btn color="primary" class="mx-2" @click="submit"> Зберегти </v-btn>
     </v-row>
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="primary"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -58,7 +75,15 @@ export default {
       images: [],
       addPhotoBtnDisabled: false,
       newImageKey: 0,
+      snackbar: false,
+      text: 'Тільки одна картинка може бути головною',
+      timeout: 2000,
     };
+  },
+  computed: {
+    isOnlyOneOrNoneImageMain() {
+      return this.images.filter(image => image.is_main).length <= 1;
+    }
   },
   methods: {
     ...mapMutations(["SET_NEW_PRODUCT"]),
@@ -70,7 +95,6 @@ export default {
         ? this.images.push(newImage)
         : (this.addPhotoBtnDisabled = true);
     },
-
     validate() {
       let isValid = true;
       if (this.$refs.addImageForm) {
@@ -80,6 +104,11 @@ export default {
             isValid = false;
           }
         });
+      }
+      if (!this.isOnlyOneOrNoneImageMain) {
+        this.snackbar = true;
+        isValid = false;
+        return;
       }
       return isValid;
     },
