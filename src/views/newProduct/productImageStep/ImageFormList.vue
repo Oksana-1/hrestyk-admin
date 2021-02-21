@@ -39,7 +39,6 @@
         :timeout="timeout"
     >
       {{ text }}
-
       <template v-slot:action="{ attrs }">
         <v-btn
             color="primary"

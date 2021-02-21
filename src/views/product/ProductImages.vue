@@ -22,6 +22,22 @@
       @confirm="deleteProductImage"
       @cancel="closeModal"
     />
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+    >
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="primary"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 
@@ -47,6 +63,9 @@ export default {
     return {
       modalToShow: null,
       activeImage: null,
+      snackbar: false,
+      text: 'Тільки одна картинка може бути головною',
+      timeout: 2000,
     };
   },
   computed: {
@@ -57,6 +76,9 @@ export default {
         ? "Зробити картинку не головною?"
         : "Зробити картинку головною?";
     },
+    isOnlyOneOrNoneImageMain() {
+      return this.newProduct.images.filter(image => image.is_main).length <= 1;
+    }
   },
   methods: {
     ...mapMutations(["SET_DIALOG"]),
@@ -70,6 +92,10 @@ export default {
     },
     changeMainImage() {
       this.activeImage.is_main = !this.activeImage.is_main;
+      if (!this.isOnlyOneOrNoneImageMain) {
+        this.snackbar = true;
+        return;
+      }
       this.$emit("imageChanges");
       this.closeModal();
     },
