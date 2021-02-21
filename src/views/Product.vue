@@ -33,16 +33,6 @@
         {{ product.updatedAt | dateToString }}</v-col
       >
     </v-row>
-    <info-modal
-      v-if="modalToShow === 'success'"
-      :infoText="'Зміни збережено!'"
-      @ok="closeModal"
-    />
-    <info-modal
-      v-if="modalToShow === 'error'"
-      :infoText="'Упс... Сталася помилка.'"
-      @ok="closeModal"
-    />
     <confirm-modal
       v-if="modalToShow === 'confirm'"
       :confirmation-text="'Видалити цей продукт?'"
@@ -55,7 +45,6 @@
 <script>
 import BaseCard from "../components/base/BaseCard";
 import BaseMenu from "../components/base/BaseMenu";
-import InfoModal from "./modals/InfoModal";
 import ConfirmModal from "./modals/ConfirmModal";
 import ProductForm from "./common/ProductForm";
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -68,7 +57,6 @@ export default {
     ProductImages,
     BaseCard,
     BaseMenu,
-    InfoModal,
     ConfirmModal,
     ProductForm,
   },
@@ -115,12 +103,8 @@ export default {
         });
         this.forceUpdate();
         this.setDefaultProductForm();
-        this.modalToShow = "success";
-        this.SET_DIALOG(true);
       } catch (e) {
         console.error(e);
-        this.modalToShow = "error";
-        this.SET_DIALOG(true);
       }
     },
     deleteItem() {

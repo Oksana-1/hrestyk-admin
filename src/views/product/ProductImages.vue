@@ -94,6 +94,7 @@ export default {
       this.activeImage.is_main = !this.activeImage.is_main;
       if (!this.isOnlyOneOrNoneImageMain) {
         this.snackbar = true;
+        this.closeModal();
         return;
       }
       this.$emit("imageChanges");
