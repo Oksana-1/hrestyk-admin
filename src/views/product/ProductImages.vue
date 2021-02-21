@@ -76,8 +76,8 @@ export default {
         ? "Зробити картинку не головною?"
         : "Зробити картинку головною?";
     },
-    isOnlyOneOrNoneImageMain() {
-      return this.newProduct.images.filter(image => image.is_main).length <= 1;
+    isNoneImageMain() {
+      return this.newProduct.images.filter(image => image.is_main).length === 0;
     }
   },
   methods: {
@@ -91,14 +91,14 @@ export default {
       this.modalToShow = "mainImage";
     },
     changeMainImage() {
-      this.activeImage.is_main = !this.activeImage.is_main;
-      if (!this.isOnlyOneOrNoneImageMain) {
+      if (this.isNoneImageMain || this.activeImage.is_main) {
+        this.activeImage.is_main = !this.activeImage.is_main;
+        this.$emit("imageChanges");
+        this.closeModal();
+      } else {
         this.snackbar = true;
         this.closeModal();
-        return;
       }
-      this.$emit("imageChanges");
-      this.closeModal();
     },
     setImageAlt(imageId, imageAlt) {
       this.activeImage = this.newProduct.images.find(
