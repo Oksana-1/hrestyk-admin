@@ -9,6 +9,7 @@
           <v-col cols="12" class="d-flex justify-center">
             <v-btn
                 color="primary"
+                :disabled="disabledButton"
                 @click="$emit('ok')"
                 class="mx-2"
             >
@@ -27,7 +28,8 @@ import BaseModal from "@/components/base/BaseModal";
 export default {
   name: "InfoModal",
   props: {
-    infoText: String
+    infoText: String,
+    disabledButton: Boolean
   },
   components: {
     BaseModal

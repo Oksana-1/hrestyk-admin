@@ -54,8 +54,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn text class="mx-2" @click="closeDialog"> Відмінити</v-btn>
-      <v-btn color="primary" @click="goToNextStep" class="mx-2">
+      <v-btn text class="mx-2" :disabled="editSubmitting" @click="closeDialog">
+        Відмінити</v-btn
+      >
+      <v-btn color="primary" :disabled="editSubmitting" @click="goToNextStep" class="mx-2">
         Зберегти
       </v-btn>
     </v-row>
@@ -72,6 +74,7 @@ export default {
   name: "ProductForm",
   props: {
     product: ProductFormData,
+    editSubmitting: Boolean,
   },
   data() {
     return {

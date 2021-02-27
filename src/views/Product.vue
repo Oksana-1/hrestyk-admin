@@ -9,7 +9,11 @@
                 <v-row class="justify-end mt-n8 px-2">
                   <base-menu @save="submit" @delete="deleteItem" />
                 </v-row>
-                <product-form :product="newProduct" @validationPass="submit" />
+                <product-form
+                  :product="newProduct"
+                  :edit-submitting="submitting"
+                  @validationPass="submit"
+                />
               </template>
             </BaseCard>
           </v-col>
@@ -109,7 +113,10 @@ export default {
       this.busy = false;
     },
     async submit() {
-      if (!this.isPrimitiveProductPropChanged() && !this.isProductImagesChanged()) {
+      if (
+        !this.isPrimitiveProductPropChanged() &&
+        !this.isProductImagesChanged()
+      ) {
         this.snackbar = true;
         return;
       }
@@ -141,7 +148,7 @@ export default {
         await this.deleteProduct(this.productId);
         await this.$router.push("/products");
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     },
     forceUpdate() {

@@ -37,11 +37,11 @@
             <v-btn
                 text
                 class="mx-2"
-                :disabled="disabledButton"
+                :disabled="busy"
                 @click="cancel"> Назад </v-btn>
             <v-btn
                 color="primary"
-                :disabled="disabledButton"
+                :disabled="busy"
                 @click="submit"> Зберегти </v-btn>
           </v-row>
         </v-form>
@@ -76,9 +76,6 @@ import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 
 export default {
   name: "NewImage",
-  props: {
-    disabledButton: Boolean
-  },
   data() {
     return {
       editMode: false,
@@ -87,6 +84,7 @@ export default {
         file: [(value) => !!value || errorMessages.requiredField],
       },
       image: new ProductFormDataImage(newProductInitialImage),
+      busy: false,
     };
   },
   computed: {
@@ -107,6 +105,7 @@ export default {
       }
       this.validate();
       if (!this.valid) return;
+      this.busy = true;
       try {
         const response = await this.addImage({
           productId: this.product.id,
@@ -115,6 +114,8 @@ export default {
         this.SET_NEW_PRODUCT(new ProductFormData(response));
       } catch (e) {
         console.error(e);
+      } finally {
+        this.busy = false;
       }
       this.editMode = false;
       this.resetForm();

@@ -55,7 +55,6 @@
             :color="image.is_main ? 'primary' : ''"
             v-bind="attrs"
             v-on="on"
-            :disabled="disabledButton"
             @click.prevent="$emit('setImageMain', image.id)"
           >
             <v-icon>mdi-heart</v-icon>

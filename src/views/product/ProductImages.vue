@@ -16,14 +16,12 @@
       />
     </v-col>
     <v-col cols="12" md="4" sm="6">
-      <new-image
-          @showIsMainSnackbar="snackbar = true"
-          :disabled-button="editSubmitting"
-      />
+      <new-image @showIsMainSnackbar="snackbar = true" />
     </v-col>
     <info-modal
       v-if="modalToShow === 'mainImage'"
       :infoText="infoMessage"
+      :disabled-button="editSubmitting"
       @ok="changeMainImage"
     />
     <confirm-modal
@@ -101,7 +99,7 @@ export default {
       if (this.isNoneImageMain || this.activeImage.is_main) {
         this.activeImage.is_main = !this.activeImage.is_main;
         this.$emit("imageChanges");
-        this.closeModal();
+        //this.closeModal();
       } else {
         this.snackbar = true;
         this.closeModal();
