@@ -55,4 +55,13 @@ export class ProductFormDataImage {
     this.is_main = image.is_main;
     this.file = image.file ? image.file : null;
   }
+  getFormdata() {
+    const formData = new FormData();
+    if (this.file) {
+      formData.append("images[0]", this.file);
+    }
+    formData.append("images[0][alt]", this.alt);
+    formData.append("images[0][is_main]", this.is_main);
+    return formData;
+  }
 }

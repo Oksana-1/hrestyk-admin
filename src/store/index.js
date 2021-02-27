@@ -91,6 +91,17 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
+  async addImage({ commit }, { productId, payload }) {
+    commit("SET_LOADING", true);
+    try {
+      const response = await api.addImage(productId, payload);
+      commit("SET_PRODUCT", response);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      commit("SET_LOADING", false);
+    }
+  },
   async deleteImage({ commit }, imageId) {
     try {
       const response = await api.deleteImage(imageId);

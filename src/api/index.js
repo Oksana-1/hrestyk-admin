@@ -2,13 +2,17 @@ import axios from "axios";
 import Product from "../entities/Product";
 
 export const BASE_HOST = "//95.179.185.226:8085/";
-const PRODUCTS_URL = "api/v1/product/all";
-const PRODUCT_URL = "api/v1/product/single/";
-const NEW_PRODUCT_URL = "api/v1/product/store-form-data";
-const DELETE_PRODUCT_URL = "api/v1/product/document";
-const DELETE_IMAGE_URL_BASE = "api/v1/product/image";
-const EDIT_PRODUCT_URL_BASE = "api/v1/product/edit";
-axios.defaults.baseURL = BASE_HOST;
+const API_VERSION = "api/v1/";
+
+const PRODUCTS_URL = "product/all";
+const PRODUCT_URL = "product/single/";
+const NEW_PRODUCT_URL = "product/store-form-data";
+const DELETE_PRODUCT_URL = "product/document";
+const ADD_IMAGE_URL = "product/image";
+const DELETE_IMAGE_URL_BASE = "product/image";
+const EDIT_PRODUCT_URL_BASE = "product/edit";
+axios.defaults.baseURL = BASE_HOST + API_VERSION;
+const boundary = new Date().getTime();
 
 export const getProducts = async () => {
   try {
@@ -35,7 +39,6 @@ export const getProduct = async (productId) => {
   }
 };
 export const createProduct = async (payload) => {
-  const boundary = new Date().getTime();
   try {
     await axios.post(NEW_PRODUCT_URL, payload, {
       headers: {
@@ -53,6 +56,22 @@ export const deleteProduct = async (productId) => {
   } catch (e) {
     console.error(e);
     throw e;
+  }
+};
+export const addImage = async (productId, payload) => {
+  try {
+    const response = await axios.patch(
+      `${ADD_IMAGE_URL}/${productId}`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data; boundary=boundary-" + boundary,
+        },
+      }
+    );
+    return new Product(response.data.data);
+  } catch (e) {
+    console.error(e);
   }
 };
 export const deleteImage = async (imageId) => {

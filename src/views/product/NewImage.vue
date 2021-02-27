@@ -63,8 +63,6 @@
 import { errorMessages } from "@/entities/errors/errorMessages";
 import { ProductFormDataImage } from "@/entities/ProductFormData";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { cloneObject } from "@/utils/helpers";
-import ProductFormData from "@/entities/ProductFormData";
 import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 
 export default {
@@ -83,22 +81,16 @@ export default {
     ...mapGetters(["product", "newProduct"]),
   },
   methods: {
-    ...mapActions(["editProduct"]),
+    ...mapActions(["editProduct", "addImage"]),
     ...mapMutations(["SET_NEW_PRODUCT"]),
     async submit() {
       this.validate();
-      this.updateStoreNewProduct();
-      await this.editProduct({
+      this.addImage({
         productId: this.product.id,
-        payload: this.newProduct.getFormData(),
+        payload: this.image.getFormdata(),
       });
       this.editMode = false;
       this.resetForm();
-    },
-    updateStoreNewProduct() {
-      const newProductCopy = cloneObject(this.newProduct);
-      newProductCopy.images.push(this.image);
-      this.SET_NEW_PRODUCT(new ProductFormData(newProductCopy));
     },
     validate() {
       this.$refs.form.validate();
