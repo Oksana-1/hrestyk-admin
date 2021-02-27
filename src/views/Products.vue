@@ -54,6 +54,7 @@
         v-if="modalToShow === 'confirm'"
         @confirm="doRemove"
         @cancel="closeModal"
+        :disabled-button="removing"
     />
     <new-product-modal
         v-if="modalToShow === 'addProduct'"/>
@@ -74,7 +75,8 @@ export default {
       busy: false,
       modalToShow: null,
       confirmationMessage: 'Видалити цей продукт?',
-      productIdToDelete: null
+      productIdToDelete: null,
+      removing: false,
     }
   },
   components: {
@@ -95,8 +97,13 @@ export default {
     },
     async init() {
       this.busy = true;
-      await this.fetchProducts();
-      this.busy = false;
+      try {
+        await this.fetchProducts();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.busy = false;
+      }
     },
     deleteItemFromList(productId) {
       this.modalToShow = 'confirm';
@@ -104,8 +111,15 @@ export default {
       this.productIdToDelete = productId;
     },
     async doRemove() {
-      await this.deleteProduct(this.productIdToDelete);
-      this.closeModal();
+      this.removing = true;
+      try {
+        await this.deleteProduct(this.productIdToDelete);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.removing = false;
+        this.closeModal();
+      }
     },
     closeModal() {
       this.SET_DIALOG(false);

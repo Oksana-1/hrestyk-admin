@@ -144,11 +144,14 @@ export default {
       this.modalToShow = null;
     },
     async doRemove() {
+      this.submitting = true;
       try {
         await this.deleteProduct(this.productId);
         await this.$router.push("/products");
       } catch (e) {
         console.error(e);
+      } finally {
+        this.submitting = false;
       }
     },
     forceUpdate() {
