@@ -21,6 +21,7 @@
             <v-card-text>
               <image-form-list
                 :product="product"
+                :create-submitting="submitting"
                 @step="step = $event"
                 @validationPass="submit"
               />
@@ -51,6 +52,7 @@ export default {
     return {
       product: new ProductFormData(newProductInitialForm),
       step: 1,
+      submitting: false,
     };
   },
   computed: {
@@ -61,6 +63,7 @@ export default {
     ...mapMutations(["SET_NEW_PRODUCT", "SET_DIALOG"]),
     async submit() {
       try {
+        this.submitting = true;
         const payload = this.newProduct.getFormData();
         await this.postNewProduct(payload);
         this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
@@ -69,6 +72,7 @@ export default {
       } catch (e) {
         console.log(e);
       } finally {
+        this.submitting = false;
         this.SET_DIALOG(false);
       }
     },

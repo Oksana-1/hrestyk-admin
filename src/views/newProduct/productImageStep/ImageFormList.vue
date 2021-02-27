@@ -31,8 +31,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn text class="mx-2" @click="$emit('step', 1)"> Назад </v-btn>
-      <v-btn color="primary" class="mx-2" @click="submit"> Зберегти </v-btn>
+      <v-btn text class="mx-2" :disabled="createSubmitting" @click="$emit('step', 1)"> Назад </v-btn>
+      <v-btn color="primary" class="mx-2" :disabled="createSubmitting" @click="submit"> Зберегти </v-btn>
     </v-row>
     <v-snackbar
         v-model="snackbar"
@@ -68,6 +68,7 @@ export default {
   },
   props: {
     product: ProductFormData,
+    createSubmitting: Boolean,
   },
   data() {
     return {
