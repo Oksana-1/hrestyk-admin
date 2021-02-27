@@ -15,7 +15,7 @@
       />
     </v-col>
     <v-col cols="12" md="4" sm="6">
-      <new-image />
+      <new-image @showIsMainSnackbar="snackbar = true" />
     </v-col>
     <info-modal
       v-if="modalToShow === 'mainImage'"

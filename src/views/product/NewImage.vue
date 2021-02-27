@@ -61,7 +61,9 @@
 
 <script>
 import { errorMessages } from "@/entities/errors/errorMessages";
-import ProductFormData, { ProductFormDataImage } from "@/entities/ProductFormData";
+import ProductFormData, {
+  ProductFormDataImage,
+} from "@/entities/ProductFormData";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 
@@ -79,12 +81,21 @@ export default {
   },
   computed: {
     ...mapGetters(["product", "newProduct"]),
+    isNoneImageMain() {
+      return (
+        this.newProduct.images.filter((image) => image.is_main).length === 0
+      );
+    },
   },
   methods: {
     ...mapActions(["editProduct", "addImage"]),
     ...mapMutations(["SET_NEW_PRODUCT"]),
     async submit() {
       this.validate();
+      if (this.image.is_main && !this.isNoneImageMain) {
+        this.$emit("showIsMainSnackbar");
+        return;
+      }
       try {
         const response = await this.addImage({
           productId: this.product.id,
