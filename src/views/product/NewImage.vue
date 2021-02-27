@@ -34,8 +34,15 @@
             </v-col>
           </v-row>
           <v-row class="justify-center">
-            <v-btn text class="mx-2" @click="cancel"> Назад </v-btn>
-            <v-btn color="primary" @click="submit"> Зберегти </v-btn>
+            <v-btn
+                text
+                class="mx-2"
+                :disabled="disabledButton"
+                @click="cancel"> Назад </v-btn>
+            <v-btn
+                color="primary"
+                :disabled="disabledButton"
+                @click="submit"> Зберегти </v-btn>
           </v-row>
         </v-form>
         <v-tooltip v-else bottom>
@@ -69,10 +76,13 @@ import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 
 export default {
   name: "NewImage",
+  props: {
+    disabledButton: Boolean
+  },
   data() {
     return {
       editMode: false,
-      valid: true,
+      valid: false,
       rules: {
         file: [(value) => !!value || errorMessages.requiredField],
       },
@@ -90,12 +100,13 @@ export default {
   methods: {
     ...mapActions(["editProduct", "addImage"]),
     ...mapMutations(["SET_NEW_PRODUCT"]),
-    async submit() {
-      this.validate();
+    submit: async function () {
       if (this.image.is_main && !this.isNoneImageMain) {
         this.$emit("showIsMainSnackbar");
         return;
       }
+      this.validate();
+      if (!this.valid) return;
       try {
         const response = await this.addImage({
           productId: this.product.id,

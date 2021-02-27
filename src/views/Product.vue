@@ -17,6 +17,7 @@
             <product-images
               :key="`product-images-${componentKey}`"
               :productImages="productImages"
+              :edit-submitting="submitting"
               @imageChanges="submit"
               @imageDeleted="forceUpdate"
             />
@@ -38,6 +39,7 @@
       :confirmation-text="'Видалити цей продукт?'"
       @confirm="doRemove"
       @cancel="closeModal"
+      :disabled-button="submitting"
     />
     <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ text }}
@@ -78,6 +80,7 @@ export default {
       snackbar: false,
       text: "Нічого не змінилося",
       timeout: 2000,
+      submitting: false,
     };
   },
   computed: {
@@ -110,6 +113,7 @@ export default {
         this.snackbar = true;
         return;
       }
+      this.submitting = true;
       try {
         const payload = this.newProduct.getFormData();
         await this.editProduct({
@@ -120,6 +124,8 @@ export default {
         this.setDefaultProductForm();
       } catch (e) {
         console.error(e);
+      } finally {
+        this.submitting = false;
       }
     },
     deleteItem() {
@@ -131,8 +137,12 @@ export default {
       this.modalToShow = null;
     },
     async doRemove() {
-      await this.deleteProduct(this.productId);
-      await this.$router.push("/products");
+      try {
+        await this.deleteProduct(this.productId);
+        await this.$router.push("/products");
+      } catch (e) {
+        console.error(e)
+      }
     },
     forceUpdate() {
       this.componentKey += 1;

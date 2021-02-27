@@ -9,13 +9,17 @@
     >
       <product-image
         :image="image"
+        :disabled-button="editSubmitting"
         @setImageMain="setImageMain"
         @setImageAlt="setImageAlt"
         @deleteImage="showConfirmModal"
       />
     </v-col>
     <v-col cols="12" md="4" sm="6">
-      <new-image @showIsMainSnackbar="snackbar = true" />
+      <new-image
+          @showIsMainSnackbar="snackbar = true"
+          :disabled-button="editSubmitting"
+      />
     </v-col>
     <info-modal
       v-if="modalToShow === 'mainImage'"
@@ -51,6 +55,7 @@ export default {
   name: "ProductImages",
   props: {
     productImages: Array,
+    editSubmitting: Boolean,
   },
   components: {
     ProductImage,

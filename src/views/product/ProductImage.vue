@@ -37,6 +37,7 @@
               icon
               v-bind="attrs"
               v-on="on"
+              :disabled="disabledButton"
               @click.prevent="$emit('setImageAlt', image.id, alt)"
             >
               <v-icon>mdi-content-save</v-icon>
@@ -54,6 +55,7 @@
             :color="image.is_main ? 'primary' : ''"
             v-bind="attrs"
             v-on="on"
+            :disabled="disabledButton"
             @click.prevent="$emit('setImageMain', image.id)"
           >
             <v-icon>mdi-heart</v-icon>
@@ -72,6 +74,7 @@ export default {
   name: "ProductImage",
   props: {
     image: Image,
+    disabledButton: Boolean
   },
   data() {
     return {
