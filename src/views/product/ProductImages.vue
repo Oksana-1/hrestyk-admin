@@ -1,6 +1,12 @@
 <template>
   <v-row>
-    <v-col cols="12" md="4" sm="6" v-for="image in productImages" :key="image.id">
+    <v-col
+      cols="12"
+      md="4"
+      sm="6"
+      v-for="image in productImages"
+      :key="image.id"
+    >
       <product-image
         :image="image"
         @setImageMain="setImageMain"
@@ -22,18 +28,10 @@
       @confirm="deleteProductImage"
       @cancel="closeModal"
     />
-    <v-snackbar
-        v-model="snackbar"
-        :timeout="timeout"
-    >
+    <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ text }}
       <template v-slot:action="{ attrs }">
-        <v-btn
-            color="primary"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-        >
+        <v-btn color="primary" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -64,7 +62,7 @@ export default {
       modalToShow: null,
       activeImage: null,
       snackbar: false,
-      text: 'Тільки одна картинка може бути головною',
+      text: "Тільки одна картинка може бути головною",
       timeout: 2000,
     };
   },
@@ -77,8 +75,10 @@ export default {
         : "Зробити картинку головною?";
     },
     isNoneImageMain() {
-      return this.newProduct.images.filter(image => image.is_main).length === 0;
-    }
+      return (
+        this.newProduct.images.filter((image) => image.is_main).length === 0
+      );
+    },
   },
   methods: {
     ...mapMutations(["SET_DIALOG"]),

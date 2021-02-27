@@ -61,7 +61,7 @@
 
 <script>
 import { errorMessages } from "@/entities/errors/errorMessages";
-import { ProductFormDataImage } from "@/entities/ProductFormData";
+import ProductFormData, { ProductFormDataImage } from "@/entities/ProductFormData";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 
@@ -85,10 +85,15 @@ export default {
     ...mapMutations(["SET_NEW_PRODUCT"]),
     async submit() {
       this.validate();
-      this.addImage({
-        productId: this.product.id,
-        payload: this.image.getFormdata(),
-      });
+      try {
+        const response = await this.addImage({
+          productId: this.product.id,
+          payload: this.image.getFormdata(),
+        });
+        this.SET_NEW_PRODUCT(new ProductFormData(response));
+      } catch (e) {
+        console.error(e);
+      }
       this.editMode = false;
       this.resetForm();
     },

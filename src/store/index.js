@@ -96,6 +96,7 @@ const actions = {
     try {
       const response = await api.addImage(productId, payload);
       commit("SET_PRODUCT", response);
+      return response;
     } catch (e) {
       console.error(e);
     } finally {
