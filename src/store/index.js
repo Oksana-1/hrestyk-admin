@@ -108,6 +108,7 @@ const actions = {
       const response = await api.deleteImage(imageId);
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
+      return response;
     } catch (e) {
       console.error(e);
       throw e;
@@ -119,6 +120,7 @@ const actions = {
       const response = await api.editProduct({ productId, payload });
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
+      return response;
     } catch (e) {
       console.error(e);
       throw e;

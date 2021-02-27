@@ -48,6 +48,7 @@ import NewImage from "@/views/product/NewImage";
 import InfoModal from "@/views/modals/InfoModal";
 import ConfirmModal from "@/views/modals/ConfirmModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import ProductFormData from "@/entities/ProductFormData";
 
 export default {
   name: "ProductImages",
@@ -86,7 +87,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_DIALOG"]),
+    ...mapMutations(["SET_DIALOG", "SET_NEW_PRODUCT"]),
     ...mapActions(["deleteImage"]),
     setImageMain(imageId) {
       this.activeImage = this.newProduct.images.find(
@@ -99,7 +100,7 @@ export default {
       if (this.isNoneImageMain || this.activeImage.is_main) {
         this.activeImage.is_main = !this.activeImage.is_main;
         this.$emit("imageChanges");
-        //this.closeModal();
+        this.closeModal();
       } else {
         this.snackbar = true;
         this.closeModal();
@@ -116,7 +117,8 @@ export default {
     async deleteProductImage() {
       this.busy = true;
       try {
-        await this.deleteImage(this.activeImage.id);
+        const response = (await this.deleteImage(this.activeImage.id)).product;
+        this.SET_NEW_PRODUCT(new ProductFormData(response));
         this.$emit("imageDeleted");
       } catch (e) {
         console.error(e);
