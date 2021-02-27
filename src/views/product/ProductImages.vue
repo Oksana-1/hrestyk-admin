@@ -25,6 +25,7 @@
     <confirm-modal
       v-if="modalToShow === 'confirm'"
       :confirmation-text="'Видалити цю картинку?'"
+      :disabled-button="busy"
       @confirm="deleteProductImage"
       @cancel="closeModal"
     />
@@ -64,6 +65,7 @@ export default {
       snackbar: false,
       text: "Тільки одна картинка може бути головною",
       timeout: 2000,
+      busy: false,
     };
   },
   computed: {
@@ -109,12 +111,14 @@ export default {
       this.activeImage = null;
     },
     async deleteProductImage() {
+      this.busy = true;
       try {
         await this.deleteImage(this.activeImage.id);
         this.$emit("imageDeleted");
       } catch (e) {
         console.error(e);
       } finally {
+        this.busy = false;
         this.closeModal();
       }
     },

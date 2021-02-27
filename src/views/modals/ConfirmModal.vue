@@ -11,6 +11,7 @@
                 color="primary"
                 @click="$emit('confirm')"
                 class="mx-2"
+                :disabled="disabledButton"
             >
               Добре
             </v-btn>
@@ -18,6 +19,7 @@
                 text
                 class="mx-2"
                 @click="$emit('cancel')"
+                :disabled="disabledButton"
             >
               Відмінити
             </v-btn>
@@ -37,7 +39,8 @@ export default {
     BaseModal
   },
   props: {
-    confirmationText: String
+    confirmationText: String,
+    disabledButton: Boolean,
   }
 }
 </script>
