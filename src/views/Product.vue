@@ -39,6 +39,14 @@
       @confirm="doRemove"
       @cancel="closeModal"
     />
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="primary" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -67,6 +75,9 @@ export default {
       busy: false,
       modalToShow: null,
       componentKey: 0,
+      snackbar: false,
+      text: "Нічого не змінилося",
+      timeout: 2000,
     };
   },
   computed: {
@@ -95,6 +106,10 @@ export default {
       this.busy = false;
     },
     async submit() {
+      if (!this.isPrimitiveProductPropChanged() && !this.isProductImagesChanged()) {
+        this.snackbar = true;
+        return;
+      }
       try {
         const payload = this.newProduct.getFormData();
         await this.editProduct({
@@ -125,6 +140,40 @@ export default {
     setDefaultProductForm() {
       if (this.product) {
         this.SET_NEW_PRODUCT(new ProductFormData(this.product));
+      }
+    },
+    isPrimitiveProductPropChanged() {
+      return (
+        Object.keys(this.newProduct).filter((prop) => {
+          if (typeof this.newProduct[prop] !== "object") {
+            return this.product[prop] !== this.newProduct[prop];
+          }
+        }).length > 0
+      );
+    },
+    isProductImagesChanged() {
+      if (
+        !Array.isArray(this.newProduct.images) ||
+        !Array.isArray(this.product.images)
+      ) {
+        throw new Error("Error on comparing images. Images is not an array.");
+      }
+      if (this.product.images.length !== this.newProduct.images.length) {
+        return true;
+      } else {
+        // comparing images props
+        return (
+          this.newProduct.images.filter((image) => {
+            const comparingItem = this.product.images.find(
+              (item) => item.id === image.id
+            );
+            if (!comparingItem) return true;
+            return (
+              image.alt !== comparingItem.alt ||
+              image.is_main !== comparingItem.is_main
+            );
+          }).length > 0
+        );
       }
     },
   },
