@@ -12,6 +12,11 @@
               <div class="font-weight-light">Замовлення</div>
             </div>
           </template>
+          <template v-slot:card-content>
+            <div class="card-title font-weight-light pt-6">
+              Поки що немає замовлень (((
+            </div>
+          </template>
         </base-card>
       </v-col>
       <v-col cols="12" lg="4" md="6">
@@ -23,7 +28,11 @@
               >
               <div class="font-weight-light">Слайдер</div>
             </div>
-          </template>
+          </template> <template v-slot:card-content>
+          <div class="card-title font-weight-light pt-6">
+            Розділ в розробці...
+          </div>
+        </template>
         </base-card>
       </v-col>
     </v-row>
