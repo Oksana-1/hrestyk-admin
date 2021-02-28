@@ -8,7 +8,26 @@
     >
       <v-icon color="#fff">{{ iconName }}</v-icon>
     </v-avatar>
-    <slot name="card-content"/>
+    <v-sheet
+        v-else
+        color="primary"
+        elevation="6"
+        class="rounded pa-6 text-center text-h6 mt-n6"
+        dark
+    >
+      <slot
+          v-if="$slots.heading"
+          name="heading"
+      />
+    </v-sheet>
+    <slot
+        name="card-content"
+    />
+    <template v-if="$slots.actions">
+      <v-card-actions class="pb-0">
+        <slot name="actions" />
+      </v-card-actions>
+    </template>
   </v-card>
 </template>
 
