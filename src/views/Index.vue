@@ -5,10 +5,10 @@
         <main-products-card />
       </v-col>
       <v-col cols="12" lg="4" md="6">
-       <main-slider-card/>
+        <main-order-card/>
       </v-col>
       <v-col cols="12" lg="4" md="6">
-        <main-order-card/>
+        <main-slider-card/>
       </v-col>
     </v-row>
   </v-container>
