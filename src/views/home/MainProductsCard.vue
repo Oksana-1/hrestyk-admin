@@ -3,7 +3,7 @@
     <template v-slot:heading>
       <div class="d-flex justify-center">
         <v-icon color="#fff" class="mr-2">mdi-store</v-icon>
-        <div class="font-weight-light">Магазин</div>
+        <div class="font-weight-light">Товари</div>
       </div>
     </template>
     <template v-slot:card-content>

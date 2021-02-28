@@ -5,47 +5,24 @@
         <main-products-card />
       </v-col>
       <v-col cols="12" lg="4" md="6">
-        <base-card>
-          <template v-slot:heading>
-            <div class="d-flex justify-center fill-height">
-              <v-icon color="#fff" class="mr-2">mdi-cart</v-icon>
-              <div class="font-weight-light">Замовлення</div>
-            </div>
-          </template>
-          <template v-slot:card-content>
-            <div class="card-title font-weight-light pt-6">
-              Поки що немає замовлень (((
-            </div>
-          </template>
-        </base-card>
+       <main-slider-card/>
       </v-col>
       <v-col cols="12" lg="4" md="6">
-        <base-card>
-          <template v-slot:heading>
-            <div class="d-flex justify-center">
-              <v-icon color="#fff" class="mr-2"
-                >mdi-folder-multiple-image</v-icon
-              >
-              <div class="font-weight-light">Слайдер</div>
-            </div>
-          </template> <template v-slot:card-content>
-          <div class="card-title font-weight-light pt-6">
-            Розділ в розробці...
-          </div>
-        </template>
-        </base-card>
+        <main-order-card/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import BaseCard from "@/components/base/BaseCard";
 import MainProductsCard from "@/views/home/MainProductsCard";
+import MainSliderCard from "@/views/home/MainSliderCard";
+import MainOrderCard from "@/views/home/MainOrderCard";
 export default {
   name: "Index",
   components: {
-    BaseCard,
+    MainOrderCard,
+    MainSliderCard,
     MainProductsCard,
   },
 };
