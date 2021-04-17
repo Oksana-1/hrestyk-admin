@@ -1,3 +1,5 @@
+import { ObjectCreationValidator } from "@/entities/ObjectCreationValidator";
+
 export default class ProductFormData {
   constructor(product) {
     this.category = product.category;
@@ -9,6 +11,8 @@ export default class ProductFormData {
     this.qty_available = product.qty_available;
     this.title = product.title;
     this.isActive = product.isActive;
+
+    ObjectCreationValidator.validate(this);
   }
 
   getFormData() {
@@ -54,6 +58,8 @@ export class ProductFormDataImage {
     this.alt = image.alt;
     this.is_main = image.is_main;
     this.file = image.file ? image.file : null;
+
+    ObjectCreationValidator.validate(this);
   }
   getFormdata() {
     const formData = new FormData();
