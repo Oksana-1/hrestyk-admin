@@ -1,4 +1,7 @@
-import * as api from "../api";
+import { ProductApi, OrderApi } from "@/api";
+
+const productApi = new ProductApi();
+const orderApi = new OrderApi();
 
 const state = {
   drawer: null,
@@ -8,6 +11,7 @@ const state = {
   product: null,
   newProduct: null,
   loading: false,
+  orders: null,
 };
 const getters = {
   drawer: (state) => state.drawer,
@@ -17,6 +21,7 @@ const getters = {
   product: (state) => state.product,
   newProduct: (state) => state.newProduct,
   loading: (state) => state.loading,
+  orders: (state) => state.orders,
 };
 const mutations = {
   SET_DRAWER(state, payload) {
@@ -40,12 +45,15 @@ const mutations = {
   SET_LOADING(state, payload) {
     state.loading = payload;
   },
+  SET_ORDERS(state, payload) {
+    state.orders = payload;
+  },
 };
 const actions = {
   async fetchProducts({ commit }) {
     commit("SET_LOADING", true);
     try {
-      const response = await api.getProducts();
+      const response = await productApi.getProducts();
       commit("SET_PRODUCTS", response.products);
       commit("SET_CATEGORIES", response.categories);
     } catch (e) {
@@ -58,7 +66,7 @@ const actions = {
   async getSingleProduct({ commit }, productId) {
     commit("SET_LOADING", true);
     try {
-      const response = await api.getProduct(productId);
+      const response = await productApi.getProduct(productId);
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
     } catch (e) {
@@ -70,7 +78,7 @@ const actions = {
   },
   async postNewProduct({ commit }, payload) {
     try {
-      await api.createProduct(payload);
+      await productApi.createProduct(payload);
       commit("SET_NEW_PRODUCT", {});
     } catch (e) {
       console.error(e);
@@ -80,8 +88,8 @@ const actions = {
   async deleteProduct({ commit }, productId) {
     commit("SET_LOADING", true);
     try {
-      await api.deleteProduct(productId);
-      const response = await api.getProducts();
+      await productApi.deleteProduct(productId);
+      const response = await productApi.getProducts();
       commit("SET_PRODUCTS", response.products);
       commit("SET_CATEGORIES", response.categories);
     } catch (e) {
@@ -94,7 +102,7 @@ const actions = {
   async addImage({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {
-      const response = await api.addImage(productId, payload);
+      const response = await productApi.addImage(productId, payload);
       commit("SET_PRODUCT", response);
       return response;
     } catch (e) {
@@ -105,7 +113,7 @@ const actions = {
   },
   async deleteImage({ commit }, imageId) {
     try {
-      const response = await api.deleteImage(imageId);
+      const response = await productApi.deleteImage(imageId);
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
       return response;
@@ -117,7 +125,7 @@ const actions = {
   async editProduct({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {
-      const response = await api.editProduct({ productId, payload });
+      const response = await productApi.editProduct({ productId, payload });
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
       return response;
@@ -126,6 +134,16 @@ const actions = {
       throw e;
     } finally {
       commit("SET_LOADING", false);
+    }
+  },
+  async getOrders() {
+    console.log("vuex");
+    try {
+      const response = await orderApi.getOrders();
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+      throw e;
     }
   },
 };
