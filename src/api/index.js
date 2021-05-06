@@ -115,9 +115,9 @@ export class ProductApi {
 }
 
 export class OrderApi {
-  async getOrders() {
+  async getOrders(payload) {
     try {
-      return (await axios.get(ORDER_URL)).data.data;
+      return (await axios.get(ORDER_URL, payload)).data.data;
     } catch (e) {
       console.error(e);
       throw e;

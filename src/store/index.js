@@ -137,9 +137,8 @@ const actions = {
     }
   },
   async getOrders() {
-    console.log("vuex");
     try {
-      const response = await orderApi.getOrders();
+      const response = await orderApi.getOrders({ take: 10, skip: 0 });
       console.log(response);
     } catch (e) {
       console.error(e);
