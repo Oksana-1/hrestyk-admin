@@ -12,22 +12,34 @@
                 >
                 <v-col cols="2" class="text-caption primary--text">Сума</v-col>
                 <v-col cols="2" class="text-caption primary--text">Ім'я</v-col>
-                <v-col cols="2" class="text-caption primary--text">Телефон</v-col>
+                <v-col cols="2" class="text-caption primary--text"
+                  >Телефон</v-col
+                >
                 <v-col cols="2" class="text-caption primary--text" />
               </v-row>
             </v-list-item>
             <v-divider />
-            <v-list v-if="!busy" class="py-0 mb-5">
+            <v-list class="py-0 mb-5">
               <order-list-item
                 v-for="order in orders"
                 :key="order.id"
                 :order="order"
                 :loading="busy"
-                @onProductListDelete="deleteOrderFromList($event)"
+                @onOrdertListDelete="deleteOrderFromList($event)"
               />
             </v-list>
           </template>
         </BaseCard>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="6">
+        <v-pagination
+          v-model="page"
+          :length="paginationLength"
+          :disabled="busy"
+          @input="goToPage"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -46,26 +58,38 @@ export default {
   data() {
     return {
       busy: false,
+      page: 1,
+      ordersPerPage: 10,
     };
   },
   computed: {
-    ...mapGetters(["orders"]),
+    ...mapGetters(["orders", "count"]),
+    paginationLength() {
+      return this.count ? this.count / this.ordersPerPage : null;
+    },
+    shift() {
+      return (this.page - 1) * this.ordersPerPage;
+    }
   },
   methods: {
     ...mapActions(["getOrders"]),
     async init() {
       this.busy = true;
       try {
-        await this.getOrders({ take: 10, skip: 190 });
+        await this.getOrders({ take: 10, skip: this.shift });
       } catch (e) {
         console.error(e);
       } finally {
         this.busy = false;
       }
     },
-    deleteOrderFromList() {
+    deleteOrderFromList(itemId) {
+      console.log(itemId);
       console.log("working hard to delete order...");
     },
+    async goToPage() {
+      await this.init();
+    }
   },
   created() {
     this.init();

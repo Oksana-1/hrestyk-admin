@@ -12,6 +12,7 @@ const state = {
   newProduct: null,
   loading: false,
   orders: null,
+  count: null,
 };
 const getters = {
   drawer: (state) => state.drawer,
@@ -22,6 +23,7 @@ const getters = {
   newProduct: (state) => state.newProduct,
   loading: (state) => state.loading,
   orders: (state) => state.orders,
+  count: (state) => state.count,
 };
 const mutations = {
   SET_DRAWER(state, payload) {
@@ -47,6 +49,9 @@ const mutations = {
   },
   SET_ORDERS(state, payload) {
     state.orders = payload;
+  },
+  SET_COUNT(state, payload) {
+    state.count = payload;
   },
 };
 const actions = {
@@ -140,7 +145,8 @@ const actions = {
     commit("SET_LOADING", true);
     try {
       const response = await orderApi.getOrders({ take, skip });
-      commit("SET_ORDERS", response);
+      commit("SET_ORDERS", response.orders);
+      commit("SET_COUNT", response.count);
     } catch (e) {
       console.error(e);
       throw e;

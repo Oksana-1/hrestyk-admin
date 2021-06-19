@@ -118,10 +118,15 @@ export class ProductApi {
 export class OrderApi {
   async getOrders({ take, skip }) {
     try {
-      const response = (
-        await axios.get(`${ORDER_URL}?take=${take}&skip=${skip}`)
-      ).data.data;
-      return response ? response.map((item) => new Order(item)) : null;
+      const response = await axios.get(
+        `${ORDER_URL}?take=${take}&skip=${skip}`
+      );
+      return response
+        ? {
+            orders: response.data.data.map((item) => new Order(item)),
+            count: response.data.count,
+          }
+        : null;
     } catch (e) {
       console.error(e);
       throw e;
