@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-skeleton-loader type="list-item" :loading="loading">
-      <v-list-item link to="/">
+      <v-list-item link :to="`/orders/${order.id}`">
         <v-row align="center" no-gutters>
           <v-col cols="2">
             <v-list-item-content>
