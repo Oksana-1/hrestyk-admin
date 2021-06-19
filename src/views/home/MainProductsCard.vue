@@ -63,7 +63,7 @@ export default {
         )[0].updatedAt;
     },
     lastCreatedDate() {
-      return this.lastProducts ? this.lastProducts[0].createdAt : null;
+      return this.lastProducts && this.lastProducts[0] ? this.lastProducts[0].createdAt : null;
     },
   },
   methods: {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Product from "../entities/Product";
+import Order from "@/entities/Order";
 
 export const BASE_HOST = "//95.179.185.226:8085/";
 const API_VERSION = "api/v1/";
@@ -117,7 +118,8 @@ export class ProductApi {
 export class OrderApi {
   async getOrders(payload) {
     try {
-      return (await axios.get(ORDER_URL, payload)).data.data;
+      const response = (await axios.get(ORDER_URL, payload)).data.data;
+      return response ? response.map((item) => new Order(item)) : null;
     } catch (e) {
       console.error(e);
       throw e;
