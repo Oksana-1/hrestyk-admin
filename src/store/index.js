@@ -154,6 +154,17 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
+  async getOrder({ commit }, orderId) {
+    commit("SET_LOADING", true);
+    try {
+      await orderApi.getOrder(orderId);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    } finally {
+      commit("SET_LOADING", false);
+    }
+  },
 };
 export default {
   state,

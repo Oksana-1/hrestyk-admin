@@ -13,6 +13,7 @@ const ADD_IMAGE_URL = "product/image";
 const DELETE_IMAGE_URL_BASE = "product/image";
 const EDIT_PRODUCT_URL_BASE = "product/edit";
 const ORDER_URL = "cart/all";
+const SINGLE_ORDER_URL = "/cart/show";
 
 axios.defaults.baseURL = BASE_HOST + API_VERSION;
 const boundary = new Date().getTime();
@@ -127,6 +128,15 @@ export class OrderApi {
             count: response.data.count,
           }
         : null;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+  async getOrder(id) {
+    try {
+      const response = await axios.get(`${SINGLE_ORDER_URL}/${id}`);
+      return new Order(response.data.data[0]);
     } catch (e) {
       console.error(e);
       throw e;
