@@ -116,9 +116,11 @@ export class ProductApi {
 }
 
 export class OrderApi {
-  async getOrders(payload) {
+  async getOrders({ take, skip }) {
     try {
-      const response = (await axios.get(ORDER_URL, payload)).data.data;
+      const response = (
+        await axios.get(`${ORDER_URL}?take=${take}&skip=${skip}`)
+      ).data.data;
       return response ? response.map((item) => new Order(item)) : null;
     } catch (e) {
       console.error(e);

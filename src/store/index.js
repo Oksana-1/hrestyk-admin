@@ -136,13 +136,16 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
-  async getOrders() {
+  async getOrders({ commit }, { take, skip }) {
+    commit("SET_LOADING", true);
     try {
-      const response = await orderApi.getOrders({ take: 10, skip: 0 });
-      console.log(response);
+      const response = await orderApi.getOrders({ take, skip });
+      commit("SET_ORDERS", response);
     } catch (e) {
       console.error(e);
       throw e;
+    } finally {
+      commit("SET_LOADING", false);
     }
   },
 };

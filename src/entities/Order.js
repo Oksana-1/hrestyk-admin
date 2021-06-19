@@ -14,6 +14,15 @@ export default class Order {
 
     ObjectCreationValidator.validate(this);
   }
+  get id() {
+    return this._id;
+  }
+  get orderSum() {
+    return this.products.reduce((total, product) => {
+      total = total + product.price * product.amount;
+      return total;
+    }, 0);
+  }
 }
 
 export class OrderProduct {

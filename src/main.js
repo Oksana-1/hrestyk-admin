@@ -7,9 +7,10 @@ import App from "./App.vue";
 import adminStore from "./store";
 import routes from "./routes";
 
-import { dateToString } from "./filters";
+import { dateToString, roundSum } from "./filters";
 
 Vue.filter("dateToString", dateToString);
+Vue.filter("roundSum", roundSum);
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
