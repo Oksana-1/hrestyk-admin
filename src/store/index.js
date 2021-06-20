@@ -12,6 +12,7 @@ const state = {
   newProduct: null,
   loading: false,
   orders: null,
+  order: null,
   count: null,
 };
 const getters = {
@@ -23,6 +24,7 @@ const getters = {
   newProduct: (state) => state.newProduct,
   loading: (state) => state.loading,
   orders: (state) => state.orders,
+  order: (state) => state.order,
   count: (state) => state.count,
 };
 const mutations = {
@@ -49,6 +51,9 @@ const mutations = {
   },
   SET_ORDERS(state, payload) {
     state.orders = payload;
+  },
+  SET_ORDER(state, payload) {
+    state.order = payload;
   },
   SET_COUNT(state, payload) {
     state.count = payload;
@@ -157,7 +162,8 @@ const actions = {
   async getOrder({ commit }, orderId) {
     commit("SET_LOADING", true);
     try {
-      await orderApi.getOrder(orderId);
+      const response = await orderApi.getOrder(orderId);
+      commit("SET_ORDER", response);
     } catch (e) {
       console.error(e);
       throw e;
