@@ -1,7 +1,13 @@
 <template>
   <div>
     <v-container fluid>
-      <api-error v-if="isError"/>
+      <div v-if="busy" class="text-center">
+        <v-progress-circular
+            indeterminate
+            color="primary"
+        />
+      </div>
+      <api-error v-else-if="isError"/>
       <v-row v-else justify="center">
         <v-col cols="12">
           <BaseCard header-type="avatar" icon-name="mdi-store">
