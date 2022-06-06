@@ -66,7 +66,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import { errorMessages } from "@/entities/errors/errorMessages";
+import { errorMessages } from "@/translations/errors/errorMessages";
 import ProductFormData from "@/entities/ProductFormData";
 import { cloneObject } from "@/utils/helpers";
 

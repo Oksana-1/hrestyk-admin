@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { errorMessages } from "@/entities/errors/errorMessages";
+import { errorMessages } from "@/translations/errors/errorMessages";
 import ProductFormData, {
   ProductFormDataImage,
 } from "@/entities/ProductFormData";

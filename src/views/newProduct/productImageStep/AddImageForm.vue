@@ -53,7 +53,7 @@
 
 <script>
 import { ProductFormDataImage } from "@/entities/ProductFormData";
-import { errorMessages } from "@/entities/errors/errorMessages";
+import { errorMessages } from "@/translations/errors/errorMessages";
 
 export default {
   name: "AddImageForm",
