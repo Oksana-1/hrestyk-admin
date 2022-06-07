@@ -2,12 +2,9 @@
   <div>
     <v-container fluid>
       <div v-if="busy" class="text-center">
-        <v-progress-circular
-            indeterminate
-            color="primary"
-        />
+        <v-progress-circular indeterminate color="primary" />
       </div>
-      <api-error v-else-if="isError"/>
+      <api-error v-else-if="isError" />
       <v-row v-else justify="center">
         <v-col cols="12">
           <BaseCard header-type="avatar" icon-name="mdi-store">
@@ -15,23 +12,23 @@
               <template>
                 <v-list-item>
                   <v-row align="center" class="hidden-sm-and-down" no-gutters>
-                    <v-col cols="1" class="text-caption primary--text"
-                      >Картинка</v-col
-                    >
-                    <v-col cols="4" class="text-caption primary--text"
-                      >Назва товару</v-col
-                    >
+                    <v-col cols="1" class="text-caption primary--text">{{
+                      productsHeaders.picture
+                    }}</v-col>
+                    <v-col cols="4" class="text-caption primary--text">{{
+                      productsHeaders.name
+                    }}</v-col>
+                    <v-col cols="2" class="text-caption primary--text">{{
+                      productsHeaders.category
+                    }}</v-col>
+                    <v-col cols="1" class="text-caption primary--text">{{
+                      productsHeaders.price
+                    }}</v-col>
+                    <v-col cols="1" class="text-caption primary--text">{{
+                      productsHeaders.onStock
+                    }}</v-col>
                     <v-col cols="2" class="text-caption primary--text"
-                      >Категорія</v-col
-                    >
-                    <v-col cols="1" class="text-caption primary--text"
-                      >Ціна</v-col
-                    >
-                    <v-col cols="1" class="text-caption primary--text"
-                      >На складі</v-col
-                    >
-                    <v-col cols="2" class="text-caption primary--text"
-                      >Дата</v-col
+                      >{{ productsHeaders.date }}</v-col
                     >
                   </v-row>
                 </v-list-item>
@@ -87,6 +84,7 @@ import NewProductModal from "./newProduct/NewProductModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import ConfirmModal from "./modals/ConfirmModal";
 import ApiError from "@/views/errors/ApiError";
+import { productsHeaders } from "@/translations/pages/products";
 
 export default {
   name: "Products",
@@ -98,6 +96,7 @@ export default {
       productIdToDelete: null,
       removing: false,
       isError: false,
+      productsHeaders,
     };
   },
   components: {
