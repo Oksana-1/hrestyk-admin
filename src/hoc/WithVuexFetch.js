@@ -1,4 +1,6 @@
 import Vue from "vue";
+import LoadSpinner from "@/components/spinners/LoadSpinner";
+import ApiError from "@/views/errors/ApiError";
 
 const WithVuexFetch = (Component, vuexFetch) => {
   const inheritedProps = Component.props || [];
@@ -7,6 +9,7 @@ const WithVuexFetch = (Component, vuexFetch) => {
     data() {
       return {
         status: "initial",
+        error: null,
       };
     },
     methods: {
@@ -15,7 +18,7 @@ const WithVuexFetch = (Component, vuexFetch) => {
         try {
           await this.$store.dispatch(vuexFetch);
         } catch (error) {
-          console.error(error);
+          this.error = error;
         } finally {
           this.status = "ready";
         }
@@ -25,13 +28,24 @@ const WithVuexFetch = (Component, vuexFetch) => {
       this.init();
     },
     render(createElement) {
-      return createElement(Component, {
-        on: { ...this.$listeners },
-        props: {
-          ...this.$props,
-          vuexStatus: this.status,
-        },
-      });
+      if (this.status === "loading") {
+        return createElement(LoadSpinner);
+      } else if (this.error) {
+        return createElement(ApiError, {
+          props: {
+            error: this.error,
+            vuexStatus: this.status,
+          },
+        });
+      } else {
+        return createElement(Component, {
+          on: { ...this.$listeners },
+          props: {
+            ...this.$props,
+            vuexStatus: this.status,
+          },
+        });
+      }
     },
   });
 };
