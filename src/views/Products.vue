@@ -1,12 +1,7 @@
 <template>
   <div>
     <v-container fluid>
-      <div v-if="busy" class="text-center">
-        <v-progress-circular indeterminate color="primary" />
-      </div>
-      <api-error v-else-if="isError" />
       <product-list
-        v-else
         @deleteItemFromList="deleteItemFromList"
         @addProduct="addProduct"
       />
@@ -26,7 +21,6 @@
 import NewProductModal from "./newProduct/NewProductModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import ConfirmModal from "./modals/ConfirmModal";
-import ApiError from "@/views/errors/ApiError";
 import { productsHeaders } from "@/translations/pages/products";
 import ProductList from "@/views/products/ProductList";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
@@ -46,7 +40,6 @@ export default {
   },
   components: {
     ProductList: WithVuexFetch(ProductList, "fetchProducts"),
-    ApiError,
     NewProductModal,
     ConfirmModal,
   },

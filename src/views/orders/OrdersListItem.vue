@@ -61,7 +61,7 @@ import Order from "@/entities/Order";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "OrderListItem",
+  name: "OrdersListItem",
   props: {
     order: Order,
   },
