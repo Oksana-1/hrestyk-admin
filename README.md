@@ -1,5 +1,9 @@
 # hrestyk-admin
 
+## Project requirements
+1. Node v12
+2. Yarn v1
+
 ## Project setup
 ```
 yarn install
