@@ -18,7 +18,7 @@ Vue.use(VueRouter);
 const store = new Vuex.Store(adminStore);
 const router = new VueRouter({
   routes,
-  mode: "history",
+  mode: "hash",
 });
 
 Vue.config.productionTip = false;
