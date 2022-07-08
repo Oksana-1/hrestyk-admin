@@ -23,9 +23,6 @@ export default {
   props: {
     customer: UserInfo,
   },
-  created() {
-    console.log(this.customer);
-  },
 };
 </script>
 

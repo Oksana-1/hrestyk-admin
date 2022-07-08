@@ -1,13 +1,14 @@
 <template>
   <v-container fluid>
-    <orders-list />
-    <v-row justify="center">
+    <load-spinner v-if="busy"/>
+    <orders-list v-else />
+    <v-row justify="center" v-if="false">
       <v-col cols="6">
         <v-pagination
-            v-model="page"
-            :length="paginationLength"
-            :disabled="busy"
-            @input="goToPage"
+          v-model="page"
+          :length="paginationLength"
+          :disabled="busy"
+          @input="goToPage"
         />
       </v-col>
     </v-row>
@@ -15,14 +16,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import OrdersList from "@/views/orders/OrdersList";
-import WithVuexFetch from "@/hoc/WithVuexFetch";
+import LoadSpinner from "@/components/spinners/LoadSpinner";
 
 export default {
   name: "Orders",
   components: {
-    OrdersList: WithVuexFetch(OrdersList, "getOrders"),
+    LoadSpinner,
+    OrdersList,
   },
   data() {
     return {
@@ -38,13 +40,27 @@ export default {
     },
     shift() {
       return (this.page - 1) * this.ordersPerPage;
-    }
+    },
   },
   methods: {
+    ...mapActions(["fetchOrders"]),
+    async init() {
+      this.busy = true;
+      try {
+        await this.fetchOrders({ take: 10, skip: this.shift });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.busy = false;
+      }
+    },
     async goToPage() {
-     console.log("working hard...")
-    }
+      console.log("working hard...");
+    },
   },
+  created() {
+    this.init();
+  }
 };
 </script>
 

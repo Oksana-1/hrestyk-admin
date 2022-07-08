@@ -146,7 +146,7 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
-  async getOrders({ commit }, { take, skip }) {
+  async fetchOrders({ commit }, { take, skip }) {
     commit("SET_LOADING", true);
     try {
       const response = await orderApi.getOrders({ take, skip });
