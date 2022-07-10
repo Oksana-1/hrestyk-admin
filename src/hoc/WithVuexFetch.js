@@ -3,9 +3,9 @@ import LoadSpinner from "@/components/spinners/LoadSpinner";
 import ApiError from "@/views/errors/ApiError";
 
 const WithVuexFetch = (Component, vuexFetch) => {
-  const inheritedProps = Component.props || [];
+  const inheritedProps = Component.props || {};
   return Vue.component("WithVuexFetch", {
-    props: { ...inheritedProps },
+    props: { ...inheritedProps, vuexArgs: String },
     data() {
       return {
         status: "initial",
@@ -13,10 +13,12 @@ const WithVuexFetch = (Component, vuexFetch) => {
       };
     },
     methods: {
-      async init() {
+      init: async function () {
         this.status = "loading";
         try {
-          await this.$store.dispatch(vuexFetch);
+          this.vuexArgs
+            ? await this.$store.dispatch(vuexFetch, this.vuexArgs)
+            : await this.$store.dispatch(vuexFetch);
         } catch (error) {
           this.error = error;
         } finally {

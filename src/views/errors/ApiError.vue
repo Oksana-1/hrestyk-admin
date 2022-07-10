@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-alert dense dismissible border="left" type="error"
+      <v-alert colored-border border="left" type="error"
         >Наш сервер, напевне, заснув. Не будіть його!</v-alert
       >
     </v-col>
