@@ -1,13 +1,11 @@
 <template>
   <div>
-    <v-container fluid class="pb-0">
-      <product-item
-        @submit="submit"
-        @deleteItem="deleteItem"
-        :submitting="submitting"
-        :vuexArgs="productId"
-      />
-    </v-container>
+    <product-item
+      @submit="submit"
+      @deleteItem="deleteItem"
+      :submitting="submitting"
+      :vuexArgs="productId"
+    />
     <confirm-modal
       v-if="modalToShow === 'confirm'"
       :confirmation-text="'Видалити цей продукт?'"

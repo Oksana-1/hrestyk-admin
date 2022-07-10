@@ -1,5 +1,6 @@
 <template>
-  <v-row justify="center">
+  <v-container fluid>
+    <v-row justify="center">
     <v-col cols="12">
       <BaseCard header-type="avatar" icon-name="mdi-store">
         <template v-slot:card-content>
@@ -59,6 +60,7 @@
       </BaseCard>
     </v-col>
   </v-row>
+  </v-container>
 </template>
 
 <script>

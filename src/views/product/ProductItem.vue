@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid class="pb-0">
     <v-form v-model="valid">
       <v-row>
         <v-col cols="12">
@@ -39,7 +39,7 @@
         {{ product.updatedAt | dateToString }}</v-col
       >
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -47,7 +47,7 @@ import BaseCard from "@/components/base/BaseCard";
 import BaseMenu from "@/components/base/BaseMenu";
 import ProductForm from "@/views/common/ProductForm";
 import ProductImages from "@/views/product/ProductImages";
-import {mapGetters, mapMutations} from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import ProductFormData from "@/entities/ProductFormData";
 
 export default {

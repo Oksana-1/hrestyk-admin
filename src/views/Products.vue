@@ -1,11 +1,9 @@
 <template>
   <div>
-    <v-container fluid>
-      <product-list
-        @deleteItemFromList="deleteItemFromList"
-        @addProduct="addProduct"
-      />
-    </v-container>
+    <product-list
+      @deleteItemFromList="deleteItemFromList"
+      @addProduct="addProduct"
+    />
     <confirm-modal
       :confirmationText="confirmationMessage"
       v-if="modalToShow === 'confirm'"
