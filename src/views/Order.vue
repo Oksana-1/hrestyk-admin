@@ -10,7 +10,7 @@
               </v-row>
               <v-row>
                 <v-col cols="8">
-                  <order-info />
+                  <order-info :order="order"/>
                 </v-col>
                 <v-col cols="4">
                   <customer-info :customer="order.userInfo" />
