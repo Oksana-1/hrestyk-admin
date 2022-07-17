@@ -86,7 +86,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["SET_NEW_PRODUCT"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     addFileInput() {
       const newImage = new ProductFormDataImage(newProductInitialImage);
       this.newImageKey++;

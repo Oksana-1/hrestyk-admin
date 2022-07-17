@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <load-spinner v-if="busy"/>
+    <load-spinner v-if="busy" />
     <orders-list v-else />
     <v-row justify="center" v-if="false">
       <v-col cols="6">
@@ -34,7 +34,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["count"]),
+    ...mapGetters("orders", ["count"]),
     paginationLength() {
       return this.count ? this.count / this.ordersPerPage : null;
     },
@@ -43,7 +43,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["fetchOrders"]),
+    ...mapActions("orders", ["fetchOrders"]),
     async init() {
       this.busy = true;
       try {
@@ -60,7 +60,7 @@ export default {
   },
   created() {
     this.init();
-  }
+  },
 };
 </script>
 

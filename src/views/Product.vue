@@ -34,7 +34,7 @@ import ProductFormData from "@/entities/ProductFormData";
 export default {
   name: "Product",
   components: {
-    ProductItem: WithVuexFetch(ProductItem, "getSingleProduct"),
+    ProductItem: WithVuexFetch(ProductItem, "products/getSingleProduct"),
     ConfirmModal,
   },
   data() {
@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["product", "newProduct"]),
+    ...mapGetters("products", ["product", "newProduct"]),
   },
   watch: {
     $route(to) {
@@ -56,8 +56,13 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_DIALOG", "SET_NEW_PRODUCT"]),
-    ...mapActions(["getSingleProduct", "deleteProduct", "editProduct"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
+    ...mapActions("products", [
+      "getSingleProduct",
+      "deleteProduct",
+      "editProduct",
+    ]),
     async submit() {
       if (
         !this.isPrimitiveProductPropChanged() &&

@@ -32,7 +32,7 @@ export default {
     product: Product,
   },
   computed: {
-    ...mapGetters(["loading"]),
+    ...mapGetters("products", ["loading"]),
     mainImageSrc() {
       if (this.product !== undefined) {
         return this.product.images.length > 0

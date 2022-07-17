@@ -73,7 +73,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["newProduct"]),
+    ...mapGetters("products", ["newProduct"]),
     infoMessage() {
       if (!this.activeImage) return "";
       return this.activeImage.is_main
@@ -87,8 +87,9 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_DIALOG", "SET_NEW_PRODUCT"]),
-    ...mapActions(["deleteImage"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
+    ...mapActions("products", ["deleteImage"]),
     setImageMain(imageId) {
       this.activeImage = this.newProduct.images.find(
         (image) => image.id === imageId

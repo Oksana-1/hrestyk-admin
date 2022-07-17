@@ -88,7 +88,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["product", "newProduct"]),
+    ...mapGetters("products", ["product", "newProduct"]),
     isNoneImageMain() {
       return (
         this.newProduct.images.filter((image) => image.is_main).length === 0
@@ -96,8 +96,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["editProduct", "addImage"]),
-    ...mapMutations(["SET_NEW_PRODUCT"]),
+    ...mapActions("products", ["editProduct", "addImage"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     submit: async function () {
       if (this.image.is_main && !this.isNoneImageMain) {
         this.$emit("showIsMainSnackbar");

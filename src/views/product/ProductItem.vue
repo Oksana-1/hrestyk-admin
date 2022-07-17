@@ -68,13 +68,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["product", "newProduct"]),
+    ...mapGetters("products", ["product", "newProduct"]),
     productImages() {
       return this.product ? this.product.images : [];
     },
   },
   methods: {
-    ...mapMutations(["SET_NEW_PRODUCT"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     setDefaultProductForm() {
       if (this.product) {
         this.SET_NEW_PRODUCT(new ProductFormData(this.product));

@@ -1,11 +1,8 @@
-import { ProductApi, OrderApi } from "@/api";
+import { ProductApi } from "@/api";
 
 const productApi = new ProductApi();
-const orderApi = new OrderApi();
 
 const state = {
-  drawer: null,
-  dialog: false,
   products: null,
   categories: null,
   product: null,
@@ -13,27 +10,15 @@ const state = {
   loading: false,
   orders: null,
   order: null,
-  count: null,
 };
 const getters = {
-  drawer: (state) => state.drawer,
-  dialog: (state) => state.dialog,
   products: (state) => state.products,
   categories: (state) => state.categories,
   product: (state) => state.product,
   newProduct: (state) => state.newProduct,
   loading: (state) => state.loading,
-  orders: (state) => state.orders,
-  order: (state) => state.order,
-  count: (state) => state.count,
 };
 const mutations = {
-  SET_DRAWER(state, payload) {
-    state.drawer = payload;
-  },
-  SET_DIALOG(state, payload) {
-    state.dialog = payload;
-  },
   SET_PRODUCTS(state, payload) {
     state.products = payload;
   },
@@ -48,12 +33,6 @@ const mutations = {
   },
   SET_LOADING(state, payload) {
     state.loading = payload;
-  },
-  SET_ORDERS(state, payload) {
-    state.orders = payload;
-  },
-  SET_ORDER(state, payload) {
-    state.order = payload;
   },
   SET_COUNT(state, payload) {
     state.count = payload;
@@ -146,33 +125,10 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
-  async fetchOrders({ commit }, { take, skip }) {
-    commit("SET_LOADING", true);
-    try {
-      const response = await orderApi.getOrders({ take, skip });
-      commit("SET_ORDERS", response.orders);
-      commit("SET_COUNT", response.count);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
-  },
-  async getOrder({ commit }, orderId) {
-    commit("SET_LOADING", true);
-    try {
-      const response = await orderApi.getOrder(orderId);
-      commit("SET_ORDER", response);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
-  },
 };
+
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

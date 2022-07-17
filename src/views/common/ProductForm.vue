@@ -57,7 +57,12 @@
       <v-btn text class="mx-2" :disabled="editSubmitting" @click="closeDialog">
         Відмінити</v-btn
       >
-      <v-btn color="primary" :disabled="editSubmitting" @click="goToNextStep" class="mx-2">
+      <v-btn
+        color="primary"
+        :disabled="editSubmitting"
+        @click="goToNextStep"
+        class="mx-2"
+      >
         Зберегти
       </v-btn>
     </v-row>
@@ -96,7 +101,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["newProduct", "categories"]),
+    ...mapGetters("products", ["newProduct", "categories"]),
     productForm: {
       get() {
         return this.newProduct;
@@ -107,7 +112,8 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["SET_NEW_PRODUCT", "SET_DIALOG", "SET_CATEGORIES"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT", "SET_CATEGORIES"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
     goToNextStep() {
       this.$refs.form.validate();
       if (this.valid) {

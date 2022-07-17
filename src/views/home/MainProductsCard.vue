@@ -45,7 +45,7 @@ export default {
     BaseCard,
   },
   computed: {
-    ...mapGetters(["products"]),
+    ...mapGetters("products", ["products"]),
     lastProducts() {
       if (!this.products) return [];
       return [...this.products]
@@ -67,7 +67,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["fetchProducts"]),
+    ...mapActions("products", ["fetchProducts"]),
     async init() {
       this.busy = true;
       try {

@@ -56,11 +56,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["newProduct"]),
+    ...mapGetters("products", ["newProduct"]),
   },
   methods: {
-    ...mapActions(["postNewProduct", "fetchProducts"]),
-    ...mapMutations(["SET_NEW_PRODUCT", "SET_DIALOG"]),
+    ...mapActions("products", ["postNewProduct", "fetchProducts"]),
+    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
     async submit() {
       try {
         this.submitting = true;

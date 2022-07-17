@@ -37,16 +37,16 @@ export default {
     };
   },
   components: {
-    ProductList: WithVuexFetch(ProductList, "fetchProducts"),
+    ProductList: WithVuexFetch(ProductList, "products/fetchProducts"),
     NewProductModal,
     ConfirmModal,
   },
   computed: {
-    ...mapGetters(["dialog"]),
+    ...mapGetters("dialogs", ["dialog"]),
   },
   methods: {
-    ...mapActions(["deleteProduct"]),
-    ...mapMutations(["SET_DIALOG"]),
+    ...mapActions("products", ["deleteProduct"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
     addProduct() {
       this.SET_DIALOG(true);
       this.modalToShow = "addProduct";

@@ -45,7 +45,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["orders"]),
+    ...mapGetters("orders", ["orders"]),
   },
   methods: {
     deleteOrderFromList(itemId) {

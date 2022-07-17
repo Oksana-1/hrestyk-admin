@@ -4,7 +4,9 @@ import VueRouter from "vue-router";
 import vuetify from "./plugins/vuetify";
 
 import App from "./App.vue";
-import adminStore from "./store";
+import products from "@/store/products";
+import orders from "@/store/orders";
+import dialogs from "@/store/dialogs";
 import routes from "./routes";
 
 import { dateToString, roundSum } from "./filters";
@@ -15,7 +17,13 @@ Vue.filter("roundSum", roundSum);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
-const store = new Vuex.Store(adminStore);
+const store = new Vuex.Store({
+  modules: {
+    products,
+    orders,
+    dialogs,
+  },
+});
 const router = new VueRouter({
   routes,
   mode: "hash",

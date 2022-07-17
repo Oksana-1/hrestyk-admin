@@ -66,7 +66,7 @@ export default {
     order: Order,
   },
   computed: {
-    ...mapGetters(["loading"]),
+    ...mapGetters("orders", ["loading"]),
   },
 };
 </script>

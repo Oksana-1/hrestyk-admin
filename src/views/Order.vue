@@ -55,7 +55,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["order"]),
+    ...mapGetters("orders", ["order"]),
   },
   watch: {
     $route(to) {
@@ -63,7 +63,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["getOrder"]),
+    ...mapActions("orders", ["getOrder"]),
     async init() {
       this.busy = true;
       try {

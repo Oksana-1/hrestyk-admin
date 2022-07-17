@@ -1,29 +1,26 @@
 <template>
-  <v-dialog
-      v-model="baseDialog"
-      :width="dialogWidth"
-  >
+  <v-dialog v-model="baseDialog" :width="dialogWidth">
     <v-card>
-      <slot name="dialog-header"/>
-      <slot name="dialog-body"/>
-      <slot name="dialog-footer"/>
+      <slot name="dialog-header" />
+      <slot name="dialog-body" />
+      <slot name="dialog-footer" />
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex';
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "BaseModal",
   props: {
     dialogWidth: {
       type: String,
-      default: '500px'
-    }
+      default: "500px",
+    },
   },
   computed: {
-    ...mapGetters(['dialog']),
+    ...mapGetters("dialogs", ["dialog"]),
     baseDialog: {
       get() {
         return this.dialog;
@@ -34,11 +31,9 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['SET_DIALOG']),
-  }
-}
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

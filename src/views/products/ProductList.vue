@@ -82,7 +82,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["products"]),
+    ...mapGetters("products", ["products"]),
   }
 }
 </script>
