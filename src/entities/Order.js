@@ -40,6 +40,9 @@ export class OrderProductImage {
   constructor(image) {
     this.alt = image.alt;
     this._uid = image._uid;
+    this.image = image.image;
+    this.is_main = image.is_main;
+    this.url = image.url;
   }
 }
 export class ProcessingStatus {

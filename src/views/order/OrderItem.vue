@@ -1,5 +1,5 @@
 <template>
-  <v-list-item link :to="`/products/${product.id}`">
+  <v-list-item link :to="`/products/${product._id}`">
     <v-row align="center" no-gutters class="py-1">
       <v-col cols="2">
         <v-list-item-avatar color="grey lighten-3">
