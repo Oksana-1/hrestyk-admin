@@ -10,26 +10,27 @@
               </v-row>
               <v-row>
                 <v-col cols="8">
-                  <order-info :order="order"/>
+                  <order-info :order="order" />
                 </v-col>
                 <v-col cols="4">
                   <customer-info :customer="order.userInfo" />
                 </v-col>
               </v-row>
             </template>
+            <template v-slot:actions>
+              <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
+              <span class="caption grey--text font-weight-light">
+                Дата створення: {{ order.createdAt | dateToString }}.
+                <span v-if="order.updatedAt">
+                  Дата останнього редагування:
+                  {{ order.updatedAt | dateToString }}
+                </span>
+              </span>
+            </template>
           </BaseCard>
         </v-col>
       </v-row>
     </v-container>
-    <v-row class="justify-space-between secondary lighten-2 white--text">
-      <v-col class="caption px-6"
-        >Дата створення: {{ order.createdAt | dateToString }}</v-col
-      >
-      <v-col v-if="order.updatedAt" class="caption px-6 text-right"
-        >Дата останнього редагування:
-        {{ order.updatedAt | dateToString }}</v-col
-      >
-    </v-row>
   </div>
 </template>
 
@@ -41,7 +42,7 @@ import OrderInfo from "@/views/order/OrderInfo";
 import CustomerInfo from "@/views/order/CustomerInfo";
 
 export default {
-  name: "Order",
+  name: "OrderItemPage",
   components: {
     BaseCard,
     BaseMenu,

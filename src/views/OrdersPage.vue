@@ -21,7 +21,7 @@ import OrdersList from "@/views/orders/OrdersList";
 import LoadSpinner from "@/components/spinners/LoadSpinner";
 
 export default {
-  name: "Orders",
+  name: "OrdersPage",
   components: {
     LoadSpinner,
     OrdersList,
