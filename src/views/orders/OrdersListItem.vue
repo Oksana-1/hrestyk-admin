@@ -10,6 +10,16 @@
               </div>
             </v-list-item-content>
           </v-col>
+          <v-col cols="3">
+            <v-list-item-content>
+              <div class="text-caption">{{ order.userInfo.name }}</div>
+            </v-list-item-content>
+          </v-col>
+          <v-col cols="2">
+            <v-list-item-content>
+              <div class="text-caption">{{ order.userInfo.phone }}</div>
+            </v-list-item-content>
+          </v-col>
           <v-col cols="2">
             <v-list-item-content>
               <div class="text-caption">{{ order.orderStatus }}</div>
@@ -20,16 +30,6 @@
               <div class="text-caption">
                 {{ order.orderSum | roundSum }} грн
               </div>
-            </v-list-item-content>
-          </v-col>
-          <v-col cols="2">
-            <v-list-item-content>
-              <div class="text-caption">{{ order.userInfo.name }}</div>
-            </v-list-item-content>
-          </v-col>
-          <v-col cols="2">
-            <v-list-item-content>
-              <div class="text-caption">{{ order.userInfo.phone }}</div>
             </v-list-item-content>
           </v-col>
           <v-col cols="1" class="d-flex justify-end">

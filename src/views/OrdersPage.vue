@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       busy: false,
-      page: 1,
+      page: 2,
       ordersPerPage: 10,
     };
   },

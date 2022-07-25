@@ -6,11 +6,11 @@
           <v-list-item>
             <v-row align="center" class="hidden-sm-and-down" no-gutters>
               <v-col cols="2" class="text-caption primary--text">Дата</v-col>
+              <v-col cols="3" class="text-caption primary--text">Замовник</v-col>
+              <v-col cols="2" class="text-caption primary--text">Телефон</v-col>
               <v-col cols="2" class="text-caption primary--text">Статус</v-col>
               <v-col cols="2" class="text-caption primary--text">Сума</v-col>
-              <v-col cols="2" class="text-caption primary--text">Ім'я</v-col>
-              <v-col cols="2" class="text-caption primary--text">Телефон</v-col>
-              <v-col cols="2" class="text-caption primary--text" />
+              <v-col cols="1" class="text-caption primary--text" />
             </v-row>
           </v-list-item>
           <v-divider />
