@@ -32,6 +32,16 @@
         </v-col>
       </v-row>
     </v-list-item>
+    <v-list-item>
+      <v-row v-if="customer.comments" align="center" no-gutters class="py-1">
+        <v-col cols="12">
+          <v-list-item-avatar color="grey lighten-3">
+            <v-icon>mdi-message</v-icon>
+          </v-list-item-avatar>
+          <span class="font-weight-light">{{ customer.comments }}</span>
+        </v-col>
+      </v-row>
+    </v-list-item>
   </v-list>
 </template>
 
