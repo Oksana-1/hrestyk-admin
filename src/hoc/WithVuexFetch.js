@@ -5,7 +5,7 @@ import ApiError from "@/views/errors/ApiError";
 const WithVuexFetch = (Component, vuexFetch) => {
   const inheritedProps = Component.props || {};
   return Vue.component("WithVuexFetch", {
-    props: { ...inheritedProps, vuexArgs: String },
+    props: { ...inheritedProps, vuexArgs: {} },
     data() {
       return {
         status: "initial",
