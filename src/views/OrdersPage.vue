@@ -1,8 +1,10 @@
 <template>
   <v-container fluid>
-    <load-spinner v-if="busy" />
-    <orders-list v-else />
-    <v-row justify="center" v-if="false">
+    <orders-list
+      :key="`ordersList-${componentKey}`"
+      :vuexArgs="{ take: ordersPerPage, skip: shift }"
+    />
+    <v-row justify="center" v-if="paginationLength > 1">
       <v-col cols="6">
         <v-pagination
           v-model="page"
@@ -18,25 +20,25 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import OrdersList from "@/views/orders/OrdersList";
-import LoadSpinner from "@/components/spinners/LoadSpinner";
+import WithVuexFetch from "@/hoc/WithVuexFetch";
 
 export default {
   name: "OrdersPage",
   components: {
-    LoadSpinner,
-    OrdersList,
+    OrdersList: WithVuexFetch(OrdersList, "orders/fetchOrders"),
   },
   data() {
     return {
       busy: false,
-      page: 3,
+      page: 1,
       ordersPerPage: 10,
+      componentKey: 1,
     };
   },
   computed: {
     ...mapGetters("orders", ["count"]),
     paginationLength() {
-      return this.count ? this.count / this.ordersPerPage : null;
+      return this.count ? Math.ceil(this.count / this.ordersPerPage) : null;
     },
     shift() {
       return (this.page - 1) * this.ordersPerPage;
@@ -44,22 +46,13 @@ export default {
   },
   methods: {
     ...mapActions("orders", ["fetchOrders"]),
-    async init() {
-      this.busy = true;
-      try {
-        await this.fetchOrders({ take: 10, skip: this.shift });
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this.busy = false;
-      }
+    async goToPage(page) {
+      this.page = page;
+      this.forceUpdate();
     },
-    async goToPage() {
-      console.log("working hard...");
+    forceUpdate() {
+      this.componentKey += 1;
     },
-  },
-  created() {
-    this.init();
   },
 };
 </script>

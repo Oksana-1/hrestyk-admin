@@ -59,7 +59,7 @@ export class UserInfo {
     this.email = userInfo.email;
     this.phone = userInfo.phone;
     this._id = userInfo._id;
-    this.comments = userInfo.comments;
+    this.comments = userInfo.comments ? userInfo.comments : null;
 
     ObjectCreationValidator.validate(this);
   }

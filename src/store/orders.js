@@ -30,7 +30,6 @@ const mutations = {
 };
 const actions = {
   async fetchOrders({ commit }, { take, skip }) {
-    commit("SET_LOADING", true);
     try {
       const response = await orderApi.getOrders({ take, skip });
       commit("SET_ORDERS", response.orders);
@@ -38,8 +37,6 @@ const actions = {
     } catch (e) {
       console.error(e);
       throw e;
-    } finally {
-      commit("SET_LOADING", false);
     }
   },
   async getOrder({ commit }, orderId) {
