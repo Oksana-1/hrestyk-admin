@@ -11,7 +11,6 @@
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </template>
-
     <v-list>
       <v-list-item
           v-for="(item, i) in items"

@@ -11,6 +11,10 @@
     </v-list-item>
     <v-divider />
     <order-item v-for="product in products" :key="product._id" :product="product"/>
+    <v-divider />
+    <v-row align="center" no-gutters class="pa-3">
+      <v-col  cols="12"><small>Загальна сума: <b>{{ total }} грн</b></small></v-col>
+    </v-row>
   </v-list>
 </template>
 
@@ -22,6 +26,14 @@ export default {
     products: Array,
   },
   components: { OrderItem },
+  computed: {
+    total() {
+      return this.products.reduce((total, product) => {
+        total = total + product.price * product.amount;
+        return total;
+      }, 0);
+    }
+  }
 };
 </script>
 

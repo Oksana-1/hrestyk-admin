@@ -10,7 +10,54 @@
               </v-row>
               <v-row>
                 <v-col cols="8">
-                  <order-info :order="order" />
+                  <v-stepper v-model="step" vertical class="elevation-0">
+                    <v-stepper-step :complete="step > 1" step="1">
+                      Замовлено
+                      <small>id: {{ order.id }}</small>
+                    </v-stepper-step>
+                    <v-stepper-content step="1">
+                      <v-card class="mb-6 elevation-0">
+                        <order-info :order="order" />
+                      </v-card>
+                      <v-btn color="primary" @click="step = 2">
+                        Готове до відправки
+                      </v-btn>
+                    </v-stepper-content>
+                    <v-stepper-step :complete="step > 2" step="2">
+                      Відправлено
+                    </v-stepper-step>
+                    <v-stepper-content step="2">
+                      <v-card class="mb-12 elevation-0">
+                        <order-info :order="order" />
+                        <v-form ref="form">
+                          <v-textarea
+                            label="Інфо по відправці"
+                            v-model="deliveryInfo"
+                          />
+                        </v-form>
+                      </v-card>
+                      <v-btn color="primary" @click="step = 3">
+                        Відправлене
+                      </v-btn>
+                      <v-btn text @click="step = 1">Не готове ще</v-btn>
+                    </v-stepper-content>
+                    <v-stepper-step :complete="step > 3" step="3">
+                      Одержано
+                    </v-stepper-step>
+                    <v-stepper-content step="3">
+                      <v-card class="mb-12 elevation-0">
+                        <order-info :order="order" />
+                      </v-card>
+                      <v-btn color="primary" @click="step = 4">
+                        Одержано
+                      </v-btn>
+                      <v-btn text @click="step = 2">Не відправлено</v-btn>
+                    </v-stepper-content>
+                  </v-stepper>
+                  <v-card v-if="step === 4" class="mb-12 ml-14 elevation-0">
+                    <order-info :order="order" />
+                    <v-btn text @click="step = 3">Не одержано</v-btn>
+                  </v-card>
                 </v-col>
                 <v-col cols="4">
                   <customer-info :customer="order.userInfo" />
@@ -53,6 +100,8 @@ export default {
     return {
       orderId: this.$route.params.id,
       busy: false,
+      step: 1,
+      deliveryInfo: "",
     };
   },
   computed: {

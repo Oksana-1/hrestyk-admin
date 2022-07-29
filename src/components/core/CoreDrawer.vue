@@ -65,7 +65,7 @@ export default {
         {
           icon: "mdi-cart",
           title: "Замовлення",
-          route: "/orders",
+          route: "/orders/all",
         },
         {
           icon: "mdi-cog",

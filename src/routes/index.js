@@ -11,9 +11,9 @@ const routes = [
   { path: "/products", component: Products, name: "Товари" },
   { path: "/products/:id", component: Product, name: "Товар" },
   { path: "/main-slider", component: MainSlider, name: "Слайдер" },
-  { path: "/orders", component: OrdersPage, name: "Всі замовлення" },
+  { path: "/orders/all", component: OrdersPage, name: "Всі замовлення" },
   {
-    path: "/orders/:page",
+    path: "/orders/all/:page",
     component: OrdersPage,
     name: "Більше замовлень",
   },

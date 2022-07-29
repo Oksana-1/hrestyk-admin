@@ -53,7 +53,7 @@ export default {
     ...mapActions("orders", ["fetchOrders"]),
     async goToPage(page) {
       const currentLocation = this.$route.path;
-      const targetLocation = page === 1 ? "/orders" : `/orders/${page}`;
+      const targetLocation = page === 1 ? "/orders/all" : `/orders/all/${page}`;
       if (targetLocation === currentLocation) return;
       await this.$router.push(targetLocation);
       this.forceUpdate();
