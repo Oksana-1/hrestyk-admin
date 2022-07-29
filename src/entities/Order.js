@@ -23,6 +23,13 @@ export default class Order {
       return total;
     }, 0);
   }
+  getContentByStatus(status) {
+    const filteredProcessing = this.processing.filter(
+      (processingItem) => processingItem.processingStatus === status
+    );
+    if (filteredProcessing.length === 0) return "";
+    return filteredProcessing[0].content || "";
+  }
 }
 
 export class OrderProduct {
@@ -47,6 +54,8 @@ export class OrderProductImage {
 }
 export class ProcessingStatus {
   constructor(processing) {
+    this._id = processing._id;
+    this.createdAt = processing.createdAt;
     this.processingStatus = processing.processingStatus;
     this.content = processing.content ? processing.content : "";
 

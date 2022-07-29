@@ -12,10 +12,13 @@ export default class Product {
     this.qty_available = product.qty_available;
     this.title = product.title;
     this.article = product.__v;
-    this.id = product._id;
+    this._id = product._id;
     this.isActive = product.isActive;
 
     ObjectCreationValidator.validate(this);
+  }
+  get id() {
+    return this._id;
   }
 }
 

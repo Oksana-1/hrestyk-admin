@@ -19,7 +19,11 @@
                       <v-card class="mb-6 elevation-0">
                         <order-info :order="order" />
                       </v-card>
-                      <v-btn color="primary" @click="changeStatus('processed')" :disabled="loading">
+                      <v-btn
+                        color="primary"
+                        @click="changeStatus('processed')"
+                        :disabled="loading"
+                      >
                         Готове до відправки
                       </v-btn>
                     </v-stepper-content>
@@ -82,6 +86,13 @@
                 </v-col>
                 <v-col cols="4">
                   <customer-info :customer="order.userInfo" />
+                  <v-card
+                    v-if="deliveryInfo"
+                    class="ma-2 pa-2 elevation-0"
+                    color="grey lighten-5"
+                  >
+                    <pre>{{ deliveryInfo }}</pre>
+                  </v-card>
                 </v-col>
               </v-row>
             </template>
@@ -161,10 +172,15 @@ export default {
     },
     updateState(status) {
       this.step = this.stepMapping[status];
+      this.deliveryInfo = this.order.getContentByStatus("sent");
     },
     async changeStatus(status) {
       try {
-        await this.changeOrderStatus({ id: this.order.id, status, content: this.deliveryInfo });
+        await this.changeOrderStatus({
+          id: this.order.id,
+          status,
+          content: this.deliveryInfo,
+        });
         this.updateState(status);
       } catch (e) {
         console.log(e);
