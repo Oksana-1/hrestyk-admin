@@ -150,10 +150,11 @@ export class OrderApi {
       throw e;
     }
   }
-  async orderProcessing({ id, status }) {
+  async orderProcessing({ id, status, content }) {
     try {
       const response = await axios.patch(
-        `${ORDER_PROCESSING_URL}/${id}/${status}`
+        `${ORDER_PROCESSING_URL}/${id}/${status}`,
+        { content }
       );
       return new Order(response.data.data);
     } catch (e) {

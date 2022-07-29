@@ -164,7 +164,7 @@ export default {
     },
     async changeStatus(status) {
       try {
-        await this.changeOrderStatus({ id: this.order.id, status });
+        await this.changeOrderStatus({ id: this.order.id, status, content: this.deliveryInfo });
         this.updateState(status);
       } catch (e) {
         console.log(e);

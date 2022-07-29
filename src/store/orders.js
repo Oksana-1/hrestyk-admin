@@ -51,9 +51,9 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
-  async changeOrderStatus({ commit }, { id, status }) {
+  async changeOrderStatus({ commit }, { id, status, content }) {
     commit("SET_LOADING", true);
-    const response = await orderApi.orderProcessing({ id, status });
+    const response = await orderApi.orderProcessing({ id, status, content });
     commit("SET_ORDER", response);
     commit("SET_LOADING", false);
   },
