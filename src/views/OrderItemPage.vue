@@ -6,7 +6,7 @@
           <BaseCard header-type="avatar" icon-name="mdi-cart">
             <template v-slot:card-content>
               <v-row class="justify-end mt-n8 px-2">
-                <base-menu @save="submit" @delete="deleteItem" />
+                <base-menu :items="baseMenuItems" @cancel="cancelOrder"/>
               </v-row>
               <v-row>
                 <v-col cols="8">
@@ -56,7 +56,7 @@
                   </v-stepper>
                   <v-card v-if="step === 4" class="mb-12 ml-14 elevation-0">
                     <order-info :order="order" />
-                    <v-btn text @click="step = 3">Не одержано</v-btn>
+                    <v-btn text @click="step = 3" outlined>Не одержано</v-btn>
                   </v-card>
                 </v-col>
                 <v-col cols="4">
@@ -102,6 +102,9 @@ export default {
       busy: false,
       step: 1,
       deliveryInfo: "",
+      baseMenuItems: [
+        { title: "Відмінити", icon: "mdi-alert-octagon", methodToEmit: "cancel" },
+      ],
     };
   },
   computed: {
@@ -124,12 +127,9 @@ export default {
         this.busy = false;
       }
     },
-    submit() {
-      console.log("whaaat?");
-    },
-    deleteItem() {
-      console.log("working hard to delete order...");
-    },
+    cancelOrder() {
+      console.log("I am going to cancel this!");
+    }
   },
   created() {
     this.init();
