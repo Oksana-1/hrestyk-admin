@@ -30,10 +30,15 @@ export default {
   data() {
     return {
       busy: false,
-      page: 1,
+      page: Number(this.$route.params.page) || 1,
       ordersPerPage: 10,
       componentKey: 1,
     };
+  },
+  watch: {
+    $route(to) {
+      this.page = Number(to.params.page) || 1;
+    },
   },
   computed: {
     ...mapGetters("orders", ["count"]),
@@ -47,7 +52,10 @@ export default {
   methods: {
     ...mapActions("orders", ["fetchOrders"]),
     async goToPage(page) {
-      this.page = page;
+      const currentLocation = this.$route.path;
+      const targetLocation = page === 1 ? "/orders" : `/orders/${page}`;
+      if (targetLocation === currentLocation) return;
+      await this.$router.push(targetLocation);
       this.forceUpdate();
     },
     forceUpdate() {
