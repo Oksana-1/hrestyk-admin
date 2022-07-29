@@ -51,6 +51,12 @@ const actions = {
       commit("SET_LOADING", false);
     }
   },
+  async changeOrderStatus({ commit }, { id, status }) {
+    commit("SET_LOADING", true);
+    const response = await orderApi.orderProcessing({ id, status });
+    commit("SET_ORDER", response);
+    commit("SET_LOADING", false);
+  },
 };
 export default {
   namespaced: true,

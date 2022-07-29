@@ -21,6 +21,7 @@ const DELETE_IMAGE_URL_BASE = "product/image";
 const EDIT_PRODUCT_URL_BASE = "product/edit";
 const ORDER_URL = "cart/all";
 const SINGLE_ORDER_URL = "/cart/show";
+const ORDER_PROCESSING_URL = "/order-processing";
 
 axios.defaults.baseURL = BASE_URL;
 const boundary = new Date().getTime();
@@ -144,6 +145,17 @@ export class OrderApi {
     try {
       const response = await axios.get(`${SINGLE_ORDER_URL}/${id}`);
       return new Order(response.data.data[0]);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+  async orderProcessing({ id, status }) {
+    try {
+      const response = await axios.patch(
+        `${ORDER_PROCESSING_URL}/${id}/${status}`
+      );
+      return new Order(response.data.data);
     } catch (e) {
       console.error(e);
       throw e;

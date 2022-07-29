@@ -6,7 +6,7 @@
           <BaseCard header-type="avatar" icon-name="mdi-cart">
             <template v-slot:card-content>
               <v-row class="justify-end mt-n8 px-2">
-                <base-menu :items="baseMenuItems" @cancel="cancelOrder"/>
+                <base-menu :items="baseMenuItems" @cancel="cancelOrder" />
               </v-row>
               <v-row>
                 <v-col cols="8">
@@ -19,7 +19,7 @@
                       <v-card class="mb-6 elevation-0">
                         <order-info :order="order" />
                       </v-card>
-                      <v-btn color="primary" @click="step = 2">
+                      <v-btn color="primary" @click="changeStatus('processed')" :disabled="loading">
                         Готове до відправки
                       </v-btn>
                     </v-stepper-content>
@@ -36,10 +36,19 @@
                           />
                         </v-form>
                       </v-card>
-                      <v-btn color="primary" @click="step = 3">
+                      <v-btn
+                        color="primary"
+                        @click="changeStatus('sent')"
+                        :disabled="loading"
+                      >
                         Відправлене
                       </v-btn>
-                      <v-btn text @click="step = 1">Не готове ще</v-btn>
+                      <v-btn
+                        text
+                        @click="changeStatus('ordered')"
+                        :disabled="loading"
+                        >Не готове ще</v-btn
+                      >
                     </v-stepper-content>
                     <v-stepper-step :complete="step > 3" step="3">
                       Одержано
@@ -48,15 +57,27 @@
                       <v-card class="mb-12 elevation-0">
                         <order-info :order="order" />
                       </v-card>
-                      <v-btn color="primary" @click="step = 4">
+                      <v-btn
+                        color="primary"
+                        @click="changeStatus('finished')"
+                        :disabled="loading"
+                      >
                         Одержано
                       </v-btn>
-                      <v-btn text @click="step = 2">Не відправлено</v-btn>
+                      <v-btn text @click="step = 2" :disabled="loading"
+                        >Не відправлено</v-btn
+                      >
                     </v-stepper-content>
                   </v-stepper>
                   <v-card v-if="step === 4" class="mb-12 ml-14 elevation-0">
                     <order-info :order="order" />
-                    <v-btn text @click="step = 3" outlined>Не одержано</v-btn>
+                    <v-btn
+                      text
+                      outlined
+                      @click="changeStatus('sent')"
+                      :disabled="loading"
+                      >Не одержано</v-btn
+                    >
                   </v-card>
                 </v-col>
                 <v-col cols="4">
@@ -103,12 +124,22 @@ export default {
       step: 1,
       deliveryInfo: "",
       baseMenuItems: [
-        { title: "Відмінити", icon: "mdi-alert-octagon", methodToEmit: "cancel" },
+        {
+          title: "Відмінити",
+          icon: "mdi-alert-octagon",
+          methodToEmit: "cancel",
+        },
       ],
+      stepMapping: {
+        ordered: 1,
+        processed: 2,
+        sent: 3,
+        finished: 4,
+      },
     };
   },
   computed: {
-    ...mapGetters("orders", ["order"]),
+    ...mapGetters("orders", ["order", "loading"]),
   },
   watch: {
     $route(to) {
@@ -116,20 +147,32 @@ export default {
     },
   },
   methods: {
-    ...mapActions("orders", ["getOrder"]),
+    ...mapActions("orders", ["getOrder", "changeOrderStatus"]),
     async init() {
       this.busy = true;
       try {
         await this.getOrder(this.orderId);
+        this.updateState(this.order.orderStatus);
       } catch (e) {
         console.error(e);
       } finally {
         this.busy = false;
       }
     },
+    updateState(status) {
+      this.step = this.stepMapping[status];
+    },
+    async changeStatus(status) {
+      try {
+        await this.changeOrderStatus({ id: this.order.id, status });
+        this.updateState(status);
+      } catch (e) {
+        console.log(e);
+      }
+    },
     cancelOrder() {
       console.log("I am going to cancel this!");
-    }
+    },
   },
   created() {
     this.init();

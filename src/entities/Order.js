@@ -48,7 +48,7 @@ export class OrderProductImage {
 export class ProcessingStatus {
   constructor(processing) {
     this.processingStatus = processing.processingStatus;
-    this.content = processing.content;
+    this.content = processing.content ? processing.content : "";
 
     ObjectCreationValidator.validate(this);
   }
