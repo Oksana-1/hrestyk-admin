@@ -1,15 +1,15 @@
-import Index from "../views/Index";
-import Products from "../views/Products";
-import Product from "../views/Product";
-import MainSlider from "../views/MainSlider";
+import HomePage from "../views/HomePage";
+import ProductsPage from "../views/ProductsPage";
+import SingleProductPage from "../views/SingleProductPage";
+import MainSlider from "../views/MainSliderPage";
 import OrdersPage from "../views/OrdersPage";
-import OrderItemPage from "@/views/OrderItemPage";
-import Settings from "../views/Settings";
+import SingleOrderPage from "@/views/SingleOrderPage";
+import SettingsPage from "../views/SettingsPage";
 
 const routes = [
-  { path: "/", component: Index, name: "Головна" },
-  { path: "/products", component: Products, name: "Товари" },
-  { path: "/products/:id", component: Product, name: "Товар" },
+  { path: "/", component: HomePage, name: "Головна" },
+  { path: "/products", component: ProductsPage, name: "Товари" },
+  { path: "/products/:id", component: SingleProductPage, name: "Товар" },
   { path: "/main-slider", component: MainSlider, name: "Слайдер" },
   { path: "/orders/all", component: OrdersPage, name: "Всі замовлення" },
   {
@@ -17,8 +17,8 @@ const routes = [
     component: OrdersPage,
     name: "Більше замовлень",
   },
-  { path: "/orders/:id", component: OrderItemPage, name: `Замовлення` },
-  { path: "/settings", component: Settings, name: "Налаштування" },
+  { path: "/orders/:id", component: SingleOrderPage, name: `Замовлення` },
+  { path: "/settings", component: SettingsPage, name: "Налаштування" },
   { path: "*", redirect: "/" },
 ];
 export default routes;

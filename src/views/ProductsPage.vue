@@ -24,7 +24,7 @@ import ProductList from "@/views/products/ProductList";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
 
 export default {
-  name: "Products",
+  name: "ProductsPage",
   data() {
     return {
       busy: false,

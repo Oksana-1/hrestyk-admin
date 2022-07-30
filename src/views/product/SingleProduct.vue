@@ -51,7 +51,7 @@ import { mapGetters, mapMutations } from "vuex";
 import ProductFormData from "@/entities/ProductFormData";
 
 export default {
-  name: "ProductItem",
+  name: "SingleProduct",
   props: {
     submitting: Boolean,
   },

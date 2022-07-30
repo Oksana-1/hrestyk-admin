@@ -17,7 +17,7 @@
 <script>
 import BaseCard from "@/components/base/BaseCard";
 export default {
-  name: "Settings",
+  name: "SettingsPage",
   components: {
     BaseCard
   }

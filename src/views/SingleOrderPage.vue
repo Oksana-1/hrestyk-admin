@@ -121,7 +121,7 @@ import OrderInfo from "@/views/order/OrderInfo";
 import CustomerInfo from "@/views/order/CustomerInfo";
 
 export default {
-  name: "OrderItemPage",
+  name: "SingleOrderPage",
   components: {
     BaseCard,
     BaseMenu,

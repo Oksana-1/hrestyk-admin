@@ -1,6 +1,6 @@
 <template>
   <div>
-    <product-item
+    <single-product
       @submit="submit"
       @deleteItem="deleteItem"
       :submitting="submitting"
@@ -27,14 +27,14 @@
 <script>
 import ConfirmModal from "./modals/ConfirmModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import ProductItem from "@/views/product/ProductItem";
+import SingleProduct from "@/views/product/SingleProduct";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
 import ProductFormData from "@/entities/ProductFormData";
 
 export default {
-  name: "Product",
+  name: "SingleProductPage",
   components: {
-    ProductItem: WithVuexFetch(ProductItem, "products/getSingleProduct"),
+    SingleProduct: WithVuexFetch(SingleProduct, "products/getSingleProduct"),
     ConfirmModal,
   },
   data() {
