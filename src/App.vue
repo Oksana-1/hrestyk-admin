@@ -1,24 +1,33 @@
 <template>
   <v-app>
-    <core-drawer/>
+    <core-drawer v-if="isUserAuthorised" />
     <v-main class="grey lighten-4">
-      <router-view/>
+      <router-view @loginSuccess="onLogin" />
     </v-main>
-    <core-bar/>
+    <core-bar v-if="isUserAuthorised" />
   </v-app>
 </template>
 
 <script>
-
 import CoreBar from "./components/core/CoreBar";
 import CoreDrawer from "./components/core/CoreDrawer";
 
 export default {
-  name: 'App',
-
+  name: "App",
   components: {
     CoreBar,
-    CoreDrawer
-  }
+    CoreDrawer,
+  },
+  data() {
+    return {
+      isUserAuthorised: false,
+    };
+  },
+  methods: {
+    onLogin() {
+      this.isUserAuthorised = true;
+      this.$router.push("/");
+    },
+  },
 };
 </script>
