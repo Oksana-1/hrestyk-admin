@@ -12,7 +12,7 @@ import WithVuexFetch from "@/hoc/WithVuexFetch";
 export default {
   name: "SingleOrderPage",
   components: {
-    SingleOrder: WithVuexFetch(SingleOrder, "orders/getOrder"),
+    SingleOrder: WithVuexFetch(SingleOrder, "orders/getOrderById"),
   },
   data() {
     return {

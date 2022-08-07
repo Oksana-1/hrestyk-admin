@@ -39,7 +39,7 @@ const actions = {
       throw e;
     }
   },
-  async getOrder({ commit }, orderId) {
+  async getOrderById({ commit }, orderId) {
     commit("SET_LOADING", true);
     try {
       const response = await orderApi.getOrder(orderId);
@@ -56,6 +56,10 @@ const actions = {
     const response = await orderApi.orderProcessing({ id, status, content });
     commit("SET_ORDER", response);
     commit("SET_LOADING", false);
+  },
+  async deleteOrderById({ dispatch }, id) {
+    await orderApi.deleteOrder(id);
+    await dispatch("fetchOrders");
   },
 };
 export default {

@@ -6,7 +6,9 @@
           <v-list-item>
             <v-row align="center" class="hidden-sm-and-down" no-gutters>
               <v-col cols="2" class="text-caption primary--text">Дата</v-col>
-              <v-col cols="3" class="text-caption primary--text">Замовник</v-col>
+              <v-col cols="3" class="text-caption primary--text"
+                >Замовник</v-col
+              >
               <v-col cols="2" class="text-caption primary--text">Телефон</v-col>
               <v-col cols="2" class="text-caption primary--text">Статус</v-col>
               <v-col cols="2" class="text-caption primary--text">Сума</v-col>
@@ -20,7 +22,7 @@
               :key="order.id"
               :order="order"
               :loading="busy"
-              @onOrdertListDelete="deleteOrderFromList($event)"
+              @onOrderListDelete="$emit('onOrderListDelete', $event)"
             />
           </v-list>
         </template>
@@ -46,12 +48,6 @@ export default {
   },
   computed: {
     ...mapGetters("orders", ["orders"]),
-  },
-  methods: {
-    deleteOrderFromList(itemId) {
-      console.log(itemId);
-      console.log("working hard to delete order...");
-    },
   },
 };
 </script>

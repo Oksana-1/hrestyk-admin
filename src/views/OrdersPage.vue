@@ -3,6 +3,7 @@
     <orders-list
       :key="`ordersList-${componentKey}`"
       :vuexArgs="{ take: ordersPerPage, skip: shift }"
+      @onOrderListDelete="deleteOrderFromList($event)"
     />
     <v-row justify="center" v-if="paginationLength > 1">
       <v-col cols="6">
@@ -50,13 +51,20 @@ export default {
     },
   },
   methods: {
-    ...mapActions("orders", ["fetchOrders"]),
+    ...mapActions("orders", ["fetchOrders", "deleteOrderById"]),
     async goToPage(page) {
       const currentLocation = this.$route.path;
       const targetLocation = page === 1 ? "/orders/all" : `/orders/all/${page}`;
       if (targetLocation === currentLocation) return;
       await this.$router.push(targetLocation);
       this.forceUpdate();
+    },
+    async deleteOrderFromList(itemId) {
+      try {
+        await this.deleteOrderById(itemId);
+      } catch (e) {
+        console.log(e);
+      }
     },
     forceUpdate() {
       this.componentKey += 1;

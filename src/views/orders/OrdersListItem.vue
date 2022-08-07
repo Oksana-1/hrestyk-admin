@@ -41,7 +41,7 @@
                   color="transparent"
                   v-bind="attrs"
                   v-on="on"
-                  @click.prevent="$emit('onOrdertListDelete', order.id)"
+                  @click.prevent="$emit('onOrderListDelete', order.id)"
                 >
                   <v-icon color="grey" small>mdi-delete</v-icon>
                 </v-btn>

@@ -22,6 +22,7 @@ const EDIT_PRODUCT_URL_BASE = "product/edit";
 const ORDER_URL = "cart/all";
 const SINGLE_ORDER_URL = "/cart/show";
 const ORDER_PROCESSING_URL = "/order-processing";
+const ORDER_DELETE_URL = "cart/cart-delete";
 
 const apiAxios = axios.create({ baseURL: BASE_URL });
 const boundary = new Date().getTime();
@@ -157,6 +158,14 @@ export class OrderApi {
         { content }
       );
       return new Order(response.data.data);
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+  async deleteOrder(id) {
+    try {
+      await apiAxios.delete(`${ORDER_DELETE_URL}/${id}`);
     } catch (e) {
       console.error(e);
       throw e;
