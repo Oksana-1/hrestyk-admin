@@ -23,13 +23,13 @@ const ORDER_URL = "cart/all";
 const SINGLE_ORDER_URL = "/cart/show";
 const ORDER_PROCESSING_URL = "/order-processing";
 
-axios.defaults.baseURL = BASE_URL;
+const apiAxios = axios.create({ baseURL: BASE_URL });
 const boundary = new Date().getTime();
 
 export class ProductApi {
   async getProducts() {
     try {
-      const response = (await axios.get(PRODUCTS_URL)).data.data;
+      const response = (await apiAxios.get(PRODUCTS_URL)).data.data;
       return {
         products: response.products.map((item) => new Product(item)),
         categories: response.categories,
@@ -41,7 +41,7 @@ export class ProductApi {
   }
   async getProduct(productId) {
     try {
-      const response = (await axios.get(PRODUCT_URL + productId)).data.data;
+      const response = (await apiAxios.get(PRODUCT_URL + productId)).data.data;
       return {
         product: new Product(response.product),
         categories: response.categories,
@@ -53,7 +53,7 @@ export class ProductApi {
   }
   async createProduct(payload) {
     try {
-      await axios.post(NEW_PRODUCT_URL, payload, {
+      await apiAxios.post(NEW_PRODUCT_URL, payload, {
         headers: {
           "Content-Type": "multipart/form-data; boundary=boundary-" + boundary,
         },
@@ -65,7 +65,7 @@ export class ProductApi {
   }
   async deleteProduct(productId) {
     try {
-      await axios.delete(`${DELETE_PRODUCT_URL}/${productId}`);
+      await apiAxios.delete(`${DELETE_PRODUCT_URL}/${productId}`);
     } catch (e) {
       console.error(e);
       throw e;
@@ -73,7 +73,7 @@ export class ProductApi {
   }
   async addImage(productId, payload) {
     try {
-      const response = await axios.patch(
+      const response = await apiAxios.patch(
         `${ADD_IMAGE_URL}/${productId}`,
         payload,
         {
@@ -91,7 +91,7 @@ export class ProductApi {
   async deleteImage(imageId) {
     try {
       const response = (
-        await axios.delete(`${DELETE_IMAGE_URL_BASE}/${imageId}`)
+        await apiAxios.delete(`${DELETE_IMAGE_URL_BASE}/${imageId}`)
       ).data.data;
       return {
         product: new Product(response.product),
@@ -106,7 +106,7 @@ export class ProductApi {
     const boundary = new Date().getTime();
     try {
       const response = (
-        await axios.patch(`${EDIT_PRODUCT_URL_BASE}/${productId}`, payload, {
+        await apiAxios.patch(`${EDIT_PRODUCT_URL_BASE}/${productId}`, payload, {
           headers: {
             "Content-Type":
               "multipart/form-data; boundary=boundary-" + boundary,
@@ -127,7 +127,7 @@ export class ProductApi {
 export class OrderApi {
   async getOrders({ take, skip }) {
     try {
-      const response = await axios.get(
+      const response = await apiAxios.get(
         `${ORDER_URL}?take=${take}&skip=${skip}`
       );
       return response
@@ -143,7 +143,7 @@ export class OrderApi {
   }
   async getOrder(id) {
     try {
-      const response = await axios.get(`${SINGLE_ORDER_URL}/${id}`);
+      const response = await apiAxios.get(`${SINGLE_ORDER_URL}/${id}`);
       return new Order(response.data.data[0]);
     } catch (e) {
       console.error(e);
@@ -152,7 +152,7 @@ export class OrderApi {
   }
   async orderProcessing({ id, status, content }) {
     try {
-      const response = await axios.patch(
+      const response = await apiAxios.patch(
         `${ORDER_PROCESSING_URL}/${id}/${status}`,
         { content }
       );
