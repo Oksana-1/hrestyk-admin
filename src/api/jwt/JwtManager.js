@@ -5,8 +5,8 @@ import {
 } from "@/utils/helpers";
 import axios from "axios";
 import { Token } from "@/api/jwt/Token";
-import { BASE_URL_HOST, BASE_URL_PORT } from "@/api";
-const BASE_URL = `${BASE_URL_HOST}${BASE_URL_PORT ? ":" + BASE_URL_PORT : ""}`;
+import { BASE_URL } from "@/utils/constants";
+
 axios.defaults.baseURL = BASE_URL;
 
 export default class JwtManager {

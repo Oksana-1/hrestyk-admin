@@ -1,4 +1,5 @@
-import { OrderApi } from "@/api";
+import { OrderApi } from "@/api/OrderApi";
+import withJwt from "@/api/jwt/withJwt";
 
 const orderApi = new OrderApi();
 
@@ -31,7 +32,7 @@ const mutations = {
 const actions = {
   async fetchOrders({ commit }, { take, skip }) {
     try {
-      const response = await orderApi.getOrders({ take, skip });
+      const response = await withJwt(orderApi.getOrders)({ take, skip });
       commit("SET_ORDERS", response.orders);
       commit("SET_COUNT", response.count);
     } catch (e) {
@@ -42,7 +43,7 @@ const actions = {
   async getOrderById({ commit }, orderId) {
     commit("SET_LOADING", true);
     try {
-      const response = await orderApi.getOrder(orderId);
+      const response = await withJwt(orderApi.getOrder)(orderId);
       commit("SET_ORDER", response);
     } catch (e) {
       console.error(e);
@@ -53,12 +54,16 @@ const actions = {
   },
   async changeOrderStatus({ commit }, { id, status, content }) {
     commit("SET_LOADING", true);
-    const response = await orderApi.orderProcessing({ id, status, content });
+    const response = await withJwt(orderApi.orderProcessing)({
+      id,
+      status,
+      content,
+    });
     commit("SET_ORDER", response);
     commit("SET_LOADING", false);
   },
   async deleteOrderById({ dispatch }, id) {
-    await orderApi.deleteOrder(id);
+    await withJwt(orderApi.deleteOrder)(id);
     await dispatch("fetchOrders");
   },
 };

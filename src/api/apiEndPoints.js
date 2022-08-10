@@ -1,0 +1,11 @@
+export const PRODUCTS_URL = "product/all";
+export const PRODUCT_URL = "product/single/";
+export const NEW_PRODUCT_URL = "product/store-form-data";
+export const DELETE_PRODUCT_URL = "product/document";
+export const ADD_IMAGE_URL = "product/image";
+export const DELETE_IMAGE_URL_BASE = "product/image";
+export const EDIT_PRODUCT_URL_BASE = "product/edit";
+export const ORDER_URL = "cart/all";
+export const SINGLE_ORDER_URL = "/cart/show";
+export const ORDER_PROCESSING_URL = "/order-processing";
+export const ORDER_DELETE_URL = "cart/cart-delete";
