@@ -17,7 +17,7 @@ export default class JwtManager {
     const storageToken = JSON.parse(getLocalStorageItem("user"));
     this.accessToken = storageToken ? new Token(storageToken) : null;
   }
-  get hasFullUserAccess() {
+  get hasUserAccess() {
     this.setTokens();
     return Boolean(this.accessToken);
   }
