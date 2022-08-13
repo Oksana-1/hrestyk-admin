@@ -11,6 +11,7 @@
 <script>
 import CoreBar from "./components/core/CoreBar";
 import CoreDrawer from "./components/core/CoreDrawer";
+import JwtManager from "@/api/jwt/JwtManager";
 
 export default {
   name: "App",
@@ -21,13 +22,22 @@ export default {
   data() {
     return {
       isUserAuthorised: false,
+      jwtManager: new JwtManager(),
     };
   },
   methods: {
+    checkHasUserAccess() {
+      this.isUserAuthorised = this.jwtManager.hasUserAccess;
+    },
     onLogin() {
-      this.isUserAuthorised = true;
-      this.$router.push("/");
+      this.checkHasUserAccess();
+      if (this.isUserAuthorised) {
+        this.$router.push("/");
+      }
     },
   },
+  created() {
+    this.checkHasUserAccess();
+  }
 };
 </script>
