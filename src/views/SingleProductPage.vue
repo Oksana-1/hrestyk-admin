@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import ConfirmModal from "./modals/ConfirmModal";
+import ConfirmModal from "../components/modals/ConfirmModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import SingleProduct from "@/views/product/SingleProduct";
 import WithVuexFetch from "@/hoc/WithVuexFetch";

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import BaseModal from "../../components/base/BaseModal";
+import BaseModal from "../base/BaseModal";
 
 export default {
   name: "ConfirmModal",

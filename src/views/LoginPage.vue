@@ -39,7 +39,7 @@
 <script>
 import { signIn } from "@/entities/initialForms/signIn";
 import JwtApi from "@/api/jwt/JwtApi";
-import ApiError from "@/views/errors/ApiError";
+import ApiError from "@/components/errors/ApiError";
 export default {
   name: "LoginPage",
   components: {

@@ -18,7 +18,7 @@
 <script>
 import NewProductModal from "./newProduct/NewProductModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import ConfirmModal from "./modals/ConfirmModal";
+import ConfirmModal from "../components/modals/ConfirmModal";
 import { productsHeaders } from "@/translations/pages/products";
 import ProductList from "@/views/products/ProductList";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
