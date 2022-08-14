@@ -2,7 +2,7 @@
   <v-app>
     <core-drawer v-if="isUserAuthorised" />
     <v-main class="grey lighten-4">
-      <router-view @loginSuccess="onLogin" />
+      <router-view />
     </v-main>
     <core-bar v-if="isUserAuthorised" />
   </v-app>
@@ -11,7 +11,6 @@
 <script>
 import CoreBar from "./components/core/CoreBar";
 import CoreDrawer from "./components/core/CoreDrawer";
-import JwtManager from "@/api/jwt/JwtManager";
 
 export default {
   name: "App",
@@ -21,28 +20,13 @@ export default {
   },
   data() {
     return {
-      isUserAuthorised: false,
-      jwtManager: new JwtManager(),
+      isUserAuthorised: this.$route.path !== "/login" ,
     };
   },
   watch: {
     $route(to) {
-      console.log(to);
+      this.isUserAuthorised = to.path !== "/login"
     },
   },
-  methods: {
-    checkHasUserAccess() {
-      this.isUserAuthorised = this.jwtManager.hasUserAccess;
-    },
-    onLogin() {
-      this.checkHasUserAccess();
-      if (this.isUserAuthorised) {
-        this.$router.push("/");
-      }
-    },
-  },
-  created() {
-    this.checkHasUserAccess();
-  }
 };
 </script>

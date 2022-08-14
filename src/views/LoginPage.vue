@@ -68,11 +68,9 @@ export default {
     async signIn() {
       try {
         await this.jwtApi.signIn(this.form);
+        await this.$router.push("/");
       } catch (e) {
         this.fatalErrorMessage = e.message;
-        console.error(e);
-      } finally {
-        this.$emit("loginSuccess");
       }
     },
   },
