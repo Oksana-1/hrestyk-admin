@@ -7,4 +7,7 @@ export class Token {
 
     ObjectCreationValidator.validate(this);
   }
+  get isValid() {
+    return this.expired * 1000 > new Date();
+  }
 }

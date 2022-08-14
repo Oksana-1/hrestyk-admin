@@ -19,7 +19,7 @@ export default class JwtManager {
   }
   get hasUserAccess() {
     this.setTokens();
-    return Boolean(this.accessToken);
+    return Boolean(this.accessToken && this.accessToken.isValid);
   }
   createAxiosInstanceWithJwt() {
     this.setTokens();

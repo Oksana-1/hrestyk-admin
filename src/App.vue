@@ -25,6 +25,11 @@ export default {
       jwtManager: new JwtManager(),
     };
   },
+  watch: {
+    $route(to) {
+      console.log(to);
+    },
+  },
   methods: {
     checkHasUserAccess() {
       this.isUserAuthorised = this.jwtManager.hasUserAccess;
