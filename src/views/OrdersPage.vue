@@ -15,18 +15,27 @@
         />
       </v-col>
     </v-row>
+    <confirm-modal
+      :confirmationText="confirmationMessage"
+      v-if="modalToShow === 'confirm'"
+      @confirm="doRemove"
+      @cancel="closeModal"
+      :disabled-button="busy"
+    />
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import OrdersList from "@/views/orders/OrdersList";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
 
 export default {
   name: "OrdersPage",
   components: {
     OrdersList: WithVuexFetch(OrdersList, "orders/fetchOrders"),
+    ConfirmModal,
   },
   data() {
     return {
@@ -34,6 +43,9 @@ export default {
       page: Number(this.$route.params.page) || 1,
       ordersPerPage: 10,
       componentKey: 1,
+      modalToShow: null,
+      confirmationMessage: "Видалити це замовлення?",
+      productIdToDelete: null,
     };
   },
   watch: {
@@ -52,6 +64,7 @@ export default {
   },
   methods: {
     ...mapActions("orders", ["fetchOrders", "deleteOrderById"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
     async goToPage(page) {
       const currentLocation = this.$route.path;
       const targetLocation = page === 1 ? "/orders/all" : `/orders/all/${page}`;
@@ -60,11 +73,26 @@ export default {
       this.forceUpdate();
     },
     async deleteOrderFromList(itemId) {
+      this.modalToShow = "confirm";
+      this.SET_DIALOG(true);
+      this.productIdToDelete = itemId;
+    },
+    async doRemove() {
+      this.busy = true;
       try {
-        await this.deleteOrderById(itemId);
+        await this.deleteOrderById(this.productIdToDelete);
+        this.forceUpdate();
       } catch (e) {
-        console.log(e);
+        console.error(e);
+      } finally {
+        this.busy = false;
+        this.closeModal();
       }
+    },
+    closeModal() {
+      this.SET_DIALOG(false);
+      this.modalToShow = null;
+      this.productIdToDelete = null;
     },
     forceUpdate() {
       this.componentKey += 1;

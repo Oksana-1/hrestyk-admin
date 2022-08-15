@@ -62,9 +62,8 @@ const actions = {
     commit("SET_ORDER", response);
     commit("SET_LOADING", false);
   },
-  async deleteOrderById({ dispatch }, id) {
+  async deleteOrderById(_, id) {
     await withJwt(orderApi.deleteOrder)(id);
-    await dispatch("fetchOrders");
   },
 };
 export default {
