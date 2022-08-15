@@ -11,6 +11,9 @@ import routes from "./routes";
 
 import { dateToString, roundSum } from "./filters";
 
+import JwtManager from "@/api/jwt/JwtManager";
+const jwtManager = new JwtManager();
+
 Vue.filter("dateToString", dateToString);
 Vue.filter("roundSum", roundSum);
 
@@ -27,6 +30,12 @@ const store = new Vuex.Store({
 const router = new VueRouter({
   routes,
   mode: "hash",
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = jwtManager.hasUserAccess;
+  if (to.path !== "/login" && !isAuthenticated) next({ path: "/login" });
+  else next();
 });
 
 Vue.config.productionTip = false;

@@ -45,8 +45,8 @@
 <script>
 import ProductImage from "@/views/product/ProductImage";
 import NewImage from "@/views/product/NewImage";
-import InfoModal from "@/views/modals/InfoModal";
-import ConfirmModal from "@/views/modals/ConfirmModal";
+import InfoModal from "@/components/modals/InfoModal";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import ProductFormData from "@/entities/ProductFormData";
 

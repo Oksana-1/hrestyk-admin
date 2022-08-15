@@ -1,6 +1,6 @@
 import Vue from "vue";
 import LoadSpinner from "@/components/spinners/LoadSpinner";
-import ApiError from "@/views/errors/ApiError";
+import ApiError from "@/components/errors/ApiError";
 
 const WithVuexFetch = (Component, vuexFetch) => {
   const inheritedProps = Component.props || {};

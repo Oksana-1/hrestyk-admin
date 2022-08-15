@@ -39,7 +39,7 @@
 <script>
 import { signIn } from "@/entities/initialForms/signIn";
 import JwtApi from "@/api/jwt/JwtApi";
-import ApiError from "@/views/errors/ApiError";
+import ApiError from "@/components/errors/ApiError";
 export default {
   name: "LoginPage",
   components: {
@@ -68,11 +68,9 @@ export default {
     async signIn() {
       try {
         await this.jwtApi.signIn(this.form);
+        await this.$router.push("/");
       } catch (e) {
         this.fatalErrorMessage = e.message;
-        console.error(e);
-      } finally {
-        this.$emit("loginSuccess");
       }
     },
   },

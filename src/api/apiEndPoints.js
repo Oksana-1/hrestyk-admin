@@ -1,0 +1,11 @@
+export const PRODUCTS_URL = "api/v1/admin/product/all";
+export const PRODUCT_URL = "api/v1/admin/product/single/";
+export const NEW_PRODUCT_URL = "api/v1/admin/product/store-form-data";
+export const DELETE_PRODUCT_URL = "api/v1/admin/product/document";
+export const ADD_IMAGE_URL = "api/v1/admin/product/image";
+export const DELETE_IMAGE_URL_BASE = "api/v1/admin/product/image";
+export const EDIT_PRODUCT_URL_BASE = "api/v1/admin/product/edit";
+export const ORDER_URL = "api/v1/cart/all";
+export const SINGLE_ORDER_URL = "api/v1/cart/show";
+export const ORDER_PROCESSING_URL = "api/v1/order-processing";
+export const ORDER_DELETE_URL = "api/v1/cart/cart-delete";

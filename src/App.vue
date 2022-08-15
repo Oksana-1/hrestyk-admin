@@ -2,7 +2,7 @@
   <v-app>
     <core-drawer v-if="isUserAuthorised" />
     <v-main class="grey lighten-4">
-      <router-view @loginSuccess="onLogin" />
+      <router-view />
     </v-main>
     <core-bar v-if="isUserAuthorised" />
   </v-app>
@@ -20,13 +20,12 @@ export default {
   },
   data() {
     return {
-      isUserAuthorised: false,
+      isUserAuthorised: this.$route.path !== "/login" ,
     };
   },
-  methods: {
-    onLogin() {
-      this.isUserAuthorised = true;
-      this.$router.push("/");
+  watch: {
+    $route(to) {
+      this.isUserAuthorised = to.path !== "/login"
     },
   },
 };

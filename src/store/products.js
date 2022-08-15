@@ -1,4 +1,5 @@
-import { ProductApi } from "@/api";
+import { ProductApi } from "@/api/ProductApi";
+import withJwt from "@/api/jwt/withJwt";
 
 const productApi = new ProductApi();
 
@@ -42,7 +43,7 @@ const actions = {
   async fetchProducts({ commit }) {
     commit("SET_LOADING", true);
     try {
-      const response = await productApi.getProducts();
+      const response = await withJwt(productApi.getProducts)();
       commit("SET_PRODUCTS", response.products);
       commit("SET_CATEGORIES", response.categories);
     } catch (e) {
@@ -55,7 +56,7 @@ const actions = {
   async getSingleProduct({ commit }, productId) {
     commit("SET_LOADING", true);
     try {
-      const response = await productApi.getProduct(productId);
+      const response = await withJwt(productApi.getProduct)(productId);
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
     } catch (e) {
@@ -67,20 +68,18 @@ const actions = {
   },
   async postNewProduct({ commit }, payload) {
     try {
-      await productApi.createProduct(payload);
+      await withJwt(productApi.createProduct)(payload);
       commit("SET_NEW_PRODUCT", {});
     } catch (e) {
       console.error(e);
       throw e;
     }
   },
-  async deleteProduct({ commit }, productId) {
+  async deleteProduct({ commit, dispatch }, productId) {
     commit("SET_LOADING", true);
     try {
-      await productApi.deleteProduct(productId);
-      const response = await productApi.getProducts();
-      commit("SET_PRODUCTS", response.products);
-      commit("SET_CATEGORIES", response.categories);
+      await withJwt(productApi).deleteProduct(productId);
+      dispatch("fetchProducts");
     } catch (e) {
       console.error(e);
       throw e;
@@ -91,7 +90,7 @@ const actions = {
   async addImage({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {
-      const response = await productApi.addImage(productId, payload);
+      const response = await withJwt(productApi.addImage)(productId, payload);
       commit("SET_PRODUCT", response);
       return response;
     } catch (e) {
@@ -102,7 +101,7 @@ const actions = {
   },
   async deleteImage({ commit }, imageId) {
     try {
-      const response = await productApi.deleteImage(imageId);
+      const response = await withJwt(productApi.deleteImage)(imageId);
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
       return response;
@@ -114,7 +113,10 @@ const actions = {
   async editProduct({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {
-      const response = await productApi.editProduct({ productId, payload });
+      const response = await withJwt(productApi.editProduct)({
+        productId,
+        payload,
+      });
       commit("SET_PRODUCT", response.product);
       commit("SET_CATEGORIES", response.categories);
       return response;
