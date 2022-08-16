@@ -9,6 +9,12 @@
             </v-row>
             <v-row>
               <v-col cols="8">
+                <v-row class="align-center px-7">
+                  <v-avatar color="grey lighten-3" size="40"
+                    ><v-icon>mdi-exclamation-thick</v-icon></v-avatar
+                  >
+                  <div class="mx-4">Замовлення відхилено</div>
+                </v-row>
                 <v-stepper v-model="step" vertical class="elevation-0">
                   <v-stepper-step :complete="step > 1" step="1">
                     Замовлено
@@ -137,6 +143,7 @@ export default {
         },
       ],
       stepMapping: {
+        declined: 0,
         ordered: 1,
         processed: 2,
         sent: 3,
@@ -168,8 +175,12 @@ export default {
         console.log(e);
       }
     },
-    cancelOrder() {
-      console.log("I am going to cancel this!");
+    async cancelOrder() {
+      try {
+        await this.changeStatus("declined ");
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   created() {
