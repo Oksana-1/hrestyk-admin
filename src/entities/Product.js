@@ -26,7 +26,7 @@ export class Image {
   constructor(image) {
     this.alt = image.alt;
     this.is_main = image.is_main;
-    this.url = /^http/.test(image.url) ? image.url : BASE_URL + image.url;
+    this.url = /^http/.test(image.url) ? image.url : BASE_URL + "/" + image.url;
     this.id = image._id;
 
     ObjectCreationValidator.validate(this);
