@@ -85,14 +85,20 @@ export default {
       },
       image: new ProductFormDataImage(newProductInitialImage),
       busy: false,
+      productId: this.$route.params.id,
     };
   },
   computed: {
-    ...mapGetters("products", ["product", "newProduct"]),
+    ...mapGetters("products", ["newProduct"]),
     isNoneImageMain() {
       return (
         this.newProduct.images.filter((image) => image.is_main).length === 0
       );
+    },
+  },
+  watch: {
+    $route(to) {
+      this.productId = to.params.id;
     },
   },
   methods: {
@@ -108,7 +114,7 @@ export default {
       this.busy = true;
       try {
         const response = await this.addImage({
-          productId: this.product.id,
+          productId: this.productId,
           payload: this.image.getFormdata(),
         });
         this.SET_NEW_PRODUCT(new ProductFormData(response));

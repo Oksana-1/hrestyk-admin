@@ -90,7 +90,10 @@ const actions = {
   async addImage({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
     try {
-      const response = await withJwt(productApi.addImage)(productId, payload);
+      const response = await withJwt(productApi.addImage)({
+        productId,
+        payload,
+      });
       commit("SET_PRODUCT", response);
       return response;
     } catch (e) {
