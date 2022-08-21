@@ -5,7 +5,7 @@
         <main-products-card />
       </v-col>
       <v-col cols="12" lg="4" md="6">
-        <main-order-card/>
+        <main-order-card  :vuexArgs="{ take: 10, skip: 0 }"/>
       </v-col>
       <v-col cols="12" lg="4" md="6">
         <main-slider-card/>
@@ -18,12 +18,14 @@
 import MainProductsCard from "@/views/home/MainProductsCard";
 import MainSliderCard from "@/views/home/MainSliderCard";
 import MainOrderCard from "@/views/home/MainOrderCard";
+import WithVuexFetch from "@/hoc/WithVuexFetch";
+
 export default {
   name: "Index",
   components: {
-    MainOrderCard,
+    MainOrderCard: WithVuexFetch(MainOrderCard, "orders/fetchOrders"),
     MainSliderCard,
-    MainProductsCard,
+    MainProductsCard: WithVuexFetch(MainProductsCard, "products/fetchProducts"),
   },
 };
 </script>

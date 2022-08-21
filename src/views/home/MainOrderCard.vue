@@ -7,23 +7,35 @@
       </div>
     </template>
     <template v-slot:card-content>
-      <div class="card-title font-weight-light pt-6">
-        Поки що немає замовлень (((
-      </div>
+      <not-found
+        v-if="orders.length === 0"
+        :message="notFoundMessages.orders"
+      />
     </template>
   </base-mini-card>
 </template>
 
 <script>
 import BaseMiniCard from "@/components/base/BaseMiniCard";
+import { mapGetters } from "vuex";
+import NotFound from "@/components/not-found/NotFound";
+import notFoundMessages from "@/translations/not-found/notFoundMessages";
+
 export default {
   name: "MainOrderCard",
   components: {
-    BaseMiniCard
-  }
-}
+    NotFound,
+    BaseMiniCard,
+  },
+  data() {
+    return {
+      notFoundMessages,
+    };
+  },
+  computed: {
+    ...mapGetters("orders", ["orders"]),
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

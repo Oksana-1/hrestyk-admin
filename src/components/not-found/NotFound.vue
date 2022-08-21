@@ -5,7 +5,11 @@
         <v-icon>mdi-timer-sand-empty</v-icon>
       </v-avatar>
     </v-col>
-    <v-col cols="12" class="text-center" v-html="message" />
+    <v-col
+      cols="12"
+      class="text-center card-title font-weight-light"
+      v-html="message"
+    />
   </v-row>
 </template>
 

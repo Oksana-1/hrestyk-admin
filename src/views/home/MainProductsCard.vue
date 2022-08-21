@@ -39,7 +39,7 @@
 <script>
 import BaseMiniCard from "@/components/base/BaseMiniCard";
 import MainProductRow from "@/views/home/MainProductRow";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import NotFound from "@/components/not-found/NotFound";
 import notFoundMessages from "@/translations/not-found/notFoundMessages";
 
@@ -76,22 +76,6 @@ export default {
     lastCreatedDate() {
       return this.lastProducts && this.lastProducts[0] ? this.lastProducts[0].createdAt : null;
     },
-  },
-  methods: {
-    ...mapActions("products", ["fetchProducts"]),
-    async init() {
-      this.busy = true;
-      try {
-        await this.fetchProducts();
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this.busy = false;
-      }
-    },
-  },
-  created() {
-    this.init();
   },
 };
 </script>
