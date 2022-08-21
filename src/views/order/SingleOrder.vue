@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <BaseCard header-type="avatar" icon-name="mdi-cart">
+        <BaseCard icon-name="mdi-cart">
           <template v-slot:card-content>
             <v-row class="justify-end mt-n8 px-2">
               <base-menu :items="baseMenuItems" @cancel="cancelOrder" />

@@ -1,5 +1,5 @@
 <template>
-  <base-card>
+  <base-mini-card page-link="/products">
     <template v-slot:heading>
       <div class="d-flex justify-center">
         <v-icon color="#fff" class="mr-2">mdi-store</v-icon>
@@ -7,19 +7,22 @@
       </div>
     </template>
     <template v-slot:card-content>
-      <div class="card-title font-weight-light pt-6">
-        Останні додані товари:
-      </div>
-      <v-divider class="mt-2" />
-      <v-list avatar="true" class="py-0 mb-5">
-        <main-product-row
-          v-for="item in lastProducts"
-          :key="item.id"
-          :product="item"
-        />
-      </v-list>
+      <not-found v-if="products.length === 0" :message="notFoundMessages.products"/>
+      <template v-else>
+        <div class="card-title font-weight-light pt-6">
+          Останні додані товари:
+        </div>
+        <v-divider class="mt-2" />
+        <v-list avatar="true" class="py-0 mb-5">
+          <main-product-row
+              v-for="item in lastProducts"
+              :key="item.id"
+              :product="item"
+          />
+        </v-list>
+      </template>
     </template>
-    <template v-slot:actions>
+    <template v-if="products.length > 0" v-slot:actions>
       <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
       <span class="caption grey--text font-weight-light"
         >останнє оновлення:
@@ -30,19 +33,27 @@
         }}</span
       >
     </template>
-  </base-card>
+  </base-mini-card>
 </template>
 
 <script>
-import BaseCard from "@/components/base/BaseCard";
+import BaseMiniCard from "@/components/base/BaseMiniCard";
 import MainProductRow from "@/views/home/MainProductRow";
 import { mapActions, mapGetters } from "vuex";
+import NotFound from "@/components/not-found/NotFound";
+import notFoundMessages from "@/translations/not-found/notFoundMessages";
 
 export default {
   name: "MainProductsCard",
   components: {
+    NotFound,
     MainProductRow,
-    BaseCard,
+    BaseMiniCard,
+  },
+  data() {
+    return {
+      notFoundMessages
+    }
   },
   computed: {
     ...mapGetters("products", ["products"]),

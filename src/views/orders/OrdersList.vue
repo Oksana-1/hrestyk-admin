@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <BaseCard header-type="avatar" icon-name="mdi-cart">
+      <BaseCard icon-name="mdi-cart">
         <template v-slot:card-content>
           <not-found v-if="orders.length === 0" :message="notFound" />
           <template v-else>

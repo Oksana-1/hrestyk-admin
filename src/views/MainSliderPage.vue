@@ -2,7 +2,7 @@
   <v-container fluid>
       <v-row>
         <v-col cols="12">
-          <BaseCard header-type="avatar" icon-name="mdi-folder-multiple-image">
+          <BaseCard icon-name="mdi-folder-multiple-image">
             <template v-slot:card-content>
               <v-row class="pa-6">
                 Тут буде сторінка зі слайдами головного слайдера

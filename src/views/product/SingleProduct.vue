@@ -3,7 +3,7 @@
     <v-form v-model="valid">
       <v-row>
         <v-col cols="12">
-          <BaseCard header-type="avatar" icon-name="mdi-store">
+          <BaseCard icon-name="mdi-store">
             <template v-slot:card-content>
               <v-row class="justify-end mt-n8 px-2">
                 <base-menu

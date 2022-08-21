@@ -1,5 +1,5 @@
 <template>
-  <base-card>
+  <base-mini-card page-link="/orders/all">
     <template v-slot:heading>
       <div class="d-flex justify-center fill-height">
         <v-icon color="#fff" class="mr-2">mdi-cart</v-icon>
@@ -11,15 +11,15 @@
         Поки що немає замовлень (((
       </div>
     </template>
-  </base-card>
+  </base-mini-card>
 </template>
 
 <script>
-import BaseCard from "@/components/base/BaseCard";
+import BaseMiniCard from "@/components/base/BaseMiniCard";
 export default {
   name: "MainOrderCard",
   components: {
-    BaseCard
+    BaseMiniCard
   }
 }
 </script>

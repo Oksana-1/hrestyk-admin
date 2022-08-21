@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row justify="center">
       <v-col cols="12">
-        <BaseCard header-type="avatar" icon-name="mdi-store">
+        <BaseCard icon-name="mdi-store">
           <template v-slot:card-content>
             <not-found v-if="products.length === 0" :message="notFound" />
             <template v-else>
