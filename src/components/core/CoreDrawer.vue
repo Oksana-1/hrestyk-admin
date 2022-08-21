@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    src="../../assets/images/hrestyk.jpg"
+    src="@/assets/images/hrestyk.jpg"
     dark
     app
   >
