@@ -78,7 +78,7 @@ const actions = {
   async deleteProduct({ commit, dispatch }, productId) {
     commit("SET_LOADING", true);
     try {
-      await withJwt(productApi).deleteProduct(productId);
+      await withJwt(productApi.deleteProduct)(productId);
       dispatch("fetchProducts");
     } catch (e) {
       console.error(e);
