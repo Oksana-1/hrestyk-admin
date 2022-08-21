@@ -38,7 +38,7 @@
 
 <script>
 import BaseMiniCard from "@/components/base/BaseMiniCard";
-import MainProductRow from "@/views/home/MainProductRow";
+import MainProductRow from "@/views/home/products/MainProductRow";
 import { mapGetters } from "vuex";
 import NotFound from "@/components/not-found/NotFound";
 import notFoundMessages from "@/translations/not-found/notFoundMessages";

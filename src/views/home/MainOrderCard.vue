@@ -11,6 +11,17 @@
         v-if="orders.length === 0"
         :message="notFoundMessages.orders"
       />
+      <template v-else>
+        <div class="card-title font-weight-light pt-6">Останні замовлення:</div>
+        <v-divider class="mt-2" />
+        <v-list avatar="true" class="py-0 mb-5">
+          <main-order-row
+            v-for="item in lastOrders"
+            :key="item.id"
+            :order="item"
+          />
+        </v-list>
+      </template>
     </template>
   </base-mini-card>
 </template>
@@ -20,10 +31,12 @@ import BaseMiniCard from "@/components/base/BaseMiniCard";
 import { mapGetters } from "vuex";
 import NotFound from "@/components/not-found/NotFound";
 import notFoundMessages from "@/translations/not-found/notFoundMessages";
+import MainOrderRow from "@/views/home/orders/MainOrderRow";
 
 export default {
   name: "MainOrderCard",
   components: {
+    MainOrderRow,
     NotFound,
     BaseMiniCard,
   },
@@ -34,6 +47,9 @@ export default {
   },
   computed: {
     ...mapGetters("orders", ["orders"]),
+    lastOrders() {
+      return this.orders;
+    },
   },
 };
 </script>
