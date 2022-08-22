@@ -31,26 +31,15 @@ const mutations = {
 };
 const actions = {
   async fetchOrders({ commit }, { take, skip }) {
-    try {
-      const response = await withJwt(orderApi.getOrders)({ take, skip });
-      commit("SET_ORDERS", response.orders);
-      commit("SET_COUNT", response.count);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    const response = await withJwt(orderApi.getOrders)({ take, skip });
+    commit("SET_ORDERS", response.orders);
+    commit("SET_COUNT", response.count);
   },
   async getOrderById({ commit }, orderId) {
     commit("SET_LOADING", true);
-    try {
-      const response = await withJwt(orderApi.getOrder)(orderId);
-      commit("SET_ORDER", response);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
+    const response = await withJwt(orderApi.getOrder)(orderId);
+    commit("SET_ORDER", response);
+    commit("SET_LOADING", false);
   },
   async changeOrderStatus({ commit }, { id, status, content }) {
     commit("SET_LOADING", true);

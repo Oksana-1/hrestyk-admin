@@ -1,5 +1,8 @@
 import * as apiEndPoints from "@/api/apiEndPoints";
 import Order from "@/entities/Order";
+import ErrorFactory from "@/entities/errors/ErrorFactory";
+
+const errorFactory = new ErrorFactory();
 
 export class OrderApi {
   async getOrders(axiosInstance, { take, skip }) {
@@ -14,8 +17,7 @@ export class OrderApi {
           }
         : null;
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async getOrder(axiosInstance, id) {
@@ -25,8 +27,7 @@ export class OrderApi {
       );
       return new Order(response.data.data[0]);
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async orderProcessing(axiosInstance, { id, status, content }) {
@@ -37,16 +38,14 @@ export class OrderApi {
       );
       return new Order(response.data.data);
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async deleteOrder(axiosInstance, id) {
     try {
       await axiosInstance.delete(`${apiEndPoints.ORDER_DELETE_URL}/${id}`);
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
 }

@@ -123,6 +123,8 @@ import BaseMenu from "@/components/base/BaseMenu";
 import OrderInfo from "@/views/order/OrderInfo";
 import CustomerInfo from "@/views/order/CustomerInfo";
 import { mapActions, mapGetters } from "vuex";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
+
 export default {
   name: "SingleOrder",
   components: {
@@ -131,6 +133,7 @@ export default {
     OrderInfo,
     CustomerInfo,
   },
+  mixins: [errorHandleMixin],
   data() {
     return {
       step: 1,
@@ -172,7 +175,7 @@ export default {
         });
         this.updateState(status);
       } catch (e) {
-        console.log(e);
+        await this.handleErrors(e);
       }
     },
     async cancelOrder() {

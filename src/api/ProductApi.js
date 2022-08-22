@@ -1,7 +1,6 @@
 import * as apiEndPoints from "@/api/apiEndPoints";
 import Product from "@/entities/Product";
 import ErrorFactory from "@/entities/errors/ErrorFactory";
-import axios from "axios";
 
 const errorFactory = new ErrorFactory();
 
@@ -35,7 +34,7 @@ export class ProductApi {
   }
   async createProduct(axiosInstance, payload) {
     try {
-      await axios.post(apiEndPoints.NEW_PRODUCT_URL, payload, {
+      await axiosInstance.post(apiEndPoints.NEW_PRODUCT_URL, payload, {
         headers: {
           "Content-Type": "multipart/form-data; boundary=boundary-" + boundary,
         },

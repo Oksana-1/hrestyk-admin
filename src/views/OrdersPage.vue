@@ -26,10 +26,11 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import OrdersList from "@/views/orders/OrdersList";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
 export default {
   name: "OrdersPage",
@@ -37,6 +38,7 @@ export default {
     OrdersList: WithVuexFetch(OrdersList, "orders/fetchOrders"),
     ConfirmModal,
   },
+  mixins: [errorHandleMixin],
   data() {
     return {
       busy: false,
@@ -83,7 +85,7 @@ export default {
         await this.deleteOrderById(this.productIdToDelete);
         this.forceUpdate();
       } catch (e) {
-        console.error(e);
+        await this.handleErrors(e);
       } finally {
         this.busy = false;
         this.closeModal();
