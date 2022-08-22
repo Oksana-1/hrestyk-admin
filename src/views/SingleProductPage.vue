@@ -30,6 +30,7 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 import SingleProduct from "@/views/product/SingleProduct";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
 import ProductFormData from "@/entities/ProductFormData";
+import {errorHandleMixin} from "@/mixins/errorHandleMixin";
 
 export default {
   name: "SingleProductPage",
@@ -37,6 +38,7 @@ export default {
     SingleProduct: WithVuexFetch(SingleProduct, "products/getSingleProduct"),
     ConfirmModal,
   },
+  mixins: [errorHandleMixin],
   data() {
     return {
       productId: this.$route.params.id,
@@ -80,7 +82,7 @@ export default {
         });
         this.setDefaultProductForm();
       } catch (e) {
-        console.error(e);
+        await this.handleErrors(e);
       } finally {
         this.submitting = false;
       }

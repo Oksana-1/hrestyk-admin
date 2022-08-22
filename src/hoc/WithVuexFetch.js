@@ -1,15 +1,16 @@
 import Vue from "vue";
 import LoadSpinner from "@/components/spinners/LoadSpinner";
 import ApiError from "@/components/errors/ApiError";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
 const WithVuexFetch = (Component, vuexFetch) => {
   const inheritedProps = Component.props || {};
   return Vue.component("WithVuexFetch", {
     props: { ...inheritedProps, vuexArgs: {} },
+    mixins: [errorHandleMixin],
     data() {
       return {
         status: "initial",
-        error: null,
       };
     },
     methods: {
@@ -20,7 +21,7 @@ const WithVuexFetch = (Component, vuexFetch) => {
             ? await this.$store.dispatch(vuexFetch, this.vuexArgs)
             : await this.$store.dispatch(vuexFetch);
         } catch (error) {
-          this.error = error;
+          await this.handleErrors(error);
         } finally {
           this.status = "ready";
         }

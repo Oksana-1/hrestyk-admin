@@ -40,6 +40,7 @@ import ImageFormList from "./productImageStep/ImageFormList";
 import ProductFormData from "@/entities/ProductFormData";
 import { newProductInitialForm } from "@/entities/initialForms/newProduct";
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
 export default {
   name: "NewProductModal",
@@ -48,6 +49,7 @@ export default {
     ImageFormList,
     BaseModal,
   },
+  mixins: [errorHandleMixin],
   data() {
     return {
       product: new ProductFormData(newProductInitialForm),
@@ -71,7 +73,7 @@ export default {
         this.step = 1;
         await this.fetchProducts();
       } catch (e) {
-        console.log(e);
+        await this.handleErrors(e);
       } finally {
         this.submitting = false;
         this.SET_DIALOG(false);

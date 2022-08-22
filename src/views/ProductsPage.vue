@@ -22,9 +22,11 @@ import ConfirmModal from "../components/modals/ConfirmModal";
 import { productsHeaders } from "@/translations/pages/products";
 import ProductList from "@/views/products/ProductList";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
 export default {
   name: "ProductsPage",
+  mixins: [errorHandleMixin],
   data() {
     return {
       busy: false,
@@ -61,7 +63,7 @@ export default {
       try {
         await this.deleteProduct(this.productIdToDelete);
       } catch (e) {
-        console.error(e);
+        await this.handleErrors(e);
       } finally {
         this.removing = false;
         this.closeModal();

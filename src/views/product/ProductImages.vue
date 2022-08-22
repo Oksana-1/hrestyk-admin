@@ -49,6 +49,7 @@ import InfoModal from "@/components/modals/InfoModal";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import ProductFormData from "@/entities/ProductFormData";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
 export default {
   name: "ProductImages",
@@ -62,6 +63,7 @@ export default {
     ConfirmModal,
     NewImage,
   },
+  mixins: [errorHandleMixin],
   data() {
     return {
       modalToShow: null,
@@ -122,7 +124,7 @@ export default {
         this.SET_NEW_PRODUCT(new ProductFormData(response));
         this.$emit("imageDeleted");
       } catch (e) {
-        console.error(e);
+        await this.handleErrors(e);
       } finally {
         this.busy = false;
         this.closeModal();

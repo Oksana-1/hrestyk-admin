@@ -1,5 +1,9 @@
 import * as apiEndPoints from "@/api/apiEndPoints";
 import Product from "@/entities/Product";
+import ErrorFactory from "@/entities/errors/ErrorFactory";
+import axios from "axios";
+
+const errorFactory = new ErrorFactory();
 
 const boundary = new Date().getTime();
 
@@ -13,8 +17,7 @@ export class ProductApi {
         categories: response.categories,
       };
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async getProduct(axiosInstance, productId) {
@@ -27,20 +30,18 @@ export class ProductApi {
         categories: response.categories,
       };
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async createProduct(axiosInstance, payload) {
     try {
-      await axiosInstance.post(apiEndPoints.NEW_PRODUCT_URL, payload, {
+      await axios.post(apiEndPoints.NEW_PRODUCT_URL, payload, {
         headers: {
           "Content-Type": "multipart/form-data; boundary=boundary-" + boundary,
         },
       });
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async deleteProduct(axiosInstance, productId) {
@@ -49,8 +50,7 @@ export class ProductApi {
         `${apiEndPoints.DELETE_PRODUCT_URL}/${productId}`
       );
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async addImage(axiosInstance, { productId, payload }) {
@@ -67,7 +67,7 @@ export class ProductApi {
       );
       return new Product(response.data.data);
     } catch (e) {
-      console.error(e);
+      errorFactory.create(e);
     }
   }
   async deleteImage(axiosInstance, imageId) {
@@ -82,8 +82,7 @@ export class ProductApi {
         categories: response.categories,
       };
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
   async editProduct(axiosInstance, { productId, payload }) {
@@ -106,8 +105,7 @@ export class ProductApi {
         categories: response.categories,
       };
     } catch (e) {
-      console.error(e);
-      throw e;
+      errorFactory.create(e);
     }
   }
 }

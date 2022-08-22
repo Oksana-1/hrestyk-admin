@@ -42,93 +42,54 @@ const mutations = {
 const actions = {
   async fetchProducts({ commit }) {
     commit("SET_LOADING", true);
-    try {
-      const response = await withJwt(productApi.getProducts)();
-      commit("SET_PRODUCTS", response.products);
-      commit("SET_CATEGORIES", response.categories);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
+    const response = await withJwt(productApi.getProducts)();
+    commit("SET_PRODUCTS", response.products);
+    commit("SET_CATEGORIES", response.categories);
+    commit("SET_LOADING", false);
   },
   async getSingleProduct({ commit }, productId) {
     commit("SET_LOADING", true);
-    try {
-      const response = await withJwt(productApi.getProduct)(productId);
-      commit("SET_PRODUCT", response.product);
-      commit("SET_CATEGORIES", response.categories);
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
+    const response = await withJwt(productApi.getProduct)(productId);
+    commit("SET_PRODUCT", response.product);
+    commit("SET_CATEGORIES", response.categories);
+    commit("SET_LOADING", false);
   },
   async postNewProduct({ commit }, payload) {
-    try {
-      await withJwt(productApi.createProduct)(payload);
-      commit("SET_NEW_PRODUCT", {});
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    await withJwt(productApi.createProduct)(payload);
+    commit("SET_NEW_PRODUCT", {});
   },
   async deleteProduct({ commit, dispatch }, productId) {
     commit("SET_LOADING", true);
-    try {
-      await withJwt(productApi.deleteProduct)(productId);
-      dispatch("fetchProducts");
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
+    await withJwt(productApi.deleteProduct)(productId);
+    dispatch("fetchProducts");
+    commit("SET_LOADING", false);
   },
   async addImage({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
-    try {
-      const response = await withJwt(productApi.addImage)({
-        productId,
-        payload,
-      });
-      commit("SET_PRODUCT", response);
-      return response;
-    } catch (e) {
-      console.error(e);
-    } finally {
-      commit("SET_LOADING", false);
-    }
+    const response = await withJwt(productApi.addImage)({
+      productId,
+      payload,
+    });
+    commit("SET_PRODUCT", response);
+    commit("SET_LOADING", false);
+    return response;
   },
   async deleteImage({ commit }, imageId) {
-    try {
-      const response = await withJwt(productApi.deleteImage)(imageId);
-      commit("SET_PRODUCT", response.product);
-      commit("SET_CATEGORIES", response.categories);
-      return response;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    const response = await withJwt(productApi.deleteImage)(imageId);
+    commit("SET_PRODUCT", response.product);
+    commit("SET_CATEGORIES", response.categories);
+    return response;
   },
   async editProduct({ commit }, { productId, payload }) {
     commit("SET_LOADING", true);
-    try {
-      const response = await withJwt(productApi.editProduct)({
-        productId,
-        payload,
-      });
-      commit("SET_PRODUCT", response.product);
-      commit("SET_CATEGORIES", response.categories);
-      return response;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    } finally {
-      commit("SET_LOADING", false);
-    }
+    const response = await withJwt(productApi.editProduct)({
+      productId,
+      payload,
+    });
+    commit("SET_PRODUCT", response.product);
+    commit("SET_CATEGORIES", response.categories);
+    commit("SET_LOADING", false);
+    return response;
   },
 };
 

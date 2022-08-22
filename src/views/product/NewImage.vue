@@ -34,15 +34,12 @@
             </v-col>
           </v-row>
           <v-row class="justify-center">
-            <v-btn
-                text
-                class="mx-2"
-                :disabled="busy"
-                @click="cancel"> Назад </v-btn>
-            <v-btn
-                color="primary"
-                :disabled="busy"
-                @click="submit"> Зберегти </v-btn>
+            <v-btn text class="mx-2" :disabled="busy" @click="cancel">
+              Назад
+            </v-btn>
+            <v-btn color="primary" :disabled="busy" @click="submit">
+              Зберегти
+            </v-btn>
           </v-row>
         </v-form>
         <v-tooltip v-else bottom>
@@ -73,9 +70,11 @@ import ProductFormData, {
 } from "@/entities/ProductFormData";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { newProductInitialImage } from "@/entities/initialForms/newProduct";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
 export default {
   name: "NewImage",
+  mixins: [errorHandleMixin],
   data() {
     return {
       editMode: false,
@@ -119,7 +118,7 @@ export default {
         });
         this.SET_NEW_PRODUCT(new ProductFormData(response));
       } catch (e) {
-        console.error(e);
+        await this.handleErrors(e);
       } finally {
         this.busy = false;
       }
