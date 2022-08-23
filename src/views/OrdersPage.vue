@@ -31,6 +31,7 @@ import OrdersList from "@/views/orders/OrdersList";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
 import { errorHandleMixin } from "@/mixins/errorHandleMixin";
+import { confirmationMessages } from "@/translations/pages/orders";
 
 export default {
   name: "OrdersPage",
@@ -46,7 +47,7 @@ export default {
       ordersPerPage: 10,
       componentKey: 1,
       modalToShow: null,
-      confirmationMessage: "Видалити це замовлення?",
+      confirmationMessage: confirmationMessages.delete,
       productIdToDelete: null,
     };
   },

@@ -21,7 +21,7 @@
                 @click="$emit('cancel')"
                 :disabled="disabledButton"
             >
-              Відмінити
+              Нє, не треба
             </v-btn>
           </v-col>
         </v-row>

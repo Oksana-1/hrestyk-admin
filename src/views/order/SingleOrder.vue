@@ -114,6 +114,13 @@
         </BaseCard>
       </v-col>
     </v-row>
+    <confirm-modal
+      :confirmationText="confirmationMessage"
+      v-if="modalToShow === 'confirm'"
+      @confirm="doDecline"
+      @cancel="closeModal"
+      :disabled-button="loading"
+    />
   </v-container>
 </template>
 
@@ -122,8 +129,10 @@ import BaseCard from "@/components/base/BaseCard";
 import BaseMenu from "@/components/base/BaseMenu";
 import OrderInfo from "@/views/order/OrderInfo";
 import CustomerInfo from "@/views/order/CustomerInfo";
-import { mapActions, mapGetters } from "vuex";
+import ConfirmModal from "@/components/modals/ConfirmModal";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { errorHandleMixin } from "@/mixins/errorHandleMixin";
+import { confirmationMessages } from "@/translations/pages/orders";
 
 export default {
   name: "SingleOrder",
@@ -132,6 +141,7 @@ export default {
     BaseMenu,
     OrderInfo,
     CustomerInfo,
+    ConfirmModal,
   },
   mixins: [errorHandleMixin],
   data() {
@@ -152,6 +162,8 @@ export default {
         sent: 3,
         finished: 4,
       },
+      confirmationMessage: confirmationMessages.decline,
+      modalToShow: null,
     };
   },
   computed: {
@@ -159,6 +171,7 @@ export default {
   },
   methods: {
     ...mapActions("orders", ["changeOrderStatus"]),
+    ...mapMutations("dialogs", ["SET_DIALOG"]),
     init() {
       this.updateState(this.order.orderStatus);
     },
@@ -178,13 +191,18 @@ export default {
         await this.handleErrors(e);
       }
     },
+    async doDecline() {
+      await this.changeStatus("declined ");
+      this.step = 0;
+      this.closeModal();
+    },
     async cancelOrder() {
-      try {
-        await this.changeStatus("declined ");
-        this.step = 0;
-      } catch (e) {
-        console.log(e);
-      }
+      this.modalToShow = "confirm";
+      this.SET_DIALOG(true);
+    },
+    closeModal() {
+      this.SET_DIALOG(false);
+      this.modalToShow = null;
     },
   },
   created() {
