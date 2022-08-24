@@ -23,6 +23,12 @@
         </v-list>
       </template>
     </template>
+    <template v-if="orders.length > 0" v-slot:actions>
+      <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
+      <span class="caption grey--text font-weight-light"
+        >останнє оновлення: {{ lastUpdatedDate | dateToString }}</span
+      >
+    </template>
   </base-mini-card>
 </template>
 
@@ -49,6 +55,11 @@ export default {
     ...mapGetters("orders", ["orders"]),
     lastOrders() {
       return this.orders;
+    },
+    lastUpdatedDate() {
+      return this.lastOrders && this.lastOrders[0]
+        ? this.lastOrders[0].createdAt
+        : null;
     },
   },
 };

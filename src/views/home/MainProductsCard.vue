@@ -63,7 +63,7 @@ export default {
         .sort((prev, next) =>
           new Date(prev.createdAt) > new Date(next.createdAt) ? -1 : 1
         )
-        .slice(0, 3);
+        .slice(0, 5);
     },
     lastUpdatedDate() {
       if (!this.products) return null;
