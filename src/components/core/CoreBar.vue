@@ -11,7 +11,7 @@
       <v-icon> mdi-dots-vertical </v-icon>
     </v-btn>
     <v-toolbar-title
-      class="hidden-sm-and-down font-weight-light"
+      class="font-weight-light"
       v-text="$route.name"
     />
     <v-spacer></v-spacer>

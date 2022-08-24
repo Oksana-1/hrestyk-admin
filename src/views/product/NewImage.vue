@@ -1,8 +1,8 @@
 <template>
   <v-card class="fill-height">
     <v-responsive min-width="100%" :aspect-ratio="1">
-      <v-card-actions class="justify-center mb-3 flex-shrink-0 fill-height">
-        <v-form v-if="editMode" ref="form" v-model="valid">
+      <v-card-actions class="justify-center mb-3 flex-shrink-0 fill-height pa-10">
+        <v-form v-if="editMode" ref="form" v-model="valid" class="flex-grow-1">
           <v-row class="align-center">
             <v-col cols="12">
               <v-file-input
@@ -35,7 +35,7 @@
           </v-row>
           <v-row class="justify-center">
             <v-btn text class="mx-2" :disabled="busy" @click="cancel">
-              Назад
+              Відмінити
             </v-btn>
             <v-btn color="primary" :disabled="busy" @click="submit">
               Зберегти
