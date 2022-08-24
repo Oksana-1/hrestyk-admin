@@ -4,8 +4,8 @@
       <v-row align="center" class="hidden-sm-and-down" no-gutters>
         <v-col cols="2" class="text-caption primary--text">Картинка</v-col>
         <v-col cols="4" class="text-caption primary--text">Назва товару</v-col>
-        <v-col cols="2" class="text-caption primary--text">Ціна</v-col>
         <v-col cols="2" class="text-caption primary--text">Кількість</v-col>
+        <v-col cols="2" class="text-caption primary--text">Ціна</v-col>
         <v-col cols="2" class="text-caption primary--text">Сума</v-col>
       </v-row>
     </v-list-item>
