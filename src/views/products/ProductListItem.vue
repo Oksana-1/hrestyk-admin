@@ -3,36 +3,36 @@
     <v-skeleton-loader type="list-item-avatar" :loading="loading">
       <v-list-item link :to="`/products/${product.id}`">
         <v-row align="center" no-gutters class="py-1">
-          <v-col cols="3" sm="1">
+          <v-col md="1" cols="3">
             <v-list-item-avatar color="grey lighten-3">
               <v-img v-if="mainImageSrc" :src="mainImageSrc"></v-img>
               <v-icon v-else>mdi-image</v-icon>
             </v-list-item-avatar>
           </v-col>
-          <v-col cols="5" sm="4">
+          <v-col md="4" cols="5">
             <v-list-item-content>
               <v-list-item-title class="text-caption">{{
                 product.title
               }}</v-list-item-title>
             </v-list-item-content>
           </v-col>
-          <v-col cols="3" sm="2">
+          <v-col md="2" cols="3">
             <div class="text-caption">{{ product.category }}</div>
           </v-col>
-          <v-col cols="4" sm="1">
+          <v-col md="1" cols="3">
             <div class="text-caption font-weight-bold">
               {{ product.price }} грн
             </div>
           </v-col>
-          <v-col cols="4" sm="1">
+          <v-col md="1" cols="5">
             <div class="text-caption">{{ product.qty_available }} шт.</div>
           </v-col>
-          <v-col cols="3" sm="2">
+          <v-col md="2" cols="3">
             <div class="text-caption">
               {{ product.createdAt | dateToString }}
             </div>
           </v-col>
-          <v-col cols="1" class="d-flex justify-end">
+          <v-col md="1" cols="1">
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
