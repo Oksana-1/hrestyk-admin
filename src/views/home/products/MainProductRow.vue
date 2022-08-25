@@ -34,13 +34,11 @@ export default {
   computed: {
     ...mapGetters("products", ["loading"]),
     mainImageSrc() {
-      if (this.product !== undefined) {
-        return this.product.images.length > 0
-          ? this.product.images[0].url
-          : null;
-      } else {
-        return null;
-      }
+      if (!this.product) return "";
+      if (this.product.images.length === 0) return "";
+      return this.product.mainImage
+        ? this.product.mainImage.url
+        : this.product.images[0].url;
     },
   },
 };

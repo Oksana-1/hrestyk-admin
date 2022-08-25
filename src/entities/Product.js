@@ -20,6 +20,9 @@ export default class Product {
   get id() {
     return this._id;
   }
+  get mainImage() {
+    return this.images.find((image) => image.is_main === true) || null;
+  }
 }
 
 export class Image {
