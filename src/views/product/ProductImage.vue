@@ -29,7 +29,7 @@
       </v-img>
     </v-hover>
     <v-card-actions>
-      <v-card-title class="caption grey--text lighten-4">
+      <v-card-title class="caption grey--text lighten-4 flex-grow-1">
         <v-text-field label="Alt" v-model="alt" />
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
