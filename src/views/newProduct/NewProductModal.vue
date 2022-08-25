@@ -69,6 +69,7 @@ export default {
         this.submitting = true;
         const payload = this.newProduct.getFormData();
         await this.postNewProduct(payload);
+        this.SET_DIALOG(false);
         this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
         this.step = 1;
         await this.fetchProducts();
@@ -76,7 +77,6 @@ export default {
         await this.handleErrors(e);
       } finally {
         this.submitting = false;
-        this.SET_DIALOG(false);
       }
     },
   },
