@@ -127,6 +127,7 @@ export default {
       const cloneCategories = cloneObject(this.categories);
       cloneCategories.push(this.customCategory);
       this.SET_CATEGORIES(cloneCategories);
+      this.customCategory = "";
     },
   },
   created() {
