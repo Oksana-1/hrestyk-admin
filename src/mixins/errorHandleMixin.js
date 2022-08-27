@@ -16,5 +16,8 @@ export const errorHandleMixin = {
         await this.$router.push("/login");
       }
     },
+    clearApiError() {
+      this.error = null;
+    },
   },
 };
