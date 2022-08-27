@@ -7,7 +7,6 @@ const state = {
   products: null,
   categories: null,
   product: null,
-  newProduct: null,
   loading: false,
   orders: null,
   order: null,
@@ -16,7 +15,6 @@ const getters = {
   products: (state) => state.products,
   categories: (state) => state.categories,
   product: (state) => state.product,
-  newProduct: (state) => state.newProduct,
   loading: (state) => state.loading,
 };
 const mutations = {
@@ -28,9 +26,6 @@ const mutations = {
   },
   SET_PRODUCT(state, payload) {
     state.product = payload;
-  },
-  SET_NEW_PRODUCT(state, payload) {
-    state.newProduct = payload;
   },
   SET_LOADING(state, payload) {
     state.loading = payload;

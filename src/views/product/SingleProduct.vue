@@ -12,8 +12,7 @@
                 />
               </v-row>
               <product-form
-                :product="newProduct"
-                :edit-submitting="submitting"
+                :submitting="submitting"
                 @validationPass="$emit('submit')"
               />
             </template>
@@ -47,8 +46,7 @@ import BaseCard from "@/components/base/BaseCard";
 import BaseMenu from "@/components/base/BaseMenu";
 import ProductForm from "@/views/common/ProductForm";
 import ProductImages from "@/views/product/ProductImages";
-import { mapGetters, mapMutations } from "vuex";
-import ProductFormData from "@/entities/ProductFormData";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SingleProduct",
@@ -68,24 +66,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("products", ["product", "newProduct"]),
+    ...mapGetters("products", ["product"]),
     productImages() {
       return this.product ? this.product.images : [];
     },
   },
   methods: {
-    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
-    setDefaultProductForm() {
-      if (this.product) {
-        this.SET_NEW_PRODUCT(new ProductFormData(this.product));
-      }
-    },
     forceUpdate() {
       this.componentKey += 1;
     },
-  },
-  created() {
-    this.setDefaultProductForm();
   },
 };
 </script>

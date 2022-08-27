@@ -3,7 +3,7 @@
     <add-image-form
       v-for="image in images"
       ref="addImageForm"
-      :key="`image-${  image.key }`"
+      :key="`image-${image.key}`"
       :image="image"
       @deleteImage="deleteImage($event)"
     />
@@ -31,21 +31,22 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn text class="mx-2" :disabled="createSubmitting" @click="$emit('step', 1)"> Назад </v-btn>
-      <v-btn color="primary" class="mx-2" :disabled="createSubmitting" @click="submit"> Зберегти </v-btn>
+      <v-btn text class="mx-2" :disabled="submitting" @click="$emit('step', 1)">
+        Назад
+      </v-btn>
+      <v-btn
+        color="primary"
+        class="mx-2"
+        :disabled="submitting"
+        @click="submit"
+      >
+        Зберегти
+      </v-btn>
     </v-row>
-    <v-snackbar
-        v-model="snackbar"
-        :timeout="timeout"
-    >
+    <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ text }}
       <template v-slot:action="{ attrs }">
-        <v-btn
-            color="primary"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-        >
+        <v-btn color="primary" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -55,11 +56,9 @@
 
 <script>
 import AddImageForm from "./AddImageForm";
-import ProductFormData, {
-  ProductFormDataImage,
-} from "@/entities/ProductFormData";
+import { ProductFormDataImage } from "@/entities/ProductFormData";
 import { newProductInitialImage } from "@/entities/initialForms/newProduct";
-import { mapMutations } from "vuex";
+import { snackbarMessages } from "@/translations/errors/errorMessages";
 
 export default {
   name: "ImageFormList",
@@ -67,8 +66,7 @@ export default {
     AddImageForm,
   },
   props: {
-    product: ProductFormData,
-    createSubmitting: Boolean,
+    submitting: Boolean,
   },
   data() {
     return {
@@ -76,17 +74,16 @@ export default {
       addPhotoBtnDisabled: false,
       newImageKey: 0,
       snackbar: false,
-      text: 'Тільки одна картинка може бути головною',
+      text: snackbarMessages.mainImageErrorMessage,
       timeout: 2000,
     };
   },
   computed: {
     isOnlyOneOrNoneImageMain() {
-      return this.images.filter(image => image.is_main).length <= 1;
-    }
+      return this.images.filter((image) => image.is_main).length <= 1;
+    },
   },
   methods: {
-    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     addFileInput() {
       const newImage = new ProductFormDataImage(newProductInitialImage);
       this.newImageKey++;
@@ -115,9 +112,7 @@ export default {
     submit() {
       const isValid = this.validate();
       if (isValid) {
-        this.product.images = this.images;
-        this.SET_NEW_PRODUCT(this.product);
-        this.$emit("validationPass");
+        this.$emit("submit", this.images);
       }
     },
     deleteImage(nodeKey) {

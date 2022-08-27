@@ -2,12 +2,12 @@
   <v-form ref="form" v-model="valid">
     <v-text-field
       label="Назва товару"
-      v-model="productForm.title"
+      v-model="form.title"
       :rules="rules.title"
     ></v-text-field>
     <v-textarea
       label="Опис товару"
-      v-model="productForm.description"
+      v-model="form.description"
       :rules="rules.description"
     ></v-textarea>
     <v-row>
@@ -15,7 +15,7 @@
         <v-select
           :items="categories"
           label="Категорія"
-          v-model="productForm.category"
+          v-model="form.category"
           :rules="rules.category"
         >
           <template v-slot:append-item>
@@ -40,7 +40,7 @@
         <v-text-field
           type="number"
           label="Ціна, грн"
-          v-model.number="productForm.price"
+          v-model.number="form.price"
           :rules="rules.price"
         ></v-text-field>
       </v-col>
@@ -48,18 +48,18 @@
         <v-text-field
           type="number"
           label="На складі, шт"
-          v-model.number="productForm.qty_available"
+          v-model.number="form.qty_available"
           :rules="rules.qty_available"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-row>
-      <v-btn text class="mx-2" :disabled="editSubmitting" @click="closeDialog">
+      <v-btn text class="mx-2" :disabled="submitting" @click="closeDialog">
         Відмінити</v-btn
       >
       <v-btn
         color="primary"
-        :disabled="editSubmitting"
+        :disabled="submitting"
         @click="goToNextStep"
         class="mx-2"
       >
@@ -72,14 +72,14 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { errorMessages } from "@/translations/errors/errorMessages";
-import ProductFormData from "@/entities/ProductFormData";
 import { cloneObject } from "@/utils/helpers";
+import { newProductInitialForm } from "@/entities/initialForms/newProduct";
+import ProductFormData from "@/entities/ProductFormData";
 
 export default {
   name: "ProductForm",
   props: {
-    product: ProductFormData,
-    editSubmitting: Boolean,
+    submitting: Boolean,
   },
   data() {
     return {
@@ -98,26 +98,19 @@ export default {
         ],
       },
       customCategory: "",
+      form: new ProductFormData(newProductInitialForm),
     };
   },
   computed: {
-    ...mapGetters("products", ["newProduct", "categories"]),
-    productForm: {
-      get() {
-        return this.newProduct;
-      },
-      set(value) {
-        this.SET_NEW_PRODUCT(value);
-      },
-    },
+    ...mapGetters("products", ["categories", "product"]),
   },
   methods: {
-    ...mapMutations("products", ["SET_NEW_PRODUCT", "SET_CATEGORIES"]),
+    ...mapMutations("products", ["SET_CATEGORIES"]),
     ...mapMutations("dialogs", ["SET_DIALOG"]),
     goToNextStep() {
       this.$refs.form.validate();
       if (this.valid) {
-        this.$emit("validationPass");
+        this.$emit("submit", this.form);
       }
     },
     closeDialog() {
@@ -131,7 +124,8 @@ export default {
     },
   },
   created() {
-    this.SET_NEW_PRODUCT(this.product);
+    console.log(this.product);
+    //this.SET_NEW_PRODUCT(this.product);
   },
 };
 </script>

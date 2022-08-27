@@ -50,7 +50,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("products", ["product", "newProduct"]),
+    ...mapGetters("products", ["product"]),
   },
   watch: {
     $route(to) {
@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     ...mapMutations("dialogs", ["SET_DIALOG"]),
-    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     ...mapActions("products", [
       "getSingleProduct",
       "deleteProduct",
