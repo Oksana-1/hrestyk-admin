@@ -54,12 +54,12 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn text class="mx-2" :disabled="submitting" @click="closeDialog">
+      <v-btn text class="mx-2" :disabled="editing" @click="closeDialog">
         Відмінити</v-btn
       >
       <v-btn
         color="primary"
-        :disabled="submitting"
+        :disabled="editing"
         @click="goToNextStep"
         class="mx-2"
       >
@@ -79,7 +79,7 @@ import ProductFormData from "@/entities/ProductFormData";
 export default {
   name: "ProductForm",
   props: {
-    submitting: Boolean,
+    isNewProduct: Boolean,
   },
   data() {
     return {
@@ -102,7 +102,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("products", ["categories", "product"]),
+    ...mapGetters("products", ["categories", "product", "editing"]),
   },
   methods: {
     ...mapMutations("products", ["SET_CATEGORIES"]),
@@ -122,10 +122,27 @@ export default {
       this.SET_CATEGORIES(cloneCategories);
       this.customCategory = "";
     },
+    init() {
+      if (!this.isNewProduct) {
+        const {
+          category,
+          description,
+          isActive,
+          price,
+          qty_available,
+          title,
+        } = this.product;
+        this.form.category = category;
+        this.form.description = description;
+        this.form.isActive = isActive;
+        this.form.price = price;
+        this.form.qty_available = qty_available;
+        this.form.title = title;
+      }
+    },
   },
   created() {
-    console.log(this.product);
-    //this.SET_NEW_PRODUCT(this.product);
+    this.init();
   },
 };
 </script>

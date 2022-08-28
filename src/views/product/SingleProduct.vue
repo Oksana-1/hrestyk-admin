@@ -1,34 +1,30 @@
 <template>
   <v-container fluid class="pb-0">
-    <v-form v-model="valid">
-      <v-row>
-        <v-col cols="12">
-          <BaseCard icon-name="mdi-store">
-            <template v-slot:card-content>
-              <v-row class="justify-end mt-n8 px-2">
-                <base-menu
-                  @save="$emit('submit')"
-                  @delete="$emit('deleteItem')"
-                />
-              </v-row>
-              <product-form
-                :submitting="submitting"
-                @validationPass="$emit('submit')"
+    <v-row>
+      <v-col cols="12">
+        <BaseCard icon-name="mdi-store">
+          <template v-slot:card-content>
+            <v-row class="justify-end mt-n8 px-2">
+              <base-menu
+                @save="$emit('submit')"
+                @delete="$emit('deleteItem')"
               />
-            </template>
-          </BaseCard>
-        </v-col>
-        <v-col cols="12">
-          <product-images
-            :key="`product-images-${componentKey}`"
-            :productImages="productImages"
-            :edit-submitting="submitting"
-            @imageChanges="$emit('submit')"
-            @imageDeleted="forceUpdate"
-          />
-        </v-col>
-      </v-row>
-    </v-form>
+            </v-row>
+            <product-form
+              :isNewProduct="false"
+              @submit="$emit('submit', $event)"
+            />
+          </template>
+        </BaseCard>
+      </v-col>
+      <v-col cols="12">
+        <product-images
+          @imageChanges="$emit('imageChanges', $event)"
+          @deleteProductImage="$emit('deleteProductImage', $event)"
+          @addImage="$emit('addImage', $event)"
+        />
+      </v-col>
+    </v-row>
     <v-row class="justify-space-between secondary lighten-2 white--text">
       <v-col class="caption px-6"
         >Дата створення: {{ product.createdAt | dateToString }}</v-col
@@ -59,22 +55,8 @@ export default {
     ProductForm,
     ProductImages,
   },
-  data() {
-    return {
-      valid: false,
-      componentKey: false,
-    };
-  },
   computed: {
     ...mapGetters("products", ["product"]),
-    productImages() {
-      return this.product ? this.product.images : [];
-    },
-  },
-  methods: {
-    forceUpdate() {
-      this.componentKey += 1;
-    },
   },
 };
 </script>

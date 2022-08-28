@@ -15,6 +15,7 @@
           <v-stepper-content step="1">
             <v-card-text>
               <product-form
+                :isNewProduct="true"
                 :key="`image-form-list-${componentKey}`"
                 @submit="onFirstStepSubmit"
               />
@@ -56,7 +57,7 @@ export default {
   mixins: [errorHandleMixin],
   data() {
     return {
-      product: new ProductFormData(cloneObject(newProductInitialForm)),
+      productFormData: new ProductFormData(cloneObject(newProductInitialForm)),
       step: 1,
       submitting: false,
       componentKey: 0,
@@ -74,23 +75,22 @@ export default {
         qty_available,
         title,
       } = form;
-      this.product.category = category;
-      this.product.description = description;
-      this.product.isActive = isActive;
-      this.product.price = price;
-      this.product.qty_available = qty_available;
-      this.product.title = title;
+      this.productFormData.category = category;
+      this.productFormData.description = description;
+      this.productFormData.isActive = isActive;
+      this.productFormData.price = price;
+      this.productFormData.qty_available = qty_available;
+      this.productFormData.title = title;
       this.step = 2;
     },
     async submit(images) {
       try {
-        this.product.images = images;
+        this.productFormData.images = images;
         this.submitting = true;
-        const payload = this.product.getFormData();
-        await this.postNewProduct(payload);
+        await this.postNewProduct(this.productFormData.getFormData());
         this.SET_DIALOG(false);
         await this.fetchProducts();
-        this.product = new ProductFormData(cloneObject(newProductInitialForm));
+        this.productFormData = new ProductFormData(cloneObject(newProductInitialForm));
         this.step = 1;
         this.forceUpdate();
       } catch (e) {
