@@ -49,9 +49,8 @@ const actions = {
     commit("SET_CATEGORIES", response.categories);
     commit("SET_LOADING", false);
   },
-  async postNewProduct({ commit }, payload) {
+  async postNewProduct(_, payload) {
     await withJwt(productApi.createProduct)(payload);
-    commit("SET_NEW_PRODUCT", {});
   },
   async deleteProduct({ commit, dispatch }, productId) {
     commit("SET_LOADING", true);
