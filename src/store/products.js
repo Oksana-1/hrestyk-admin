@@ -7,17 +7,15 @@ const state = {
   products: null,
   categories: null,
   product: null,
-  newProduct: null,
   loading: false,
-  orders: null,
-  order: null,
+  editing: false,
 };
 const getters = {
   products: (state) => state.products,
   categories: (state) => state.categories,
   product: (state) => state.product,
-  newProduct: (state) => state.newProduct,
   loading: (state) => state.loading,
+  editing: (state) => state.editing,
 };
 const mutations = {
   SET_PRODUCTS(state, payload) {
@@ -29,14 +27,11 @@ const mutations = {
   SET_PRODUCT(state, payload) {
     state.product = payload;
   },
-  SET_NEW_PRODUCT(state, payload) {
-    state.newProduct = payload;
-  },
   SET_LOADING(state, payload) {
     state.loading = payload;
   },
-  SET_COUNT(state, payload) {
-    state.count = payload;
+  SET_EDITING(state, payload) {
+    state.editing = payload;
   },
 };
 const actions = {
@@ -54,9 +49,8 @@ const actions = {
     commit("SET_CATEGORIES", response.categories);
     commit("SET_LOADING", false);
   },
-  async postNewProduct({ commit }, payload) {
+  async postNewProduct(_, payload) {
     await withJwt(productApi.createProduct)(payload);
-    commit("SET_NEW_PRODUCT", {});
   },
   async deleteProduct({ commit, dispatch }, productId) {
     commit("SET_LOADING", true);
@@ -65,30 +59,32 @@ const actions = {
     commit("SET_LOADING", false);
   },
   async addImage({ commit }, { productId, payload }) {
-    commit("SET_LOADING", true);
+    commit("SET_EDITING", true);
     const response = await withJwt(productApi.addImage)({
       productId,
       payload,
     });
     commit("SET_PRODUCT", response);
-    commit("SET_LOADING", false);
+    commit("SET_EDITING", false);
     return response;
   },
   async deleteImage({ commit }, imageId) {
+    commit("SET_EDITING", true);
     const response = await withJwt(productApi.deleteImage)(imageId);
     commit("SET_PRODUCT", response.product);
     commit("SET_CATEGORIES", response.categories);
+    commit("SET_EDITING", false);
     return response;
   },
   async editProduct({ commit }, { productId, payload }) {
-    commit("SET_LOADING", true);
+    commit("SET_EDITING", true);
     const response = await withJwt(productApi.editProduct)({
       productId,
       payload,
     });
     commit("SET_PRODUCT", response.product);
     commit("SET_CATEGORIES", response.categories);
-    commit("SET_LOADING", false);
+    commit("SET_EDITING", false);
     return response;
   },
 };

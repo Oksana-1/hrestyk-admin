@@ -4,3 +4,6 @@ export const errorMessages = {
   floatField: "Введіть коректне число",
 };
 export const fatalErrorMessage = "Щось пішло не так, спробуйте пізніше!";
+export const snackbarMessages = {
+  mainImageErrorMessage: "Тільки одна картинка може бути головною",
+};

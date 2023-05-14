@@ -14,16 +14,20 @@
         <v-stepper-items>
           <v-stepper-content step="1">
             <v-card-text>
-              <product-form :product="product" @validationPass="step = 2" />
+              <product-form
+                :isNewProduct="true"
+                :key="`image-form-list-${componentKey}`"
+                @submit="onFirstStepSubmit"
+              />
             </v-card-text>
           </v-stepper-content>
           <v-stepper-content step="2">
             <v-card-text>
               <image-form-list
-                :product="product"
-                :create-submitting="submitting"
+                :key="`image-form-list-${componentKey}`"
+                :submitting="submitting"
                 @step="step = $event"
-                @validationPass="submit"
+                @submit="submit"
               />
             </v-card-text>
           </v-stepper-content>
@@ -39,8 +43,9 @@ import ProductForm from "../common/ProductForm";
 import ImageFormList from "./productImageStep/ImageFormList";
 import ProductFormData from "@/entities/ProductFormData";
 import { newProductInitialForm } from "@/entities/initialForms/newProduct";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import { errorHandleMixin } from "@/mixins/errorHandleMixin";
+import { cloneObject } from "@/utils/helpers";
 
 export default {
   name: "NewProductModal",
@@ -52,32 +57,50 @@ export default {
   mixins: [errorHandleMixin],
   data() {
     return {
-      product: new ProductFormData(newProductInitialForm),
+      productFormData: new ProductFormData(cloneObject(newProductInitialForm)),
       step: 1,
       submitting: false,
+      componentKey: 0,
     };
-  },
-  computed: {
-    ...mapGetters("products", ["newProduct"]),
   },
   methods: {
     ...mapActions("products", ["postNewProduct", "fetchProducts"]),
-    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     ...mapMutations("dialogs", ["SET_DIALOG"]),
-    async submit() {
+    onFirstStepSubmit(form) {
+      const {
+        category,
+        description,
+        isActive,
+        price,
+        qty_available,
+        title,
+      } = form;
+      this.productFormData.category = category;
+      this.productFormData.description = description;
+      this.productFormData.isActive = isActive;
+      this.productFormData.price = price;
+      this.productFormData.qty_available = qty_available;
+      this.productFormData.title = title;
+      this.step = 2;
+    },
+    async submit(images) {
       try {
+        this.productFormData.images = images;
         this.submitting = true;
-        const payload = this.newProduct.getFormData();
-        await this.postNewProduct(payload);
+        await this.postNewProduct(this.productFormData.getFormData());
         this.SET_DIALOG(false);
-        this.SET_NEW_PRODUCT(new ProductFormData(newProductInitialForm));
-        this.step = 1;
         await this.fetchProducts();
+        this.productFormData = new ProductFormData(cloneObject(newProductInitialForm));
+        this.step = 1;
+        this.forceUpdate();
       } catch (e) {
         await this.handleErrors(e);
       } finally {
         this.submitting = false;
       }
+    },
+    forceUpdate() {
+      this.componentKey += 1;
     },
   },
 };

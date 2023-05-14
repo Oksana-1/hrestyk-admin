@@ -1,17 +1,19 @@
 <template>
   <div>
     <single-product
-      @submit="submit"
       @deleteItem="deleteItem"
-      :submitting="submitting"
+      @deleteProductImage="deleteProductImage"
+      @addImage="addProductImage"
+      @imageChanges="onImageChange"
       :vuexArgs="productId"
+      :key="`product-${componentKey}`"
     />
     <confirm-modal
       v-if="modalToShow === 'confirm'"
       :confirmation-text="'Видалити цей продукт?'"
       @confirm="doRemove"
       @cancel="closeModal"
-      :disabled-button="submitting"
+      :disabled-button="editing"
     />
     <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ text }}
@@ -29,8 +31,9 @@ import ConfirmModal from "../components/modals/ConfirmModal";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import SingleProduct from "@/views/product/SingleProduct";
 import WithVuexFetch from "@/hoc/WithVuexFetch";
+import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 import ProductFormData from "@/entities/ProductFormData";
-import {errorHandleMixin} from "@/mixins/errorHandleMixin";
+import { cloneObject } from "@/utils/helpers";
 
 export default {
   name: "SingleProductPage",
@@ -46,11 +49,12 @@ export default {
       snackbar: false,
       text: "Нічого не змінилося",
       timeout: 2000,
-      submitting: false,
+      productFormData: null,
+      componentKey: 0,
     };
   },
   computed: {
-    ...mapGetters("products", ["product", "newProduct"]),
+    ...mapGetters("products", ["product", "editing"]),
   },
   watch: {
     $route(to) {
@@ -59,32 +63,24 @@ export default {
   },
   methods: {
     ...mapMutations("dialogs", ["SET_DIALOG"]),
-    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     ...mapActions("products", [
       "getSingleProduct",
       "deleteProduct",
       "editProduct",
+      "deleteImage",
+      "addImage",
     ]),
-    async submit() {
-      if (
-        !this.isPrimitiveProductPropChanged() &&
-        !this.isProductImagesChanged()
-      ) {
-        this.snackbar = true;
-        return;
-      }
-      this.submitting = true;
+    async onImageChange(images) {
       try {
-        const payload = this.newProduct.getFormData();
+        const productToSend = new ProductFormData(cloneObject(this.product));
+        productToSend.images = images;
         await this.editProduct({
           productId: this.productId,
-          payload: payload,
+          payload: productToSend,
         });
-        this.setDefaultProductForm();
+        this.forceUpdate();
       } catch (e) {
         await this.handleErrors(e);
-      } finally {
-        this.submitting = false;
       }
     },
     deleteItem() {
@@ -96,54 +92,34 @@ export default {
       this.modalToShow = null;
     },
     async doRemove() {
-      this.submitting = true;
       try {
         await this.deleteProduct(this.productId);
         await this.$router.push("/products");
       } catch (e) {
-        console.error(e);
-      } finally {
-        this.submitting = false;
+        await this.handleErrors(e);
       }
     },
-    setDefaultProductForm() {
-      if (this.product) {
-        this.SET_NEW_PRODUCT(new ProductFormData(this.product));
+    async deleteProductImage(id) {
+      try {
+        await this.deleteImage(id);
+        this.forceUpdate();
+      } catch (e) {
+        await this.handleErrors(e);
       }
     },
-    isPrimitiveProductPropChanged() {
-      return (
-        Object.keys(this.newProduct).filter((prop) => {
-          if (typeof this.newProduct[prop] !== "object") {
-            return this.product[prop] !== this.newProduct[prop];
-          }
-        }).length > 0
-      );
+    async addProductImage(image) {
+      try {
+        await this.addImage({
+          productId: this.productId,
+          payload: image.getFormdata(),
+        });
+        this.forceUpdate();
+      } catch (e) {
+        await this.handleErrors(e);
+      }
     },
-    isProductImagesChanged() {
-      if (
-        !Array.isArray(this.newProduct.images) ||
-        !Array.isArray(this.product.images)
-      ) {
-        throw new Error("Error on comparing images. Images is not an array.");
-      }
-      if (this.product.images.length !== this.newProduct.images.length) {
-        return true;
-      } else {
-        // comparing images props
-        return (
-          this.newProduct.images.filter((image) => {
-            const comparingItem = this.product.images.find(
-              (item) => item.id === image.id
-            );
-            if (!comparingItem) return true;
-            return (
-              image.alt !== comparingItem.alt ||
-              image.is_main !== comparingItem.is_main
-            );
-          }).length > 0
-        );
-      }
+    forceUpdate() {
+      this.componentKey += 1;
     },
   },
 };

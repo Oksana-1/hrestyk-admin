@@ -1,7 +1,9 @@
 <template>
   <v-card class="fill-height">
     <v-responsive min-width="100%" :aspect-ratio="1">
-      <v-card-actions class="justify-center mb-3 flex-shrink-0 fill-height pa-10">
+      <v-card-actions
+        class="justify-center mb-3 flex-shrink-0 fill-height pa-10"
+      >
         <v-form v-if="editMode" ref="form" v-model="valid" class="flex-grow-1">
           <v-row class="align-center">
             <v-col cols="12">
@@ -65,10 +67,8 @@
 
 <script>
 import { errorMessages } from "@/translations/errors/errorMessages";
-import ProductFormData, {
-  ProductFormDataImage,
-} from "@/entities/ProductFormData";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { ProductFormDataImage } from "@/entities/ProductFormData";
+import { mapActions } from "vuex";
 import { newProductInitialImage } from "@/entities/initialForms/newProduct";
 import { errorHandleMixin } from "@/mixins/errorHandleMixin";
 
@@ -84,46 +84,14 @@ export default {
       },
       image: new ProductFormDataImage(newProductInitialImage),
       busy: false,
-      productId: this.$route.params.id,
     };
-  },
-  computed: {
-    ...mapGetters("products", ["newProduct"]),
-    isNoneImageMain() {
-      return (
-        this.newProduct.images.filter((image) => image.is_main).length === 0
-      );
-    },
-  },
-  watch: {
-    $route(to) {
-      this.productId = to.params.id;
-    },
   },
   methods: {
     ...mapActions("products", ["editProduct", "addImage"]),
-    ...mapMutations("products", ["SET_NEW_PRODUCT"]),
     submit: async function () {
-      if (this.image.is_main && !this.isNoneImageMain) {
-        this.$emit("showIsMainSnackbar");
-        return;
-      }
       this.validate();
       if (!this.valid) return;
-      this.busy = true;
-      try {
-        const response = await this.addImage({
-          productId: this.productId,
-          payload: this.image.getFormdata(),
-        });
-        this.SET_NEW_PRODUCT(new ProductFormData(response));
-      } catch (e) {
-        await this.handleErrors(e);
-      } finally {
-        this.busy = false;
-      }
-      this.editMode = false;
-      this.resetForm();
+      this.$emit("addImage", this.image);
     },
     validate() {
       this.$refs.form.validate();
